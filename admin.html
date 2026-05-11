@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Nirmaan MUN</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body { background: var(--dark-wine); color: var(--text-light); }
+    .admin-container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+    .stat-card { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); }
+    .stat-card h3 { font-size: 0.8rem; color: var(--blush-pale); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .stat-card .value { font-size: 2rem; font-weight: bold; color: var(--gold-accent); }
+    .table-container { background: rgba(255,255,255,0.05); border-radius: 6px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; text-transform: uppercase; color: var(--blush-pale); }
+    td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
+    .badge-status { padding: 0.25rem 0.5rem; border-radius: 2px; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; }
+    .badge-pending { background: rgba(248, 196, 99, 0.2); color: var(--sunset-amber); }
+    .badge-verified { background: rgba(40, 167, 69, 0.2); color: #4ade80; }
+    .login-container { max-width: 400px; margin: 100px auto; padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 6px; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <div id="loginSection" class="login-container">
+    <img src="/logo.jpg" alt="Logo" style="width:80px; border-radius:50%; margin: 0 auto 1.5rem;">
+    <h2 style="margin-bottom:1.5rem; color:var(--gold-accent);">Admin Login</h2>
+    <input type="password" id="adminPassword" class="form-input" placeholder="Enter Admin Password" style="background:rgba(255,255,255,0.1); color:#fff; margin-bottom:1rem;">
+    <button id="loginBtn" class="btn btn-primary" style="width:100%;">Login</button>
+    <p id="loginError" style="color:#ff6b6b; font-size:0.8rem; margin-top:1rem; display:none;">Incorrect password</p>
+  </div>
+
+  <div id="dashboardSection" class="admin-container" style="display:none;">
+    <div class="admin-header">
+      <div style="display:flex; align-items:center; gap:1rem;">
+        <img src="/logo.jpg" alt="Logo" style="width:40px; border-radius:50%;">
+        <h2>Nirmaan MUN <span style="color:var(--gold-accent);">Dashboard</span></h2>
+      </div>
+      <div>
+        <button id="exportBtn" class="btn btn-secondary" style="border-color:var(--gold-accent); color:var(--gold-accent);">Export CSV</button>
+        <button id="logoutBtn" class="btn btn-outline-light" style="margin-left:1rem;">Logout</button>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <h3>Total Registrations</h3>
+        <div class="value" id="statTotal">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Verified Payments</h3>
+        <div class="value" id="statVerified">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Pending Payments</h3>
+        <div class="value" id="statPending">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Most Popular Comm.</h3>
+        <div class="value" id="statPopular" style="font-size:1.2rem; margin-top:0.5rem;">-</div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Committee 1</th>
+            <th>School</th>
+            <th>Exp.</th>
+            <th>Payment</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="delegatesTable">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script type="module" src="/js/supabase.js"></script>
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>

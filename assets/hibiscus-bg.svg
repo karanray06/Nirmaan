@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" fill="none">
+  <g opacity="0.9">
+    <!-- Petal 1 - Top -->
+    <path d="M300 40 C340 120, 380 180, 300 260 C220 180, 260 120, 300 40Z" stroke="currentColor" stroke-width="1.5" fill="currentColor" fill-opacity="0.15"/>
+    <path d="M300 80 C320 130, 350 170, 300 230" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <path d="M300 80 C280 130, 250 170, 300 230" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <!-- Petal 2 - Top Right -->
+    <path d="M490 130 C430 190, 400 250, 330 270 C360 190, 410 150, 490 130Z" stroke="currentColor" stroke-width="1.5" fill="currentColor" fill-opacity="0.15"/>
+    <path d="M450 155 C410 195, 380 235, 340 260" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <!-- Petal 3 - Bottom Right -->
+    <path d="M520 380 C450 360, 390 340, 340 290 C400 300, 460 320, 520 380Z" stroke="currentColor" stroke-width="1.5" fill="currentColor" fill-opacity="0.15"/>
+    <path d="M480 370 C430 350, 380 330, 345 300" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <!-- Petal 4 - Bottom -->
+    <path d="M300 560 C260 480, 220 420, 300 340 C380 420, 340 480, 300 560Z" stroke="currentColor" stroke-width="1.5" fill="currentColor" fill-opacity="0.15"/>
+    <path d="M300 520 C280 470, 250 430, 300 370" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <path d="M300 520 C320 470, 350 430, 300 370" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <!-- Petal 5 - Bottom Left -->
+    <path d="M80 380 C150 360, 210 340, 260 290 C200 300, 140 320, 80 380Z" stroke="currentColor" stroke-width="1.5" fill="currentColor" fill-opacity="0.15"/>
+    <path d="M120 370 C170 350, 220 330, 255 300" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <!-- Petal 6 - Top Left -->
+    <path d="M110 130 C170 190, 200 250, 270 270 C240 190, 190 150, 110 130Z" stroke="currentColor" stroke-width="1.5" fill="currentColor" fill-opacity="0.15"/>
+    <path d="M150 155 C190 195, 220 235, 260 260" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <!-- Center -->
+    <circle cx="300" cy="300" r="30" stroke="currentColor" stroke-width="1.5" fill="currentColor" fill-opacity="0.2"/>
+    <circle cx="300" cy="300" r="15" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.3"/>
+  </g>
+</svg>
