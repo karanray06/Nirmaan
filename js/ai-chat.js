@@ -50,20 +50,40 @@ document.addEventListener('DOMContentLoaded', () => {
     messagesArea.scrollTop = messagesArea.scrollHeight;
 
     try {
-      // Call Vercel API Route (which calls Grok)
-      const res = await fetch('/api/chat', {
+      // Call Grok API directly for local dev
+      const apiKey = import.meta.env.VITE_GROK_API_KEY;
+      const res = await fetch('https://api.x.ai/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: "grok-4.20-reasoning", // Using the model you requested
+          messages: [
+            {
+              role: "system",
+              content: "You are a formal, knowledgeable MUN research assistant for NIRMAAN MUN. Your job is to help delegates research committee topics, understand UN resolutions, explain diplomatic terminology, and prepare speeches. Cite real UN documents when possible. Keep answers concise, structured, and helpful."
+            },
+            {
+              role: "user",
+              content: text
+            }
+          ],
+          temperature: 0.7,
+          max_tokens: 800
+        })
       });
 
       const data = await res.json();
       document.getElementById(typingId).remove();
 
       if(data.error) {
-        appendMessage('assistant', "I'm sorry, I encountered an error connecting to the intelligence core.");
+        // Expose the actual error so user knows it's a billing issue
+        appendMessage('assistant', `API Error: ${data.error.message || data.error}`);
       } else {
-        appendMessage('assistant', formatMarkdown(data.reply));
+        const reply = data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response.";
+        appendMessage('assistant', formatMarkdown(reply));
       }
 
     } catch (err) {
