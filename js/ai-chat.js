@@ -50,16 +50,16 @@ document.addEventListener('DOMContentLoaded', () => {
     messagesArea.scrollTop = messagesArea.scrollHeight;
 
     try {
-      // Call Grok API directly for local dev
-      const apiKey = import.meta.env.VITE_GROK_API_KEY;
-      const res = await fetch('https://api.x.ai/v1/chat/completions', {
+      // Call Groq API directly for local dev
+      const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-          model: "grok-4.20-reasoning", // Using the model you requested
+          model: "llama3-8b-8192", // Groq fast Llama 3 model
           messages: [
             {
               role: "system",
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById(typingId).remove();
 
       if(data.error) {
-        // Expose the actual error so user knows it's a billing issue
+        // Expose the actual error so user knows it's a billing/auth issue
         appendMessage('assistant', `API Error: ${data.error.message || data.error}`);
       } else {
         const reply = data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response.";
