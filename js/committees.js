@@ -1,13 +1,10 @@
 const committeesData = [
-  { abbr: 'UNGA', name: 'United Nations General Assembly', level: 'beginner', agendas: ['Militarization of the Arctic', 'Debt Crisis in Developing Nations'] },
-  { abbr: 'UNSC', name: 'United Nations Security Council', level: 'advanced', agendas: ['Situation in the South China Sea', 'Reform of Peacekeeping Operations'] },
-  { abbr: 'UNHRC', name: 'UN Human Rights Council', level: 'intermediate', agendas: ['Protecting Rights of Climate Refugees', 'Censorship and Freedom of Press'] },
-  { abbr: 'WHO', name: 'World Health Organization', level: 'beginner', agendas: ['Global Pandemic Preparedness', 'Access to Essential Medicines'] },
-  { abbr: 'ECOSOC', name: 'Economic and Social Council', level: 'intermediate', agendas: ['Transitioning to Green Economies', 'Eradicating Extreme Poverty'] },
-  { abbr: 'DISEC', name: 'Disarmament & International Security', level: 'intermediate', agendas: ['Regulation of Autonomous Weapons', 'Nuclear Non-Proliferation in ME'] },
-  { abbr: 'ICJ', name: 'International Court of Justice', level: 'advanced', agendas: ['Territorial Dispute (Case A)', 'Advisory Opinion on Climate Change'] },
-  { abbr: 'IPC', name: 'International Press Corps', level: 'beginner', agendas: ['Reporting on Committee Proceedings', 'Holding Press Conferences'] },
-  { abbr: 'JCC', name: 'Joint Crisis Cabinet', level: 'crisis', agendas: ['Classified Historical Crisis', 'Midnight Directives'] }
+  { abbr: 'UNCSW', name: 'UN Commission on the Status of Women', level: 'intermediate', agendas: ["Role of AI and data economies in reinforcing modern patriarchy and control over women's body"] },
+  { abbr: 'UNHRC', name: 'UN Human Rights Council', level: 'intermediate', agendas: ["Normalisation of civilian as 'collateral damage' and compatibility with human rights obligations"] },
+  { abbr: 'AIPPM', name: 'All India Political Parties Meet', level: 'beginner', agendas: ["'One Nation, One Election' framework: strengthening democratic governance vs monopolization of power"] },
+  { abbr: 'IIA', name: 'International Intelligence Agency', level: 'advanced', agendas: ['Foreign interference through cyber operations, disinformation networks, and proxy digital actors'] },
+  { abbr: 'IP', name: 'International Press', level: 'beginner', agendas: ['Photography, Journalism, Caricature'] },
+  { abbr: 'MOOT', name: 'Moot Court', level: 'advanced', agendas: ['A courtroom where logic prevails (Case provided on event day)'] }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
