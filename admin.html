@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:#1a0a10; color:#f0d4da; font-family:'DM Sans',sans-serif; min-height:100vh; }
+    body { background:#2a1520; color:#f0d4da; font-family:'DM Sans',sans-serif; min-height:100vh; }
 
     /* LOGIN */
     .login-overlay { min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#1a0a10 0%,#2d0f1a 40%,#3d0816 100%); position:relative; overflow:hidden; }
@@ -27,7 +27,7 @@
 
     /* DASHBOARD LAYOUT */
     .dashboard { display:none; }
-    .dash-sidebar { position:fixed; left:0; top:0; bottom:0; width:240px; background:#140810; border-right:1px solid rgba(255,255,255,.06); padding:1.5rem; display:flex; flex-direction:column; z-index:10; }
+    .dash-sidebar { position:fixed; left:0; top:0; bottom:0; width:240px; background:#2a1520; border-right:1px solid rgba(255,255,255,.08); padding:1.5rem; display:flex; flex-direction:column; z-index:10; }
     .dash-sidebar .brand { display:flex; align-items:center; gap:.75rem; margin-bottom:2.5rem; padding-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,.06); }
     .dash-sidebar .brand img { width:36px; height:36px; border-radius:50%; }
     .dash-sidebar .brand h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:#c9a96e; }
@@ -41,7 +41,7 @@
     .db-dot.connected { background:#4ade80; box-shadow:0 0 8px rgba(74,222,128,.4); }
     .db-dot.disconnected { background:#ff6b6b; box-shadow:0 0 8px rgba(255,107,107,.4); }
 
-    .dash-main { margin-left:240px; padding:2rem 2.5rem; min-height:100vh; }
+    .dash-main { margin-left:240px; padding:2rem 2.5rem; min-height:100vh; background:#2a1520; }
     .dash-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; }
     .dash-header h1 { font-family:'Playfair Display',serif; font-size:1.8rem; }
     .dash-header h1 span { color:#c9a96e; }
