@@ -1,22 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Conference Date from ENV or fallback
-  const confDateStr = import.meta.env.VITE_CONFERENCE_DATE || '2026-08-15T09:00:00+05:30';
+  let confDateStr = '2026-08-08T09:00:00+05:30';
+  try {
+    if (import.meta.env && import.meta.env.VITE_CONFERENCE_DATE) {
+      confDateStr = import.meta.env.VITE_CONFERENCE_DATE;
+    }
+  } catch (e) {}
   const countDownDate = new Date(confDateStr).getTime();
 
   const elDays = document.getElementById('cdDays');
   const elHours = document.getElementById('cdHours');
   const elMins = document.getElementById('cdMins');
   const elSecs = document.getElementById('cdSecs');
+  const countdownContainer = document.getElementById('countdown');
+  const dateDisplay = document.getElementById('heroDateDisplay');
+
+  if (dateDisplay) {
+    const d = new Date(confDateStr);
+    const options = { month: 'long', day: 'numeric', year: 'numeric' };
+    const formatted = d.toLocaleDateString('en-US', options);
+    // Add next day for the "- 9" part
+    const nextDay = new Date(d);
+    nextDay.setDate(d.getDate() + 1);
+    const endDay = nextDay.getDate();
+    dateDisplay.innerText = `${d.toLocaleString('en-US', {month: 'long'})} ${d.getDate()} - ${endDay}, ${d.getFullYear()}`;
+  }
 
   function updateCountdown() {
     const now = new Date().getTime();
     const distance = countDownDate - now;
 
     if (distance < 0) {
-      if(elDays) elDays.innerText = "00";
-      if(elHours) elHours.innerText = "00";
-      if(elMins) elMins.innerText = "00";
-      if(elSecs) elSecs.innerText = "00";
+      if (countdownContainer) {
+        countdownContainer.innerHTML = '<h3 style="color:var(--gold-accent); margin-top:1rem;">Conference In Progress 🎙️</h3>';
+      }
       return;
     }
 

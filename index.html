@@ -76,7 +76,7 @@
         <div class="countdown-separator">:</div>
         <div class="countdown-unit"><span class="countdown-value" id="cdSecs">00</span><span class="countdown-label">Secs</span></div>
       </div>
-      <p class="hero-date">August 8 - 9, 2026</p>
+      <p class="hero-date" id="heroDateDisplay">August 8 - 9, 2026</p>
       
       <div class="hero-ctas" style="margin-top: 2rem;">
         <a href="#register" class="btn btn-primary">Register Now</a>
@@ -136,7 +136,7 @@
 
       <div class="stats-bar" id="statsBar">
         <div class="stat-item">
-          <span class="stat-number" data-target="500">0</span>
+          <span class="stat-number" data-target="150">0</span>
           <span class="stat-label">Delegates Expected</span>
         </div>
         <div class="stat-item">
@@ -249,7 +249,7 @@
       </div>
       
       <div class="schedule-download">
-        <a href="/brochure.pdf" download class="btn btn-secondary">Download Brochure PDF</a>
+        <a href="javascript:void(0)" onclick="toast('Brochure coming soon! Please check back later.')" class="btn btn-secondary">Download Brochure PDF</a>
       </div>
     </div>
   </section>
@@ -510,7 +510,7 @@
       </div>
 
       <div class="resources-grid">
-        <a href="https://linktr.ee/nirmaan.indraja" target="_blank" class="card resource-card">
+        <a href="javascript:void(0)" onclick="toast('Position Paper Template coming soon!')" class="card resource-card">
           <div class="card-body">
             <div class="resource-icon">
               <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -521,7 +521,7 @@
             </div>
           </div>
         </a>
-        <a href="https://linktr.ee/nirmaan.indraja" target="_blank" class="card resource-card">
+        <a href="javascript:void(0)" onclick="toast('Rules of Procedure coming soon!')" class="card resource-card">
           <div class="card-body">
             <div class="resource-icon">
               <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
@@ -532,7 +532,7 @@
             </div>
           </div>
         </a>
-        <a href="https://linktr.ee/nirmaan.indraja" target="_blank" class="card resource-card">
+        <a href="javascript:void(0)" onclick="document.getElementById('bg-guides').style.display = document.getElementById('bg-guides').style.display === 'block' ? 'none' : 'block'" class="card resource-card">
           <div class="card-body">
             <div class="resource-icon">
               <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -544,21 +544,39 @@
           </div>
         </a>
       </div>
+      
+      <div id="bg-guides" style="display:none; margin-top:1rem; background:rgba(255,255,255,.02); border-radius:12px; padding:1.5rem; border:1px solid rgba(255,255,255,.05);">
+        <h3 style="margin-bottom:1rem; color:var(--primary-crimson);">Select a Committee</h3>
+        <ul style="list-style:none; padding:0; display:grid; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)); gap:1rem;">
+          <li><a href="javascript:void(0)" onclick="toast('UNCSW Guide coming soon')" style="color:var(--gold-accent); text-decoration:none; padding:0.8rem; background:rgba(0,0,0,.2); border-radius:6px; display:block; border:1px solid rgba(201,169,110,.2);">UNCSW <span style="float:right; font-size:0.8rem; opacity:0.6; margin-top:2px;">Coming Soon</span></a></li>
+          <li><a href="javascript:void(0)" onclick="toast('UNHRC Guide coming soon')" style="color:var(--gold-accent); text-decoration:none; padding:0.8rem; background:rgba(0,0,0,.2); border-radius:6px; display:block; border:1px solid rgba(201,169,110,.2);">UNHRC <span style="float:right; font-size:0.8rem; opacity:0.6; margin-top:2px;">Coming Soon</span></a></li>
+          <li><a href="javascript:void(0)" onclick="toast('AIPPM Guide coming soon')" style="color:var(--gold-accent); text-decoration:none; padding:0.8rem; background:rgba(0,0,0,.2); border-radius:6px; display:block; border:1px solid rgba(201,169,110,.2);">AIPPM <span style="float:right; font-size:0.8rem; opacity:0.6; margin-top:2px;">Coming Soon</span></a></li>
+          <li><a href="javascript:void(0)" onclick="toast('IIA Guide coming soon')" style="color:var(--gold-accent); text-decoration:none; padding:0.8rem; background:rgba(0,0,0,.2); border-radius:6px; display:block; border:1px solid rgba(201,169,110,.2);">IIA <span style="float:right; font-size:0.8rem; opacity:0.6; margin-top:2px;">Coming Soon</span></a></li>
+          <li><a href="javascript:void(0)" onclick="toast('IP Guide coming soon')" style="color:var(--gold-accent); text-decoration:none; padding:0.8rem; background:rgba(0,0,0,.2); border-radius:6px; display:block; border:1px solid rgba(201,169,110,.2);">Press Corps <span style="float:right; font-size:0.8rem; opacity:0.6; margin-top:2px;">Coming Soon</span></a></li>
+          <li><a href="javascript:void(0)" onclick="toast('Moot Court Guide coming soon')" style="color:var(--gold-accent); text-decoration:none; padding:0.8rem; background:rgba(0,0,0,.2); border-radius:6px; display:block; border:1px solid rgba(201,169,110,.2);">Moot Court <span style="float:right; font-size:0.8rem; opacity:0.6; margin-top:2px;">Coming Soon</span></a></li>
+        </ul>
+      </div>
 
       <div class="glossary">
         <h3>MUN Glossary</h3>
-        <details class="glossary-item">
-          <summary>Moderated Caucus</summary>
-          <p>A form of debate where delegates are called upon by the Chair to speak for a set amount of time on a specific sub-topic.</p>
-        </details>
-        <details class="glossary-item">
-          <summary>Unmoderated Caucus</summary>
-          <p>Informal debate time where delegates can freely move around the room to discuss and draft resolutions.</p>
-        </details>
-        <details class="glossary-item">
-          <summary>Working Paper</summary>
-          <p>A rough draft of ideas and solutions compiled by a group of delegates before forming a formal Draft Resolution.</p>
-        </details>
+        <details class="glossary-item"><summary>Moderated Caucus</summary><p>A form of debate where delegates are called upon by the Chair to speak for a set amount of time on a specific sub-topic.</p></details>
+        <details class="glossary-item"><summary>Unmoderated Caucus</summary><p>Informal debate time where delegates can freely move around the room to discuss and draft resolutions.</p></details>
+        <details class="glossary-item"><summary>Working Paper</summary><p>A rough draft of ideas and solutions compiled by a group of delegates before forming a formal Draft Resolution.</p></details>
+        <details class="glossary-item"><summary>Draft Resolution</summary><p>A document written in resolution format, approved by the chairs, and introduced to committee but not yet voted upon.</p></details>
+        <details class="glossary-item"><summary>Operative Clause</summary><p>The part of a resolution which describes how the UN will do something about a certain issue. It begins with an action verb.</p></details>
+        <details class="glossary-item"><summary>Preambulatory Clause</summary><p>The part of a resolution that describes previous actions taken on the topic and reasons why the resolution is necessary.</p></details>
+        <details class="glossary-item"><summary>Point of Order</summary><p>A point raised when a delegate believes the chair or another delegate has made an error in the rules of procedure.</p></details>
+        <details class="glossary-item"><summary>Point of Information</summary><p>A question directed to the delegate speaking or to the chair, typically regarding the contents of a speech.</p></details>
+        <details class="glossary-item"><summary>Placard</summary><p>A piece of cardstock with a country's name on it that a delegate raises in the air to signal to the chair that they wish to speak.</p></details>
+        <details class="glossary-item"><summary>Quorum</summary><p>The minimum number of delegates who must be present for a committee to conduct business.</p></details>
+        <details class="glossary-item"><summary>Bloc</summary><p>A group of countries in a similar geographical region or with a similar opinion on a particular topic.</p></details>
+        <details class="glossary-item"><summary>Veto Power</summary><p>The ability, held by China, France, the Russian Federation, the UK, and the USA to prevent any draft resolution in the Security Council from passing.</p></details>
+        <details class="glossary-item"><summary>Communiqué</summary><p>A brief report or statement released by a committee, typically the crisis committee, regarding actions they have taken.</p></details>
+        <details class="glossary-item"><summary>Dais</summary><p>The group of people, usually high school or college students, in charge of a MUN committee.</p></details>
+        <details class="glossary-item"><summary>Yielding the Floor</summary><p>When a delegate finishes their speech and gives their remaining time back to the Chair or to another delegate.</p></details>
+        <details class="glossary-item"><summary>Right of Reply</summary><p>A right to speak in reply to a previous speaker's comment, invoked when a delegate feels their country's national integrity has been insulted.</p></details>
+        <details class="glossary-item"><summary>Sanctions</summary><p>Actions taken by countries against others for political reasons, either unilaterally or multilaterally.</p></details>
+        <details class="glossary-item"><summary>Consensus</summary><p>A group agreement achieved without formal voting, where no delegate actively objects to the passing of the motion.</p></details>
       </div>
     </div>
   </section>
@@ -662,9 +680,14 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
-      <div class="sponsors">
-        <p>In Partnership With</p>
-        <img src="/logo.jpg" alt="Partner" style="height:40px; border-radius:50%; opacity:0.5; filter:grayscale(1);">
+      <div class="sponsors" style="text-align:center; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 2rem;">
+        <p style="margin-bottom: 1rem; color: rgba(240,212,218,0.7); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em;">In Partnership With</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
+          <div style="width: 120px; height: 60px; border: 2px dashed rgba(201,169,110,0.4); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: rgba(201,169,110,0.6); font-size: 0.75rem;">Your Brand Here</div>
+          <div style="width: 120px; height: 60px; border: 2px dashed rgba(201,169,110,0.4); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: rgba(201,169,110,0.6); font-size: 0.75rem;">Your Brand Here</div>
+          <div style="width: 120px; height: 60px; border: 2px dashed rgba(201,169,110,0.4); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: rgba(201,169,110,0.6); font-size: 0.75rem;">Your Brand Here</div>
+        </div>
+        <a href="mailto:nirmaan.indraja@gmail.com?subject=Sponsorship Enquiry — Nirmaan MUN 2026" class="btn btn-outline-light" style="font-size: 0.8rem; padding: 0.4rem 1rem;">Become a Partner</a>
       </div>
       
       <div class="footer-grid">

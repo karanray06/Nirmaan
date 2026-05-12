@@ -8,25 +8,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const observer = new IntersectionObserver((entries) => {
     if (entries[0].isIntersecting && !hasRun) {
       hasRun = true;
+      
+      const easeOutQuad = t => t * (2 - t);
+      const duration = 1500;
+      
       statNumbers.forEach(stat => {
         const target = +stat.getAttribute('data-target');
-        const duration = 2000; // ms
-        const stepTime = Math.abs(Math.floor(duration / target));
-        let current = 0;
+        const startTimestamp = performance.now();
         
-        // Fast counter for large numbers, slow for small
-        const timer = setInterval(() => {
-          current += (target > 100 ? 5 : 1);
-          if (current >= target) {
-            stat.innerText = target + (target > 100 ? '+' : '');
-            clearInterval(timer);
+        const step = (timestamp) => {
+          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+          const current = Math.floor(easeOutQuad(progress) * target);
+          
+          stat.innerText = current + (target > 100 ? '+' : '');
+          
+          if (progress < 1) {
+            requestAnimationFrame(step);
           } else {
-            stat.innerText = current;
+            stat.innerText = target + (target > 100 ? '+' : '');
           }
-        }, target > 100 ? 20 : stepTime);
+        };
+        requestAnimationFrame(step);
       });
     }
-  }, { threshold: 0.5 });
+  }, { threshold: 0.2 });
 
   observer.observe(statsBar);
 });

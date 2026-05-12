@@ -77,11 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
               ${liHtml}
             </ul>
             <div class="committee-footer">
-              <a href="${com.guideUrl}" download class="guide-download-btn">
+              <a href="javascript:void(0)" onclick="toast('${com.abbr} Study Guide coming soon!')" class="guide-download-btn">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 Download Study Guide
               </a>
-              <a href="https://linktr.ee/nirmaan.indraja" target="_blank" class="guide-link-btn">
+              <a href="#resources" class="guide-link-btn">
                 View Resources <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
             </div>
