@@ -84,14 +84,15 @@
 .committee-card{transition:all var(--transition-normal)}
 .committee-card.hidden{display:none}
 .committee-card .card-body{display:flex;flex-direction:column;gap:.75rem}
-.committee-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.committee-header{display:flex;align-items:center;gap:1rem}
+.committee-emoji{width:52px;height:52px;flex-shrink:0;background:linear-gradient(135deg,var(--blush-pale),var(--warm-cream));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;border:1.5px solid var(--border-subtle)}
+.committee-meta{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
 .committee-abbr{font-family:var(--font-display);font-size:.75rem;font-weight:600;letter-spacing:.1em;padding:.3rem .7rem;background:var(--blush-pale);color:var(--primary-crimson);border-radius:2px;white-space:nowrap}
 .committee-name{font-family:var(--font-display);font-size:1.3rem;font-weight:600;color:var(--dark-wine)}
 .committee-agendas{list-style:none;padding:0}
 .committee-agendas li{font-size:.9rem;color:var(--text-muted);padding:.35rem 0 .35rem 1.25rem;position:relative}
 .committee-agendas li::before{content:'✦';position:absolute;left:0;color:var(--primary-crimson);font-size:.6rem;top:.55rem}
 .committee-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:.75rem;border-top:1px solid var(--border-subtle);gap:.5rem;flex-wrap:wrap}
-.committee-icon{width:48px;height:48px;object-fit:contain;border-radius:4px;flex-shrink:0}
 .guide-download-btn{font-size:.8rem;color:var(--primary-crimson);font-weight:600;display:flex;align-items:center;gap:6px;padding:.4rem .8rem;border:1.5px solid var(--primary-crimson);border-radius:3px;transition:all var(--transition-fast);text-decoration:none;white-space:nowrap}
 .guide-download-btn:hover{background:var(--primary-crimson);color:#fff}
 .guide-download-btn:hover svg{stroke:#fff}
