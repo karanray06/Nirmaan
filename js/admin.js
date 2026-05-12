@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!teamMembers.length) { grid.innerHTML = '<div class="empty">No team members yet. Click "Add Member" above.</div>'; return; }
     grid.innerHTML = teamMembers.map(m => `<div class="team-card">
       <div class="team-card-wrapper">
-        <img src="${m.photo_url || '/logo.jpg'}" alt="${m.name}" onerror="this.src='/logo.jpg'" style="${(m.name.toLowerCase().includes('kavya') || m.name.toLowerCase().includes('awani')) ? 'transform:scale(1.6); transform-origin:center 15%;' : ''}">
+        <img src="${m.photo_url || '/logo.jpg'}" alt="${m.name}" onerror="this.src='/logo.jpg'" style="width:100%; height:100%; object-fit:cover; ${m.name.toLowerCase().includes('kavya') ? 'transform:scale(1.8); transform-origin:20% 40%;' : (m.name.toLowerCase().includes('awani') ? 'transform:scale(2); transform-origin:center 45%;' : '')}">
       </div>
       <h4>${m.name}</h4><div class="role">${m.role}</div>
       ${m.phone ? `<div class="phone">${m.phone}</div>` : ''}
