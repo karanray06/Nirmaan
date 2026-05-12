@@ -3,136 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard — Nirmaan MUN</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>Admin — Nirmaan MUN</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:#2a1520; color:#f0d4da; font-family:'DM Sans',sans-serif; min-height:100vh; }
-
-    /* LOGIN */
-    .login-overlay { min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#1a0a10 0%,#2d0f1a 40%,#3d0816 100%); position:relative; overflow:hidden; }
-    .login-overlay::before { content:''; position:absolute; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle,rgba(139,30,63,.15),transparent 70%); top:-100px; right:-100px; }
-    .login-overlay::after { content:''; position:absolute; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle,rgba(201,169,110,.08),transparent 70%); bottom:-50px; left:-50px; }
-    .login-box { width:100%; max-width:420px; padding:3rem; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:16px; backdrop-filter:blur(20px); text-align:center; position:relative; z-index:1; box-shadow:0 24px 48px rgba(0,0,0,.4); }
-    .login-box img { width:90px; height:90px; border-radius:50%; border:3px solid rgba(201,169,110,.4); margin-bottom:1.5rem; object-fit:cover; }
-    .login-box h2 { font-family:'Playfair Display',serif; font-size:1.8rem; color:#c9a96e; margin-bottom:.5rem; }
-    .login-box p { font-size:.85rem; color:rgba(240,212,218,.5); margin-bottom:2rem; }
-    .login-input { width:100%; padding:.9rem 1.2rem; background:rgba(255,255,255,.06); border:1.5px solid rgba(255,255,255,.1); border-radius:8px; color:#fff; font-size:.95rem; outline:none; transition:all .3s; }
-    .login-input:focus { border-color:#c9a96e; box-shadow:0 0 0 3px rgba(201,169,110,.15); }
-    .login-input::placeholder { color:rgba(255,255,255,.3); }
-    .login-btn { width:100%; padding:.9rem; background:linear-gradient(135deg,#8b1e3f,#3d0816); color:#fff; border:none; border-radius:8px; font-size:.95rem; font-weight:600; cursor:pointer; transition:all .3s; margin-top:1rem; letter-spacing:.04em; }
-    .login-btn:hover { background:linear-gradient(135deg,#a52555,#5a1028); transform:translateY(-1px); box-shadow:0 8px 24px rgba(139,30,63,.3); }
-    .login-error { color:#ff6b6b; font-size:.8rem; margin-top:1rem; display:none; }
-
-    /* DASHBOARD LAYOUT */
-    .dashboard { display:none; }
-    .dash-sidebar { position:fixed; left:0; top:0; bottom:0; width:240px; background:#2a1520; border-right:1px solid rgba(255,255,255,.08); padding:1.5rem; display:flex; flex-direction:column; z-index:10; }
-    .dash-sidebar .brand { display:flex; align-items:center; gap:.75rem; margin-bottom:2.5rem; padding-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,.06); }
-    .dash-sidebar .brand img { width:36px; height:36px; border-radius:50%; }
-    .dash-sidebar .brand h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:#c9a96e; }
-    .nav-item { display:flex; align-items:center; gap:.75rem; padding:.75rem 1rem; border-radius:8px; color:rgba(240,212,218,.6); font-size:.85rem; font-weight:500; cursor:pointer; transition:all .2s; margin-bottom:.25rem; }
-    .nav-item:hover { background:rgba(255,255,255,.05); color:#f0d4da; }
-    .nav-item.active { background:rgba(139,30,63,.3); color:#c9a96e; border:1px solid rgba(139,30,63,.4); }
-    .nav-item svg { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.5; flex-shrink:0; }
-    .nav-spacer { flex:1; }
-    .db-status { display:flex; align-items:center; gap:.5rem; padding:.75rem 1rem; border-radius:8px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); font-size:.75rem; }
-    .db-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-    .db-dot.connected { background:#4ade80; box-shadow:0 0 8px rgba(74,222,128,.4); }
-    .db-dot.disconnected { background:#ff6b6b; box-shadow:0 0 8px rgba(255,107,107,.4); }
-
-    .dash-main { margin-left:240px; padding:2rem 2.5rem; min-height:100vh; background:#2a1520; }
-    .dash-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; }
-    .dash-header h1 { font-family:'Playfair Display',serif; font-size:1.8rem; }
-    .dash-header h1 span { color:#c9a96e; }
-    .header-actions { display:flex; gap:.75rem; }
-    .btn-dash { padding:.6rem 1.2rem; border-radius:8px; font-size:.8rem; font-weight:600; cursor:pointer; transition:all .2s; border:1.5px solid; display:flex; align-items:center; gap:.5rem; }
-    .btn-export { background:rgba(201,169,110,.1); border-color:rgba(201,169,110,.3); color:#c9a96e; }
-    .btn-export:hover { background:rgba(201,169,110,.2); }
-    .btn-refresh { background:rgba(74,222,128,.1); border-color:rgba(74,222,128,.3); color:#4ade80; }
-    .btn-refresh:hover { background:rgba(74,222,128,.2); }
-    .btn-logout { background:rgba(255,107,107,.1); border-color:rgba(255,107,107,.3); color:#ff6b6b; }
-    .btn-logout:hover { background:rgba(255,107,107,.2); }
-
-    /* STATS */
-    .stats-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:1.25rem; margin-bottom:2rem; }
-    .stat-card { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:12px; padding:1.5rem; transition:all .3s; position:relative; overflow:hidden; }
-    .stat-card:hover { border-color:rgba(201,169,110,.2); transform:translateY(-2px); }
-    .stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--accent,#c9a96e),transparent); border-radius:12px 12px 0 0; }
-    .stat-card h4 { font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; color:rgba(240,212,218,.5); margin-bottom:.75rem; }
-    .stat-val { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:#c9a96e; }
-    .stat-card:nth-child(2) { --accent:#4ade80; }
-    .stat-card:nth-child(2) .stat-val { color:#4ade80; }
-    .stat-card:nth-child(3) { --accent:#f8c463; }
-    .stat-card:nth-child(3) .stat-val { color:#f8c463; }
-    .stat-card:nth-child(4) { --accent:#8b5cf6; }
-    .stat-card:nth-child(4) .stat-val { color:#8b5cf6; }
-    .stat-card:nth-child(5) { --accent:#fb7185; }
-    .stat-card:nth-child(5) .stat-val { color:#fb7185; font-size:1rem; margin-top:.5rem; }
-
-    /* SEARCH & FILTERS */
-    .controls-bar { display:flex; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap; }
-    .search-box { flex:1; min-width:200px; position:relative; }
-    .search-box input { width:100%; padding:.7rem 1rem .7rem 2.5rem; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:8px; color:#fff; font-size:.85rem; outline:none; }
-    .search-box input:focus { border-color:#c9a96e; }
-    .search-box svg { position:absolute; left:.8rem; top:50%; transform:translateY(-50%); width:16px; height:16px; stroke:rgba(240,212,218,.4); fill:none; stroke-width:1.5; }
-    .filter-select { padding:.7rem 1rem; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:8px; color:#fff; font-size:.85rem; cursor:pointer; outline:none; min-width:150px; }
-    .filter-select option { background:#1a0a10; color:#fff; }
-
-    /* TABLE */
-    .table-wrap { background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.06); border-radius:12px; overflow:hidden; }
-    .table-info { padding:1rem 1.5rem; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,.06); font-size:.8rem; color:rgba(240,212,218,.5); }
-    table { width:100%; border-collapse:collapse; }
-    th { padding:.9rem 1.25rem; text-align:left; font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; color:rgba(240,212,218,.4); background:rgba(255,255,255,.02); border-bottom:1px solid rgba(255,255,255,.06); }
-    td { padding:.9rem 1.25rem; font-size:.85rem; border-bottom:1px solid rgba(255,255,255,.03); }
-    tr:hover td { background:rgba(255,255,255,.02); }
-    .del-name { font-weight:600; color:#f0d4da; }
-    .del-email { font-size:.75rem; color:rgba(240,212,218,.4); margin-top:.15rem; }
-    .del-id { font-family:'Playfair Display',serif; color:#c9a96e; font-weight:600; font-size:.85rem; }
-    .badge { padding:.25rem .6rem; border-radius:4px; font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
-    .badge-verified { background:rgba(74,222,128,.15); color:#4ade80; }
-    .badge-pending { background:rgba(248,196,99,.15); color:#f8c463; }
-    .badge-rejected { background:rgba(255,107,107,.15); color:#ff6b6b; }
-    .action-btn { padding:.35rem .7rem; border-radius:6px; font-size:.7rem; font-weight:600; cursor:pointer; border:1px solid; transition:all .2s; }
-    .btn-verify { background:rgba(74,222,128,.1); border-color:rgba(74,222,128,.3); color:#4ade80; }
-    .btn-verify:hover { background:rgba(74,222,128,.25); }
-    .btn-reject { background:rgba(255,107,107,.1); border-color:rgba(255,107,107,.3); color:#ff6b6b; margin-left:.35rem; }
-    .btn-reject:hover { background:rgba(255,107,107,.25); }
-    .btn-view-proof { font-size:.75rem; color:#c9a96e; text-decoration:underline; cursor:pointer; display:block; margin-bottom:.35rem; }
-    .empty-state { text-align:center; padding:4rem 2rem; color:rgba(240,212,218,.3); }
-    .empty-state svg { width:48px; height:48px; stroke:rgba(240,212,218,.2); fill:none; stroke-width:1; margin-bottom:1rem; }
-
-    /* COMMITTEE BREAKDOWN */
-    .committee-breakdown { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:1.5rem; }
-    .comm-bar-card { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:10px; padding:1.25rem; }
-    .comm-bar-card h5 { font-size:.75rem; color:rgba(240,212,218,.5); margin-bottom:.5rem; text-transform:uppercase; letter-spacing:.08em; }
-    .comm-bar-card .comm-name { font-weight:600; color:#c9a96e; font-size:1rem; }
-    .comm-bar-card .comm-count { font-size:.8rem; color:rgba(240,212,218,.4); }
-    .comm-bar { height:4px; background:rgba(255,255,255,.06); border-radius:2px; margin-top:.75rem; overflow:hidden; }
-    .comm-bar-fill { height:100%; border-radius:2px; background:linear-gradient(90deg,#8b1e3f,#c9a96e); transition:width .6s ease; }
-
-    /* RESPONSIVE */
-    @media(max-width:900px) {
-      .dash-sidebar { display:none; }
-      .dash-main { margin-left:0; padding:1.5rem; }
-      .stats-grid { grid-template-columns:repeat(2,1fr); }
-      .committee-breakdown { grid-template-columns:1fr; }
-    }
-    @media(max-width:600px) {
-      .stats-grid { grid-template-columns:1fr; }
-      .dash-header { flex-direction:column; gap:1rem; }
-    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:#2a1520;color:#f0d4da;font-family:'DM Sans',sans-serif;min-height:100vh}
+    .login-overlay{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a0a10,#2d0f1a,#3d0816)}
+    .login-box{max-width:420px;width:100%;padding:3rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;backdrop-filter:blur(20px);text-align:center;box-shadow:0 24px 48px rgba(0,0,0,.4)}
+    .login-box img{width:90px;height:90px;border-radius:50%;border:3px solid rgba(201,169,110,.4);margin-bottom:1.5rem;object-fit:cover}
+    .login-box h2{font-family:'Playfair Display',serif;font-size:1.8rem;color:#c9a96e;margin-bottom:.5rem}
+    .login-box p{font-size:.85rem;color:rgba(240,212,218,.5);margin-bottom:2rem}
+    .login-input{width:100%;padding:.9rem 1.2rem;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:.95rem;outline:none;transition:.3s}
+    .login-input:focus{border-color:#c9a96e;box-shadow:0 0 0 3px rgba(201,169,110,.15)}
+    .login-input::placeholder{color:rgba(255,255,255,.3)}
+    .login-btn{width:100%;padding:.9rem;background:linear-gradient(135deg,#8b1e3f,#3d0816);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:600;cursor:pointer;transition:.3s;margin-top:1rem}
+    .login-btn:hover{background:linear-gradient(135deg,#a52555,#5a1028);transform:translateY(-1px);box-shadow:0 8px 24px rgba(139,30,63,.3)}
+    .login-error{color:#ff6b6b;font-size:.8rem;margin-top:1rem;display:none}
+    .dashboard{display:none}
+    .sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:#221018;border-right:1px solid rgba(255,255,255,.08);padding:1.25rem;display:flex;flex-direction:column;z-index:10}
+    .sidebar .brand{display:flex;align-items:center;gap:.6rem;margin-bottom:2rem;padding-bottom:1.25rem;border-bottom:1px solid rgba(255,255,255,.06)}
+    .sidebar .brand img{width:34px;height:34px;border-radius:50%}
+    .sidebar .brand h3{font-family:'Playfair Display',serif;font-size:1rem;color:#c9a96e}
+    .nav-item{display:flex;align-items:center;gap:.6rem;padding:.65rem .9rem;border-radius:8px;color:rgba(240,212,218,.5);font-size:.82rem;font-weight:500;cursor:pointer;transition:.2s;margin-bottom:.2rem;border:1px solid transparent}
+    .nav-item:hover{background:rgba(255,255,255,.04);color:#f0d4da}
+    .nav-item.active{background:rgba(139,30,63,.25);color:#c9a96e;border-color:rgba(139,30,63,.35)}
+    .nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5;flex-shrink:0}
+    .nav-spacer{flex:1}
+    .db-status{display:flex;align-items:center;gap:.4rem;padding:.6rem .8rem;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);font-size:.7rem}
+    .db-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+    .db-dot.ok{background:#4ade80;box-shadow:0 0 6px rgba(74,222,128,.4)}
+    .db-dot.err{background:#ff6b6b;box-shadow:0 0 6px rgba(255,107,107,.4)}
+    .main{margin-left:220px;padding:1.75rem 2rem;min-height:100vh;background:#2a1520}
+    .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.75rem}
+    .page-header h1{font-family:'Playfair Display',serif;font-size:1.6rem}
+    .page-header h1 span{color:#c9a96e}
+    .hdr-actions{display:flex;gap:.6rem}
+    .btn{padding:.55rem 1rem;border-radius:7px;font-size:.78rem;font-weight:600;cursor:pointer;transition:.2s;border:1.5px solid;display:inline-flex;align-items:center;gap:.4rem}
+    .btn-gold{background:rgba(201,169,110,.1);border-color:rgba(201,169,110,.3);color:#c9a96e}
+    .btn-gold:hover{background:rgba(201,169,110,.2)}
+    .btn-green{background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.3);color:#4ade80}
+    .btn-green:hover{background:rgba(74,222,128,.2)}
+    .btn-red{background:rgba(255,107,107,.1);border-color:rgba(255,107,107,.3);color:#ff6b6b}
+    .btn-red:hover{background:rgba(255,107,107,.2)}
+    .btn-solid{background:linear-gradient(135deg,#8b1e3f,#6b1530);border-color:#8b1e3f;color:#fff}
+    .btn-solid:hover{background:linear-gradient(135deg,#a52555,#8b1e3f)}
+    .stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:1.75rem}
+    .stat-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:1.25rem;position:relative;overflow:hidden}
+    .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--ac,#c9a96e);border-radius:10px 10px 0 0}
+    .stat-card h4{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(240,212,218,.4);margin-bottom:.5rem}
+    .stat-val{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--ac,#c9a96e)}
+    .stat-card:nth-child(2){--ac:#4ade80}.stat-card:nth-child(3){--ac:#f8c463}.stat-card:nth-child(4){--ac:#8b5cf6}.stat-card:nth-child(5){--ac:#fb7185}
+    .controls{display:flex;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap}
+    .search-wrap{flex:1;min-width:200px;position:relative}
+    .search-wrap input{width:100%;padding:.6rem .9rem .6rem 2.2rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:7px;color:#fff;font-size:.82rem;outline:none}
+    .search-wrap input:focus{border-color:#c9a96e}
+    .search-wrap svg{position:absolute;left:.7rem;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:rgba(240,212,218,.3);fill:none;stroke-width:1.5}
+    select.flt{padding:.6rem .9rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:7px;color:#fff;font-size:.82rem;outline:none;min-width:140px}
+    select.flt option{background:#2a1520}
+    .tbl-wrap{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px;overflow:hidden}
+    .tbl-info{padding:.75rem 1.25rem;display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);font-size:.75rem;color:rgba(240,212,218,.4)}
+    table{width:100%;border-collapse:collapse}
+    th{padding:.7rem 1rem;text-align:left;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(240,212,218,.35);background:rgba(255,255,255,.02);border-bottom:1px solid rgba(255,255,255,.06)}
+    td{padding:.7rem 1rem;font-size:.82rem;border-bottom:1px solid rgba(255,255,255,.03)}
+    tr:hover td{background:rgba(255,255,255,.02)}
+    .badge{padding:.2rem .5rem;border-radius:3px;font-size:.65rem;font-weight:600;text-transform:uppercase}
+    .badge-ok{background:rgba(74,222,128,.15);color:#4ade80}
+    .badge-warn{background:rgba(248,196,99,.15);color:#f8c463}
+    .badge-err{background:rgba(255,107,107,.15);color:#ff6b6b}
+    .empty{text-align:center;padding:3rem;color:rgba(240,212,218,.3)}
+    .tab-view{display:none}.tab-view.active{display:block}
+    .card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:1.5rem;margin-bottom:1.25rem}
+    .card h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:#c9a96e;margin-bottom:1rem}
+    .field{margin-bottom:1rem}
+    .field label{display:block;font-size:.75rem;color:rgba(240,212,218,.5);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.08em}
+    .field input,.field textarea{width:100%;padding:.6rem .9rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:7px;color:#fff;font-size:.85rem;outline:none}
+    .field input:focus,.field textarea:focus{border-color:#c9a96e}
+    .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+    .team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-bottom:1.5rem}
+    .team-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:1.25rem;text-align:center;position:relative}
+    .team-card img{width:70px;height:70px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,169,110,.3);margin-bottom:.75rem}
+    .team-card h4{font-size:.95rem;color:#f0d4da;margin-bottom:.2rem}
+    .team-card .role{font-size:.75rem;color:#c9a96e;text-transform:uppercase;letter-spacing:.08em}
+    .team-card .phone{font-size:.75rem;color:rgba(240,212,218,.4);margin-top:.3rem}
+    .team-card .card-actions{display:flex;gap:.4rem;justify-content:center;margin-top:.75rem}
+    .comm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.25rem}
+    .comm-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:1rem}
+    .comm-card h5{font-size:.7rem;color:rgba(240,212,218,.4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
+    .comm-card .val{font-weight:600;color:#c9a96e;font-size:.95rem}
+    .comm-card .pct{font-size:.75rem;color:rgba(240,212,218,.3)}
+    .bar{height:4px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:.5rem;overflow:hidden}
+    .bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#8b1e3f,#c9a96e);transition:width .5s}
+    .color-preview{width:32px;height:32px;border-radius:6px;border:2px solid rgba(255,255,255,.15);cursor:pointer;display:inline-block;vertical-align:middle}
+    .toast{position:fixed;bottom:2rem;right:2rem;padding:.8rem 1.5rem;border-radius:8px;font-size:.85rem;font-weight:600;z-index:999;animation:slideIn .3s;display:none}
+    .toast.ok{background:#065f46;color:#4ade80;border:1px solid rgba(74,222,128,.3)}
+    .toast.err{background:#7f1d1d;color:#ff6b6b;border:1px solid rgba(255,107,107,.3)}
+    @keyframes slideIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+    @media(max-width:900px){.sidebar{display:none}.main{margin-left:0;padding:1.25rem}.stats-grid{grid-template-columns:repeat(2,1fr)}.comm-grid{grid-template-columns:1fr}.field-row,.field-row-3{grid-template-columns:1fr}}
+    @media(max-width:500px){.stats-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-
-  <!-- LOGIN SCREEN -->
+  <!-- LOGIN -->
   <div id="loginSection" class="login-overlay">
     <div class="login-box">
       <img src="/logo.jpg" alt="Nirmaan MUN">
       <h2>Admin Portal</h2>
-      <p>Nirmaan MUN — Secretariat Access Only</p>
-      <input type="password" id="adminPassword" class="login-input" placeholder="Enter admin password" autocomplete="off">
+      <p>Secretariat Access Only</p>
+      <input type="password" id="adminPassword" class="login-input" placeholder="Enter admin password">
       <button id="loginBtn" class="login-btn">Access Dashboard</button>
       <p id="loginError" class="login-error">Incorrect password. Try again.</p>
     </div>
@@ -140,116 +118,109 @@
 
   <!-- DASHBOARD -->
   <div id="dashboardSection" class="dashboard">
-    <!-- Sidebar -->
-    <aside class="dash-sidebar">
-      <div class="brand">
-        <img src="/logo.jpg" alt="Logo">
-        <h3>Nirmaan</h3>
-      </div>
-      <div class="nav-item active" data-view="overview">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        Overview
-      </div>
-      <div class="nav-item" data-view="delegates">
-        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        All Delegates
-      </div>
-      <div class="nav-item" data-view="committees">
-        <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        Committees
-      </div>
+    <aside class="sidebar">
+      <div class="brand"><img src="/logo.jpg" alt=""><h3>Nirmaan</h3></div>
+      <div class="nav-item active" data-tab="delegates"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Delegates</div>
+      <div class="nav-item" data-tab="team"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Team</div>
+      <div class="nav-item" data-tab="payments"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Payments</div>
+      <div class="nav-item" data-tab="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</div>
       <div class="nav-spacer"></div>
-      <div class="db-status" id="dbStatus">
-        <span class="db-dot disconnected" id="dbDot"></span>
-        <span id="dbText">Checking Supabase...</span>
-      </div>
+      <div class="db-status"><span class="db-dot err" id="dbDot"></span><span id="dbText">Checking...</span></div>
     </aside>
 
-    <!-- Main Content -->
-    <main class="dash-main">
-      <div class="dash-header">
-        <h1>Dashboard <span>Overview</span></h1>
-        <div class="header-actions">
-          <button class="btn-dash btn-refresh" id="refreshBtn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-            Refresh
-          </button>
-          <button class="btn-dash btn-export" id="exportBtn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Export CSV
-          </button>
-          <button class="btn-dash btn-logout" id="logoutBtn">Logout</button>
+    <main class="main">
+      <!-- TAB: DELEGATES -->
+      <div class="tab-view active" id="tab-delegates">
+        <div class="page-header">
+          <h1>Delegate <span>Management</span></h1>
+          <div class="hdr-actions">
+            <button class="btn btn-green" id="refreshBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Refresh</button>
+            <button class="btn btn-gold" id="exportBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button>
+            <button class="btn btn-red" id="logoutBtn">Logout</button>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><h4>Total</h4><div class="stat-val" id="statTotal">0</div></div>
+          <div class="stat-card"><h4>Verified</h4><div class="stat-val" id="statVerified">0</div></div>
+          <div class="stat-card"><h4>Pending</h4><div class="stat-val" id="statPending">0</div></div>
+          <div class="stat-card"><h4>Revenue (Est.)</h4><div class="stat-val" id="statRevenue">₹0</div></div>
+          <div class="stat-card"><h4>Top Committee</h4><div class="stat-val" id="statPopular" style="font-size:1rem;margin-top:.3rem">—</div></div>
+        </div>
+        <div class="controls">
+          <div class="search-wrap"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input id="searchInput" placeholder="Search delegates..."></div>
+          <select class="flt" id="filterComm"><option value="all">All Committees</option><option>UNCSW</option><option>UNHRC</option><option>AIPPM</option><option>IIA</option><option>IP</option><option>Moot Court</option></select>
+          <select class="flt" id="filterStatus"><option value="all">All Status</option><option value="pending">Pending</option><option value="verified">Verified</option><option value="rejected">Rejected</option></select>
+        </div>
+        <div class="tbl-wrap">
+          <div class="tbl-info"><span id="tblCount">0 delegates</span><span id="lastUp">—</span></div>
+          <div style="overflow-x:auto"><table><thead><tr><th>ID</th><th>Name/Email</th><th>Phone</th><th>School</th><th>Committee</th><th>Exp</th><th>Status</th><th>Actions</th></tr></thead><tbody id="delTable"><tr><td colspan="8" class="empty">Loading...</td></tr></tbody></table></div>
+        </div>
+        <h3 style="margin-top:1.75rem;font-family:'Playfair Display',serif;color:#c9a96e;font-size:1.1rem">Committee Breakdown</h3>
+        <div class="comm-grid" id="commBreakdown"></div>
+      </div>
+
+      <!-- TAB: TEAM -->
+      <div class="tab-view" id="tab-team">
+        <div class="page-header"><h1>Team <span>Management</span></h1><button class="btn btn-solid" id="addTeamBtn">+ Add Member</button></div>
+        <div class="team-grid" id="teamGrid"></div>
+        <div class="card" id="teamForm" style="display:none">
+          <h3 id="teamFormTitle">Add Team Member</h3>
+          <input type="hidden" id="teamEditId">
+          <div class="field-row">
+            <div class="field"><label>Full Name</label><input id="tmName" placeholder="e.g. John Doe"></div>
+            <div class="field"><label>Role / Title</label><input id="tmRole" placeholder="e.g. Secretary General"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Phone</label><input id="tmPhone" placeholder="+91 XXXXX XXXXX"></div>
+            <div class="field"><label>Photo URL</label><input id="tmPhoto" placeholder="/photo.jpg or https://..."></div>
+          </div>
+          <div class="field"><label>Display Order (lower = first)</label><input type="number" id="tmOrder" value="0"></div>
+          <div style="display:flex;gap:.5rem;margin-top:.5rem">
+            <button class="btn btn-solid" id="teamSaveBtn">Save Member</button>
+            <button class="btn btn-red" id="teamCancelBtn">Cancel</button>
+          </div>
         </div>
       </div>
 
-      <!-- Stats -->
-      <div class="stats-grid">
-        <div class="stat-card"><h4>Total Registrations</h4><div class="stat-val" id="statTotal">0</div></div>
-        <div class="stat-card"><h4>Verified Payments</h4><div class="stat-val" id="statVerified">0</div></div>
-        <div class="stat-card"><h4>Pending Payments</h4><div class="stat-val" id="statPending">0</div></div>
-        <div class="stat-card"><h4>Revenue (Est.)</h4><div class="stat-val" id="statRevenue">₹0</div></div>
-        <div class="stat-card"><h4>Most Popular</h4><div class="stat-val" id="statPopular">—</div></div>
-      </div>
-
-      <!-- Search & Filter -->
-      <div class="controls-bar">
-        <div class="search-box">
-          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="searchInput" placeholder="Search by name, email, school, or delegate ID...">
+      <!-- TAB: PAYMENTS -->
+      <div class="tab-view" id="tab-payments">
+        <div class="page-header"><h1>Payment <span>Settings</span></h1></div>
+        <div class="card">
+          <h3>Registration Fees</h3>
+          <div class="field-row-3">
+            <div class="field"><label>Early Bird (₹)</label><input type="number" id="feeEarly" value="1800"></div>
+            <div class="field"><label>Standard (₹)</label><input type="number" id="feeStd" value="2100"></div>
+            <div class="field"><label>IP (₹)</label><input type="number" id="feeIp" value="1900"></div>
+          </div>
+          <button class="btn btn-solid" id="saveFeesBtn">Save Fees</button>
         </div>
-        <select class="filter-select" id="filterCommittee">
-          <option value="all">All Committees</option>
-          <option value="UNCSW">UNCSW</option>
-          <option value="UNHRC">UNHRC</option>
-          <option value="AIPPM">AIPPM</option>
-          <option value="IIA">IIA</option>
-          <option value="IP">IP</option>
-          <option value="Moot Court">Moot Court</option>
-        </select>
-        <select class="filter-select" id="filterStatus">
-          <option value="all">All Status</option>
-          <option value="pending">Pending</option>
-          <option value="verified">Verified</option>
-          <option value="rejected">Rejected</option>
-        </select>
-      </div>
-
-      <!-- Table -->
-      <div class="table-wrap">
-        <div class="table-info">
-          <span id="tableCount">Showing 0 delegates</span>
-          <span id="lastUpdated">Last updated: —</span>
-        </div>
-        <div style="overflow-x:auto;">
-          <table>
-            <thead>
-              <tr>
-                <th>Delegate ID</th>
-                <th>Name / Email</th>
-                <th>Phone</th>
-                <th>School</th>
-                <th>Committee</th>
-                <th>Experience</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="delegatesTable">
-              <tr><td colspan="8" class="empty-state">
-                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                <p>Loading delegate data...</p>
-              </td></tr>
-            </tbody>
-          </table>
+        <div class="card">
+          <h3>UPI / Payment Details</h3>
+          <div class="field"><label>UPI ID</label><input id="upiId" placeholder="nirmaan@bank"></div>
+          <div class="field"><label>QR Code Image URL (leave empty to remove)</label><input id="qrUrl" placeholder="https://... or /qr-code.png"></div>
+          <button class="btn btn-solid" id="savePayBtn">Save Payment Info</button>
         </div>
       </div>
 
-      <!-- Committee Breakdown -->
-      <h3 style="margin-top:2.5rem; font-family:'Playfair Display',serif; color:#c9a96e; font-size:1.3rem;">Committee Breakdown</h3>
-      <div class="committee-breakdown" id="committeeBreakdown"></div>
+      <!-- TAB: SETTINGS -->
+      <div class="tab-view" id="tab-settings">
+        <div class="page-header"><h1>Site <span>Settings</span></h1></div>
+        <div class="card">
+          <h3>Change Admin Password</h3>
+          <div class="field"><label>Current Password</label><input type="password" id="curPwd" placeholder="Enter current password"></div>
+          <div class="field"><label>New Password</label><input type="password" id="newPwd" placeholder="Enter new password"></div>
+          <div class="field"><label>Confirm New Password</label><input type="password" id="confPwd" placeholder="Confirm new password"></div>
+          <button class="btn btn-solid" id="changePwdBtn">Update Password</button>
+        </div>
+        <div class="card">
+          <h3>Conference Date</h3>
+          <div class="field"><label>Date (YYYY-MM-DD)</label><input id="confDate" placeholder="2026-08-08"></div>
+          <button class="btn btn-solid" id="saveDateBtn">Save Date</button>
+        </div>
+      </div>
     </main>
   </div>
-
+  <div class="toast" id="toast"></div>
   <script type="module" src="/js/supabase.js"></script>
   <script type="module" src="/js/admin.js"></script>
 </body>
