@@ -3,12 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!tickerTrack) return;
 
   const mockRegistrations = [
-    "Rahul from DPS registered for UNGA",
-    "Sarah from International School secured USA in UNSC",
-    "Aarav from Modern School registered for WHO",
-    "Priya from National College registered for ECOSOC",
-    "John from Global Academy joined the Press Corps",
-    "Sneha from City High registered for DISEC"
+    "Registrations for NIRMAAN MUN 2026 are now open! | 8th-9th August, Delhi NCR",
+    "Delegate from DPS registered for UNCSW",
+    "Join the All India Political Parties Meet (AIPPM) to debate 'One Nation, One Election'",
+    "Moot Court case to be revealed on the day of the event",
+    "Delegate from National College registered for UNHRC",
+    "Early bird registrations open at ₹1800",
+    "Delegate from Global Academy joined the International Press"
   ];
 
   // Create ticker content by duplicating list to ensure smooth scrolling

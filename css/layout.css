@@ -90,9 +90,26 @@
 .committee-agendas{list-style:none;padding:0}
 .committee-agendas li{font-size:.9rem;color:var(--text-muted);padding:.35rem 0 .35rem 1.25rem;position:relative}
 .committee-agendas li::before{content:'✦';position:absolute;left:0;color:var(--primary-crimson);font-size:.6rem;top:.55rem}
-.committee-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:.75rem;border-top:1px solid var(--border-subtle)}
+.committee-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:.75rem;border-top:1px solid var(--border-subtle);gap:.5rem;flex-wrap:wrap}
+.committee-icon{width:48px;height:48px;object-fit:contain;border-radius:4px;flex-shrink:0}
+.guide-download-btn{font-size:.8rem;color:var(--primary-crimson);font-weight:600;display:flex;align-items:center;gap:6px;padding:.4rem .8rem;border:1.5px solid var(--primary-crimson);border-radius:3px;transition:all var(--transition-fast);text-decoration:none;white-space:nowrap}
+.guide-download-btn:hover{background:var(--primary-crimson);color:#fff}
+.guide-download-btn:hover svg{stroke:#fff}
+.guide-link-btn{font-size:.78rem;color:var(--gold-accent);font-weight:500;display:flex;align-items:center;gap:4px;transition:color var(--transition-fast);text-decoration:none}
+.guide-link-btn:hover{color:var(--primary-crimson)}
 
-@media(max-width:768px){.committee-grid{grid-template-columns:1fr}}
+/* ===== WHAT AWAITS YOU ===== */
+.what-awaits{background:linear-gradient(135deg,var(--deep-burgundy),var(--dark-wine));color:var(--text-light);text-align:center}
+.what-awaits .section-label{color:var(--sunset-amber)}
+.what-awaits .section-title{color:#fff}
+.what-awaits .section-subtitle{color:rgba(240,212,218,.6);margin:0 auto}
+.awaits-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;margin-top:2.5rem;max-width:960px;margin-left:auto;margin-right:auto}
+.awaits-item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:1.5rem 1rem;text-align:center;transition:all var(--transition-fast)}
+.awaits-item:hover{background:rgba(255,255,255,.1);border-color:rgba(201,169,110,.3);transform:translateY(-3px)}
+.awaits-icon{font-size:2rem;display:block;margin-bottom:.75rem}
+.awaits-item h4{font-size:.9rem;color:var(--blush-pale);font-weight:500;line-height:1.4}
+
+@media(max-width:768px){.committee-grid{grid-template-columns:1fr}.awaits-grid{grid-template-columns:repeat(2,1fr)}}
 
 /* ===== SCHEDULE ===== */
 .schedule{background:var(--warm-cream)}
