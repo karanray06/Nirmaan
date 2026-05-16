@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
       checkDB();
       loadDelegates();
       loadTeam();
+      loadMessages();
       loadSettings();
     } else {
       loginError.style.display = 'block';
@@ -57,7 +58,11 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
       item.classList.add('active');
       document.querySelectorAll('.tab-view').forEach(v => v.classList.remove('active'));
-      document.getElementById('tab-' + item.dataset.tab).classList.add('active');
+      const target = document.getElementById('tab-' + item.dataset.tab);
+      if(target) target.classList.add('active');
+      
+      // Refresh messages if clicking messages tab
+      if (item.dataset.tab === 'messages') loadMessages();
     });
   });
 
@@ -223,6 +228,50 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTeam();
   });
 
+  // ====== MESSAGES TAB ======
+  let messages = [];
+  async function loadMessages() {
+    try {
+      const { data, error } = await supabase.from('messages').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      messages = data || [];
+      renderMessages();
+    } catch (err) {
+      console.error('Error loading messages:', err);
+    }
+  }
+
+  function renderMessages() {
+    const tbody = document.getElementById('messagesTable');
+    if (!messages.length) {
+      tbody.innerHTML = '<tr><td colspan="5" class="empty">No messages yet.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = messages.map(m => `
+      <tr>
+        <td>${new Date(m.created_at).toLocaleDateString()}</td>
+        <td>${m.name}</td>
+        <td><a href="mailto:${m.email}" style="color:#c9a96e">${m.email}</a></td>
+        <td style="max-width:300px; white-space:normal;">${m.content}</td>
+        <td>
+          <button class="btn btn-red" style="padding:.2rem .5rem;font-size:.65rem" onclick="window._delMessage('${m.id}')">Delete</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  window._delMessage = async (id) => {
+    if (!confirm('Delete this message?')) return;
+    try {
+      const { error } = await supabase.from('messages').delete().eq('id', id);
+      if (error) throw error;
+      toast('Message deleted', 'err');
+      loadMessages();
+    } catch (err) {
+      toast('Failed to delete message', 'err');
+    }
+  };
+
   // ====== PAYMENTS TAB ======
   async function loadSettings() {
     try {
@@ -236,6 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (s.upi_id) document.getElementById('upiId').value = s.upi_id;
       if (s.qr_code_url) document.getElementById('qrUrl').value = s.qr_code_url;
       if (s.conference_date) document.getElementById('confDate').value = s.conference_date;
+      if (s.dates_announced) document.getElementById('datesAnnouncedToggle').checked = s.dates_announced === 'true';
       if (s.admin_password) adminPwd = s.admin_password;
     } catch { /* settings table may not exist */ }
   }
@@ -273,8 +323,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('saveDateBtn').addEventListener('click', async () => {
     const d = document.getElementById('confDate').value;
+    const announced = document.getElementById('datesAnnouncedToggle').checked;
     if (!d) return toast('Enter a date', 'err');
-    await saveSetting('conference_date', d);
-    toast('Conference date saved!');
+    const ok1 = await saveSetting('conference_date', d);
+    const ok2 = await saveSetting('dates_announced', announced.toString());
+    if (ok1 && ok2) toast('Settings saved!');
   });
 });

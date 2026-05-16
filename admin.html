@@ -124,6 +124,7 @@
       <div class="nav-item active" data-tab="delegates"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Delegates</div>
       <div class="nav-item" data-tab="team"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Team</div>
       <div class="nav-item" data-tab="payments"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Payments</div>
+      <div class="nav-item" data-tab="messages"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>Messages</div>
       <div class="nav-item" data-tab="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</div>
       <div class="nav-spacer"></div>
       <div class="db-status"><span class="db-dot err" id="dbDot"></span><span id="dbText">Checking...</span></div>
@@ -203,6 +204,19 @@
         </div>
       </div>
 
+      <!-- TAB: MESSAGES -->
+      <div class="tab-view" id="tab-messages">
+        <div class="page-header"><h1>Inquiry <span>Messages</span></h1></div>
+        <div class="tbl-wrap">
+          <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>Date</th><th>Name</th><th>Email</th><th>Message</th><th>Actions</th></tr></thead>
+              <tbody id="messagesTable"><tr><td colspan="5" class="empty">Loading messages...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <!-- TAB: SETTINGS -->
       <div class="tab-view" id="tab-settings">
         <div class="page-header"><h1>Site <span>Settings</span></h1></div>
@@ -214,9 +228,13 @@
           <button class="btn btn-solid" id="changePwdBtn">Update Password</button>
         </div>
         <div class="card">
-          <h3>Conference Date</h3>
+          <h3>Conference Date & Visibility</h3>
           <div class="field"><label>Date (YYYY-MM-DD)</label><input id="confDate" placeholder="2026-08-08"></div>
-          <button class="btn btn-solid" id="saveDateBtn">Save Date</button>
+          <div class="field" style="display:flex; align-items:center; gap:1rem; margin-top:1rem;">
+            <label style="margin-bottom:0;">Dates Announced (Shows Countdown)</label>
+            <input type="checkbox" id="datesAnnouncedToggle" style="width:auto;">
+          </div>
+          <button class="btn btn-solid" id="saveDateBtn" style="margin-top:1rem;">Save Settings</button>
         </div>
       </div>
     </main>

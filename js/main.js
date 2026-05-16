@@ -1,4 +1,26 @@
-document.addEventListener('DOMContentLoaded', () => {
+import { supabase } from './supabase.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // --- Check Dates Announced State ---
+  async function checkDatesState() {
+    try {
+      const { data, error } = await supabase
+        .from('site_settings')
+        .select('value')
+        .eq('key', 'dates_announced')
+        .single();
+      
+      if (data) {
+        const isAnnounced = data.value === 'true';
+        document.getElementById('countdownContainer').style.display = isAnnounced ? 'block' : 'none';
+        document.getElementById('tbaContainer').style.display = isAnnounced ? 'none' : 'block';
+      }
+    } catch (err) {
+      console.error('Error fetching dates state:', err);
+    }
+  }
+  checkDatesState();
+
   // --- Navbar Scroll Effect ---
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
@@ -95,5 +117,38 @@ document.addEventListener('DOMContentLoaded', () => {
       const targetDay = document.getElementById(tab.dataset.day);
       if(targetDay) targetDay.classList.add('active');
     });
+    });
   });
+
+  // --- Contact Form Submission ---
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+      const content = document.getElementById('contactMessage').value;
+      const submitBtn = contactForm.querySelector('button');
+
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Sending...';
+
+      try {
+        const { error } = await supabase
+          .from('messages')
+          .insert([{ name, email, content }]);
+
+        if (error) throw error;
+
+        alert('Message sent successfully! We will get back to you soon.');
+        contactForm.reset();
+      } catch (err) {
+        console.error('Error sending message:', err);
+        alert('Failed to send message. Please try again later.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Send Message';
+      }
+    });
+  }
 });
