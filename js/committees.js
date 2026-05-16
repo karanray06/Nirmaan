@@ -3,7 +3,7 @@ const committeesData = [
     abbr: 'UNCSW', 
     name: 'UN Commission on the Status of Women', 
     level: 'intermediate', 
-    image: '/assets/icon-uncsw.png',
+    image: '/icon-uncsw.png',
     agendas: ["Deliberation on the role of Artificial Intelligence and data economies in reinforcing modern forms of patriarchy and control over women's body."],
     guideUrl: '/guides/UNCSW-Study-Guide.pdf'
   },
@@ -11,7 +11,7 @@ const committeesData = [
     abbr: 'UNHRC', 
     name: 'UN Human Rights Council', 
     level: 'intermediate', 
-    image: '/assets/icon-unhrc.png',
+    image: '/icon-unhrc.png',
     agendas: ["Deliberation on the normalisation of civilian as 'collateral damage' and its compatibility with international human rights obligations."],
     guideUrl: '/guides/UNHRC-Study-Guide.pdf'
   },
@@ -19,7 +19,7 @@ const committeesData = [
     abbr: 'AIPPM', 
     name: 'All India Political Parties Meet', 
     level: 'beginner', 
-    image: '/assets/icon-aippm.png',
+    image: '/icon-aippm.png',
     agendas: ["Deliberation on whether 'One Nation, One Election' framework strengthens democratic governance or enables the monopolization of political power."],
     guideUrl: '/guides/AIPPM-Study-Guide.pdf'
   },
@@ -27,7 +27,7 @@ const committeesData = [
     abbr: 'IIA', 
     name: 'International Intelligence Agency', 
     level: 'advanced', 
-    image: '/assets/icon-iia.png',
+    image: '/icon-iia.png',
     agendas: ['Assessment of foreign interference through cyber operations, disinformation networks, and proxy digital actors destabilising domestic political systems.'],
     guideUrl: '/guides/IIA-Study-Guide.pdf'
   },
@@ -35,7 +35,7 @@ const committeesData = [
     abbr: 'IP', 
     name: 'International Press', 
     level: 'beginner', 
-    image: '/assets/icon-ip.png',
+    image: '/icon-ip.png',
     agendas: ['Photography, Journalism, Caricature'],
     guideUrl: '/guides/IP-Study-Guide.pdf'
   },
@@ -43,7 +43,7 @@ const committeesData = [
     abbr: 'MOOT', 
     name: 'Moot Court', 
     level: 'advanced', 
-    image: '/assets/moot-court.png',
+    image: '/moot-court.png',
     agendas: ['A courtroom where logic prevails, advocacy defines, and every case demands more than just words. (Case to be provided at the day of event)'],
     guideUrl: '/guides/MootCourt-Study-Guide.pdf'
   }
