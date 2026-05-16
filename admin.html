@@ -228,13 +228,19 @@
           <button class="btn btn-solid" id="changePwdBtn">Update Password</button>
         </div>
         <div class="card">
-          <h3>Conference Date & Visibility</h3>
+          <h3>Conference Visibility</h3>
           <div class="field"><label>Date (YYYY-MM-DD)</label><input id="confDate" placeholder="2026-08-08"></div>
-          <div class="field" style="display:flex; align-items:center; gap:1rem; margin-top:1rem;">
-            <label style="margin-bottom:0;">Dates Announced (Shows Countdown)</label>
-            <input type="checkbox" id="datesAnnouncedToggle" style="width:auto;">
+          <div class="field" style="display:flex; align-items:center; gap:1.5rem; margin-top:1rem;">
+            <div style="display:flex; align-items:center; gap:.5rem;">
+              <input type="checkbox" id="datesAnnouncedToggle" style="width:auto;">
+              <label style="margin-bottom:0;">Dates Announced</label>
+            </div>
+            <div style="display:flex; align-items:center; gap:.5rem;">
+              <input type="checkbox" id="scheduleAnnouncedToggle" style="width:auto;">
+              <label style="margin-bottom:0;">Schedule Announced</label>
+            </div>
           </div>
-          <button class="btn btn-solid" id="saveDateBtn" style="margin-top:1rem;">Save Settings</button>
+          <button class="btn btn-solid" id="saveDateBtn" style="margin-top:1rem;">Save Visibility Settings</button>
         </div>
       </div>
     </main>

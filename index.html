@@ -194,68 +194,75 @@
         <h2 class="section-title">Conference Schedule</h2>
       </div>
 
-      <div class="day-tabs" id="dayTabs">
-        <button class="day-tab active" data-day="day1">Day 1</button>
-        <button class="day-tab" data-day="day2">Day 2</button>
+      <div id="scheduleContainer" style="display:none;">
+        <div class="day-tabs" id="dayTabs">
+          <button class="day-tab active" data-day="day1">Day 1</button>
+          <button class="day-tab" data-day="day2">Day 2</button>
+        </div>
+
+        <div class="timeline">
+          <!-- Day 1 -->
+          <div class="timeline-day active" id="day1">
+            <div class="timeline-item gold">
+              <span class="time-pill">09:00 AM</span>
+              <h4>Opening Ceremony</h4>
+              <p>Inaugural addresses, lighting of the lamp, and cultural performances.</p>
+              <div class="venue">Main Auditorium</div>
+            </div>
+            <div class="timeline-item rose">
+              <span class="time-pill">11:30 AM</span>
+              <h4>Committee Session I</h4>
+              <p>Roll call, setting the agenda, and opening statements.</p>
+              <div class="venue">Respective Committee Rooms</div>
+            </div>
+            <div class="timeline-item burgundy">
+              <span class="time-pill">01:30 PM</span>
+              <h4>Networking Lunch</h4>
+              <div class="venue">Dining Hall</div>
+            </div>
+            <div class="timeline-item rose">
+              <span class="time-pill">02:30 PM</span>
+              <h4>Committee Session II</h4>
+              <p>Moderated caucuses and initial draft resolutions.</p>
+              <div class="venue">Respective Committee Rooms</div>
+            </div>
+          </div>
+          <!-- Day 2 -->
+          <div class="timeline-day" id="day2">
+            <div class="timeline-item gold">
+              <span class="time-pill">09:00 AM</span>
+              <h4>Committee Session III</h4>
+              <p>Continuation of debate, working papers, and draft resolutions.</p>
+              <div class="venue">Respective Committee Rooms</div>
+            </div>
+            <div class="timeline-item rose">
+              <span class="time-pill">11:30 AM</span>
+              <h4>Committee Session IV</h4>
+              <p>Final debate, voting on resolutions, and Moot Court finals.</p>
+              <div class="venue">Respective Committee Rooms</div>
+            </div>
+            <div class="timeline-item burgundy">
+              <span class="time-pill">01:00 PM</span>
+              <h4>Lunch &amp; Refreshments</h4>
+              <div class="venue">Dining Hall</div>
+            </div>
+            <div class="timeline-item gold">
+              <span class="time-pill">02:30 PM</span>
+              <h4>Closing Ceremony &amp; Awards</h4>
+              <p>Merit-based awards, special recognitions, and farewell addresses.</p>
+              <div class="venue">Main Auditorium</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="timeline">
-        <!-- Day 1 -->
-        <div class="timeline-day active" id="day1">
-          <div class="timeline-item gold">
-            <span class="time-pill">09:00 AM</span>
-            <h4>Opening Ceremony</h4>
-            <p>Inaugural addresses, lighting of the lamp, and cultural performances.</p>
-            <div class="venue">Main Auditorium</div>
-          </div>
-          <div class="timeline-item rose">
-            <span class="time-pill">11:30 AM</span>
-            <h4>Committee Session I</h4>
-            <p>Roll call, setting the agenda, and opening statements.</p>
-            <div class="venue">Respective Committee Rooms</div>
-          </div>
-          <div class="timeline-item burgundy">
-            <span class="time-pill">01:30 PM</span>
-            <h4>Networking Lunch</h4>
-            <div class="venue">Dining Hall</div>
-          </div>
-          <div class="timeline-item rose">
-            <span class="time-pill">02:30 PM</span>
-            <h4>Committee Session II</h4>
-            <p>Moderated caucuses and initial draft resolutions.</p>
-            <div class="venue">Respective Committee Rooms</div>
-          </div>
-        </div>
-        <!-- Day 2 -->
-        <div class="timeline-day" id="day2">
-          <div class="timeline-item gold">
-            <span class="time-pill">09:00 AM</span>
-            <h4>Committee Session III</h4>
-            <p>Continuation of debate, working papers, and draft resolutions.</p>
-            <div class="venue">Respective Committee Rooms</div>
-          </div>
-          <div class="timeline-item rose">
-            <span class="time-pill">11:30 AM</span>
-            <h4>Committee Session IV</h4>
-            <p>Final debate, voting on resolutions, and Moot Court finals.</p>
-            <div class="venue">Respective Committee Rooms</div>
-          </div>
-          <div class="timeline-item burgundy">
-            <span class="time-pill">01:00 PM</span>
-            <h4>Lunch &amp; Refreshments</h4>
-            <div class="venue">Dining Hall</div>
-          </div>
-          <div class="timeline-item gold">
-            <span class="time-pill">02:30 PM</span>
-            <h4>Closing Ceremony &amp; Awards</h4>
-            <p>Merit-based awards, special recognitions, and farewell addresses.</p>
-            <div class="venue">Main Auditorium</div>
-          </div>
-        </div>
+      <div id="scheduleTbaContainer" style="display:block; text-align:center; padding: 4rem 2rem; background: rgba(123, 21, 48, 0.05); border-radius: 16px; border: 1px dashed var(--border-medium);">
+        <h3 style="font-family:var(--font-display); font-size: 2rem; color: var(--gold-accent); margin-bottom: 1rem;">Itinerary Under Review</h3>
+        <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">Our team is finalizing the session timings and venue details to ensure a seamless experience. The full schedule will be announced soon.</p>
       </div>
       
       <div class="schedule-download">
-        <a href="javascript:void(0)" onclick="toast('Brochure coming soon! Please check back later.')" class="btn btn-secondary">Download Brochure PDF</a>
+        <a href="https://drive.google.com/file/d/179keM_vp9nyx6JXOoqPKOlqqvu1CeoPC/view?usp=sharing" target="_blank" class="btn btn-secondary">Download Brochure PDF</a>
       </div>
     </div>
   </section>
@@ -532,21 +539,21 @@
       </div>
 
       <div class="resources-grid">
-        <a href="javascript:void(0)" onclick="toast('Position Paper Template coming soon!')" class="card resource-card">
+        <a href="https://bestdelegate.com/model-un-made-easy-how-to-write-a-position-paper/" target="_blank" class="card resource-card">
           <div class="card-body">
             <div class="resource-icon">
-              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             </div>
             <div class="resource-info">
-              <h4>Position Paper Template</h4>
-              <p>Official format and guidelines.</p>
+              <h4>Position Paper Guide</h4>
+              <p>Official format and writing tips.</p>
             </div>
           </div>
         </a>
-        <a href="javascript:void(0)" onclick="toast('Rules of Procedure coming soon!')" class="card resource-card">
+        <a href="https://jamun.org/rop" target="_blank" class="card resource-card">
           <div class="card-body">
             <div class="resource-icon">
-              <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
             </div>
             <div class="resource-info">
               <h4>Rules of Procedure</h4>
@@ -554,14 +561,25 @@
             </div>
           </div>
         </a>
-        <a href="javascript:void(0)" onclick="document.getElementById('bg-guides').style.display = document.getElementById('bg-guides').style.display === 'block' ? 'none' : 'block'" class="card resource-card">
+        <a href="https://digitallibrary.un.org/" target="_blank" class="card resource-card">
           <div class="card-body">
             <div class="resource-icon">
-              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
             </div>
             <div class="resource-info">
-              <h4>Background Guides</h4>
-              <p>Access study material by committee.</p>
+              <h4>UN Digital Library</h4>
+              <p>Official resolutions & reports.</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.cia.gov/the-world-factbook/" target="_blank" class="card resource-card">
+          <div class="card-body">
+            <div class="resource-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="resource-info">
+              <h4>CIA World Factbook</h4>
+              <p>Essential country statistics.</p>
             </div>
           </div>
         </a>

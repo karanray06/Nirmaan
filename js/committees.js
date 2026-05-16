@@ -66,7 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="card committee-card" data-level="${com.level}">
           <div class="card-body">
             <div class="committee-header">
-              <div class="committee-emoji">${com.emoji}</div>
+              <div class="committee-icon-wrapper">
+                ${com.image ? `<img src="${com.image}" alt="${com.abbr}" class="committee-img">` : `<div class="committee-emoji">${com.emoji}</div>`}
+              </div>
               <div class="committee-meta">
                 <span class="committee-abbr">${com.abbr}</span>
                 <span class="badge ${badgeClass}">${com.level}</span>

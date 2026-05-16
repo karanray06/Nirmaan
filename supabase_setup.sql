@@ -114,3 +114,4 @@ CREATE POLICY "anon_delete_messages" ON public.messages FOR DELETE TO anon USING
 
 -- Add dates_announced setting
 INSERT INTO public.site_settings (key, value) VALUES ('dates_announced', 'true') ON CONFLICT (key) DO NOTHING;
+INSERT INTO public.site_settings (key, value) VALUES ('schedule_announced', 'true') ON CONFLICT (key) DO NOTHING;

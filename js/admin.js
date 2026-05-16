@@ -286,6 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (s.qr_code_url) document.getElementById('qrUrl').value = s.qr_code_url;
       if (s.conference_date) document.getElementById('confDate').value = s.conference_date;
       if (s.dates_announced) document.getElementById('datesAnnouncedToggle').checked = s.dates_announced === 'true';
+      if (s.schedule_announced) document.getElementById('scheduleAnnouncedToggle').checked = s.schedule_announced === 'true';
       if (s.admin_password) adminPwd = s.admin_password;
     } catch { /* settings table may not exist */ }
   }
@@ -323,10 +324,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('saveDateBtn').addEventListener('click', async () => {
     const d = document.getElementById('confDate').value;
-    const announced = document.getElementById('datesAnnouncedToggle').checked;
+    const dAnn = document.getElementById('datesAnnouncedToggle').checked;
+    const sAnn = document.getElementById('scheduleAnnouncedToggle').checked;
     if (!d) return toast('Enter a date', 'err');
     const ok1 = await saveSetting('conference_date', d);
-    const ok2 = await saveSetting('dates_announced', announced.toString());
-    if (ok1 && ok2) toast('Settings saved!');
+    const ok2 = await saveSetting('dates_announced', dAnn.toString());
+    const ok3 = await saveSetting('schedule_announced', sAnn.toString());
+    if (ok1 && ok2 && ok3) toast('Settings saved!');
   });
 });

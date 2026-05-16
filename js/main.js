@@ -1,25 +1,32 @@
 import { supabase } from './supabase.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-  // --- Check Dates Announced State ---
-  async function checkDatesState() {
+  // --- Check State (Dates & Schedule) ---
+  async function checkStates() {
     try {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('site_settings')
-        .select('value')
-        .eq('key', 'dates_announced')
-        .single();
+        .select('key, value');
       
       if (data) {
-        const isAnnounced = data.value === 'true';
-        document.getElementById('countdownContainer').style.display = isAnnounced ? 'block' : 'none';
-        document.getElementById('tbaContainer').style.display = isAnnounced ? 'none' : 'block';
+        const settings = {};
+        data.forEach(s => settings[s.key] = s.value);
+        
+        // Dates
+        const isDatesAnnounced = settings['dates_announced'] === 'true';
+        document.getElementById('countdownContainer').style.display = isDatesAnnounced ? 'block' : 'none';
+        document.getElementById('tbaContainer').style.display = isDatesAnnounced ? 'none' : 'block';
+
+        // Schedule
+        const isScheduleAnnounced = settings['schedule_announced'] === 'true';
+        document.getElementById('scheduleContainer').style.display = isScheduleAnnounced ? 'block' : 'none';
+        document.getElementById('scheduleTbaContainer').style.display = isScheduleAnnounced ? 'none' : 'block';
       }
     } catch (err) {
-      console.error('Error fetching dates state:', err);
+      console.error('Error fetching states:', err);
     }
   }
-  checkDatesState();
+  checkStates();
 
   // --- Navbar Scroll Effect ---
   const navbar = document.getElementById('navbar');
