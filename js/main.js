@@ -117,7 +117,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       const targetDay = document.getElementById(tab.dataset.day);
       if(targetDay) targetDay.classList.add('active');
     });
-    });
   });
 
   // --- Contact Form Submission ---
