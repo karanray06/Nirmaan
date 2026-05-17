@@ -314,74 +314,91 @@ body.united-nations .card:hover {
 }
 
 /* Navbar Scoped Themes Styling (Classic Default transparent-to-burgundy navbar remains 100% perfectly untouched) */
-body.raksha-bandhan nav.navbar,
-body.deepavali-spark nav.navbar,
-body.avengers-initiative nav.navbar,
-body.united-nations nav.navbar {
-  background: var(--warm-cream) !important;
+
+/* 🪔 Raksha Bandhan Scoped Navbar: Deep palace burgundy background with gold/cream text and links */
+body.raksha-bandhan nav.navbar {
+  background: var(--deep-burgundy) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--border-medium) !important;
+}
+body.raksha-bandhan nav.navbar .nav-logo-text {
+  color: var(--gold-accent) !important;
+  font-family: var(--font-display) !important;
+}
+body.raksha-bandhan nav.navbar .nav-links a {
+  color: rgba(255, 243, 224, 0.85) !important;
+}
+body.raksha-bandhan nav.navbar .nav-links a:hover,
+body.raksha-bandhan nav.navbar .nav-links a.active {
+  color: var(--gold-accent) !important;
+}
+body.raksha-bandhan nav.navbar .hamburger span {
+  background: var(--gold-accent) !important;
+}
+
+/* 🌌 Deepavali Spark Scoped Navbar: Deep mystical night-sky background with gold/white text and links */
+body.deepavali-spark nav.navbar {
+  background: var(--dark-wine) !important;
   backdrop-filter: blur(12px) !important;
   border-bottom: 1px solid var(--border-subtle) !important;
 }
-
-body.raksha-bandhan nav.navbar .nav-logo-text,
-body.deepavali-spark nav.navbar .nav-logo-text,
-body.avengers-initiative nav.navbar .nav-logo-text,
-body.united-nations nav.navbar .nav-logo-text {
-  color: var(--primary-crimson) !important;
+body.deepavali-spark nav.navbar .nav-logo-text {
+  color: var(--gold-accent) !important;
   font-family: var(--font-display) !important;
 }
-
-body.raksha-bandhan nav.navbar .nav-links a,
-body.deepavali-spark nav.navbar .nav-links a,
-body.avengers-initiative nav.navbar .nav-links a,
-body.united-nations nav.navbar .nav-links a {
-  color: var(--text-muted) !important;
+body.deepavali-spark nav.navbar .nav-links a {
+  color: rgba(255, 255, 255, 0.85) !important;
 }
-
-body.raksha-bandhan nav.navbar .nav-links a:hover,
-body.raksha-bandhan nav.navbar .nav-links a.active,
 body.deepavali-spark nav.navbar .nav-links a:hover,
-body.deepavali-spark nav.navbar .nav-links a.active,
-body.avengers-initiative nav.navbar .nav-links a:hover,
-body.avengers-initiative nav.navbar .nav-links a.active,
-body.united-nations nav.navbar .nav-links a:hover,
-body.united-nations nav.navbar .nav-links a.active {
-  color: var(--primary-crimson) !important;
-}
-
-/* Scrolled navbars for custom themes */
-body.raksha-bandhan nav.navbar.scrolled,
-body.deepavali-spark nav.navbar.scrolled,
-body.avengers-initiative nav.navbar.scrolled,
-body.united-nations nav.navbar.scrolled {
-  background: var(--dark-wine) !important;
-  border-bottom: 1px solid var(--border-medium) !important;
-}
-
-body.raksha-bandhan nav.navbar.scrolled .nav-logo-text,
-body.deepavali-spark nav.navbar.scrolled .nav-logo-text,
-body.avengers-initiative nav.navbar.scrolled .nav-logo-text,
-body.united-nations nav.navbar.scrolled .nav-logo-text {
-  color: var(--text-light) !important;
-}
-
-body.raksha-bandhan nav.navbar.scrolled .nav-links a,
-body.deepavali-spark nav.navbar.scrolled .nav-links a,
-body.avengers-initiative nav.navbar.scrolled .nav-links a,
-body.united-nations nav.navbar.scrolled .nav-links a {
-  color: rgba(255, 255, 255, 0.8) !important;
-}
-
-body.raksha-bandhan nav.navbar.scrolled .nav-links a:hover,
-body.raksha-bandhan nav.navbar.scrolled .nav-links a.active,
-body.deepavali-spark nav.navbar.scrolled .nav-links a:hover,
-body.deepavali-spark nav.navbar.scrolled .nav-links a.active,
-body.avengers-initiative nav.navbar.scrolled .nav-links a:hover,
-body.avengers-initiative nav.navbar.scrolled .nav-links a.active,
-body.united-nations nav.navbar.scrolled .nav-links a:hover,
-body.united-nations nav.navbar.scrolled .nav-links a.active {
+body.deepavali-spark nav.navbar .nav-links a.active {
   color: var(--gold-accent) !important;
 }
+body.deepavali-spark nav.navbar .hamburger span {
+  background: var(--gold-accent) !important;
+}
+
+/* ⚡ Avengers Initiative Scoped Navbar: Sleek tactical carbon black background with holographic cyan text and links */
+body.avengers-initiative nav.navbar {
+  background: var(--dark-wine) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+}
+body.avengers-initiative nav.navbar .nav-logo-text {
+  color: var(--rose-mid) !important;
+  font-family: var(--font-display) !important;
+}
+body.avengers-initiative nav.navbar .nav-links a {
+  color: rgba(226, 237, 248, 0.85) !important;
+}
+body.avengers-initiative nav.navbar .nav-links a:hover,
+body.avengers-initiative nav.navbar .nav-links a.active {
+  color: var(--rose-mid) !important;
+}
+body.avengers-initiative nav.navbar .hamburger span {
+  background: var(--rose-mid) !important;
+}
+
+/* 🌐 United Nations Scoped Navbar: Formal diplomatic navy background with pure white and champagne text/links */
+body.united-nations nav.navbar {
+  background: var(--deep-burgundy) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--border-medium) !important;
+}
+body.united-nations nav.navbar .nav-logo-text {
+  color: #FFFFFF !important;
+  font-family: var(--font-display) !important;
+}
+body.united-nations nav.navbar .nav-links a {
+  color: rgba(248, 250, 252, 0.85) !important;
+}
+body.united-nations nav.navbar .nav-links a:hover,
+body.united-nations nav.navbar .nav-links a.active {
+  color: var(--gold-accent) !important;
+}
+body.united-nations nav.navbar .hamburger span {
+  background: #FFFFFF !important;
+}
+
 
 /* Primary Buttons Overrides strictly scoped under custom themes */
 body.raksha-bandhan .btn-primary,
