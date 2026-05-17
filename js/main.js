@@ -1,6 +1,8 @@
 import { supabase } from './supabase.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
+  let currentActiveTheme = '';
+
   // --- Check State (Dates & Schedule & Themes) ---
   async function checkStates() {
     try {
@@ -13,18 +15,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         data.forEach(s => settings[s.key] = s.value);
         
         // Active Theme
-        const activeTheme = settings['current_theme'] || 'default';
+        const activeTheme = settings['active_theme'] || 'nirmaan-classic';
         applyTheme(activeTheme);
 
         // Dates
         const isDatesAnnounced = settings['dates_announced'] === 'true';
-        document.getElementById('countdownContainer').style.display = isDatesAnnounced ? 'block' : 'none';
-        document.getElementById('tbaContainer').style.display = isDatesAnnounced ? 'none' : 'block';
+        const countdownContainer = document.getElementById('countdownContainer');
+        const tbaContainer = document.getElementById('tbaContainer');
+        if (countdownContainer) countdownContainer.style.display = isDatesAnnounced ? 'block' : 'none';
+        if (tbaContainer) tbaContainer.style.display = isDatesAnnounced ? 'none' : 'block';
 
         // Schedule
         const isScheduleAnnounced = settings['schedule_announced'] === 'true';
-        document.getElementById('scheduleContainer').style.display = isScheduleAnnounced ? 'block' : 'none';
-        document.getElementById('scheduleTbaContainer').style.display = isScheduleAnnounced ? 'none' : 'block';
+        const scheduleContainer = document.getElementById('scheduleContainer');
+        const scheduleTbaContainer = document.getElementById('scheduleTbaContainer');
+        if (scheduleContainer) scheduleContainer.style.display = isScheduleAnnounced ? 'block' : 'none';
+        if (scheduleTbaContainer) scheduleTbaContainer.style.display = isScheduleAnnounced ? 'none' : 'block';
         
         if (isScheduleAnnounced) {
           loadDynamicSchedule();
@@ -47,6 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (error) throw error;
       
       const container = document.getElementById('scheduleContainer');
+      if (!container) return;
       if (!data || data.length === 0) {
         container.innerHTML = '<div style="text-align:center; padding:2rem; color:var(--text-muted);">No events scheduled.</div>';
         return;
@@ -112,92 +119,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // --- Theme Customization PRESETS ---
+  // --- Smooth Theme Application ---
   function applyTheme(theme) {
-    const themeStyles = {
-      default: {
-        '--primary-crimson': '#7B1530',
-        '--dark-wine': '#3D0816',
-        '--deep-burgundy': '#2A0A12',
-        '--gold-accent': '#C9A96E',
-        '--blush-pale': '#F0D4DA',
-        '--warm-cream': '#FDF8F0',
-        '--ivory': '#FFFBF4',
-        '--font-display': "'Cormorant Garamond', serif",
-        '--font-body': "'Outfit', sans-serif"
-      },
-      raksha_bandhan: {
-        '--primary-crimson': '#D35400',
-        '--dark-wine': '#8E2700',
-        '--deep-burgundy': '#5E1914',
-        '--gold-accent': '#E5A93B',
-        '--blush-pale': '#FFEBE1',
-        '--warm-cream': '#FCF5EC',
-        '--ivory': '#FFFDF9',
-        '--font-display': "'Cinzel', serif",
-        '--font-body': "'Outfit', sans-serif"
-      },
-      diwali: {
-        '--primary-crimson': '#E67E22',
-        '--dark-wine': '#2C0835',
-        '--deep-burgundy': '#1A0520',
-        '--gold-accent': '#F1C40F',
-        '--blush-pale': '#FADBD8',
-        '--warm-cream': '#FDFAF5',
-        '--ivory': '#FFFDF0',
-        '--font-display': "'Marcellus', serif",
-        '--font-body': "'Montserrat', sans-serif"
-      },
-      avengers: {
-        '--primary-crimson': '#C0392B',
-        '--dark-wine': '#1A1A1A',
-        '--deep-burgundy': '#0A0A0A',
-        '--gold-accent': '#F39C12',
-        '--blush-pale': '#D5DBDB',
-        '--warm-cream': '#FAFAFA',
-        '--ivory': '#FAFAFA',
-        '--font-display': "'Orbitron', sans-serif",
-        '--font-body': "'Rajdhani', sans-serif"
-      },
-      un: {
-        '--primary-crimson': '#009EDB',
-        '--dark-wine': '#0A3B66',
-        '--deep-burgundy': '#052440',
-        '--gold-accent': '#8FA6C4',
-        '--blush-pale': '#E6F2FF',
-        '--warm-cream': '#F5F9FD',
-        '--ivory': '#FFFFFF',
-        '--font-display': "'Helvetica Neue', Helvetica, Arial, sans-serif",
-        '--font-body': "'Inter', sans-serif"
-      }
-    };
+    const newThemeClass = theme || 'nirmaan-classic';
+    if (newThemeClass === currentActiveTheme) return;
 
-    const fontLinks = {
-      raksha_bandhan: 'https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap',
-      diwali: 'https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@400;500;600&display=swap',
-      avengers: 'https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Rajdhani:wght@500;600;700&display=swap',
-      un: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap'
-    };
-
-    const styles = themeStyles[theme] || themeStyles['default'];
-
-    // Load fonts
-    if (fontLinks[theme]) {
-      const linkId = `theme-font-${theme}`;
-      if (!document.getElementById(linkId)) {
-        const link = document.createElement('link');
-        link.id = linkId;
-        link.rel = 'stylesheet';
-        link.href = fontLinks[theme];
-        document.head.appendChild(link);
-      }
+    const decor = document.querySelector('.theme-decorations');
+    if (decor && currentActiveTheme !== '') {
+      // Fade out decor wrapper
+      decor.style.opacity = '0';
+      decor.style.transition = 'opacity 0.3s ease';
+      
+      setTimeout(() => {
+        document.body.className = newThemeClass;
+        currentActiveTheme = newThemeClass;
+        
+        setTimeout(() => {
+          decor.style.opacity = '1';
+        }, 100);
+      }, 300);
+    } else {
+      document.body.className = newThemeClass;
+      currentActiveTheme = newThemeClass;
     }
-
-    // Apply variables to document element
-    Object.keys(styles).forEach(key => {
-      document.documentElement.style.setProperty(key, styles[key]);
-    });
   }
+
+  // Start polling active_theme every 30 seconds
+  setInterval(checkStates, 30000);
 
   checkStates();
 

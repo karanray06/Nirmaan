@@ -298,78 +298,206 @@
         <div class="page-header">
           <h1>Theme <span>Customization</span></h1>
         </div>
-        <p style="color:var(--text-muted); margin-bottom:2rem; font-size:.9rem;">Select a visual style preset for the Nirmaan MUN platform. The theme changes color palettes, backgrounds, and fonts instantly across the site.</p>
+        <p style="color:var(--text-muted); margin-bottom:2rem; font-size:.9rem;">Select a visual style preset for the Nirmaan MUN platform. Applying a theme transforms the entire platform — colors, background patterns, watermarks, dynamic decorations, and typography.</p>
         
         <div class="theme-selection-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:2rem;">
-          <!-- Default -->
-          <div class="card theme-card-preset active" data-theme="default" style="cursor:pointer; border:2px solid var(--gold-accent); position:relative;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-              <h3 style="margin:0;">Nirmaan Classic</h3>
-              <span class="badge badge-ok">Default</span>
+          
+          <!-- Theme Card: Nirmaan Classic -->
+          <div class="card theme-card-preset active" data-theme="nirmaan-classic" style="cursor:pointer; border:2px solid transparent; display:flex; flex-direction:column; justify-content:space-between; min-height:360px;">
+            <div class="theme-mini-preview" style="height:140px; background:#FAF6F0; position:relative; overflow:hidden; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:center;">
+              <div style="position:absolute; width:100%; height:100%; background: #FAF6F0; opacity: 1;"></div>
+              <!-- Hibiscus watermark SVG -->
+              <svg width="90" height="90" viewBox="0 0 100 100" opacity="0.08" style="position:absolute; color:#7B1530;">
+                <path d="M50 15 C35 5, 20 25, 45 45 C20 40, 5 60, 30 75 C45 80, 55 80, 70 75 C95 60, 80 40, 55 45 C80 25, 65 5, 50 15 Z" fill="currentColor"/>
+              </svg>
+              <!-- Golden Logo representation -->
+              <div style="z-index:1; width:45px; height:45px; border-radius:50%; background:#7B1530; border:2px solid #C9A96E; box-shadow:0 0 15px rgba(201, 169, 110, 0.4); display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond', serif; font-size:1.2rem; font-weight:bold; color:#C9A96E;">N</div>
             </div>
-            <div style="display:flex; gap:.5rem; margin-bottom:1rem;">
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#7B1530; border:1px solid rgba(255,255,255,.2);"></span>
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#C9A96E; border:1px solid rgba(255,255,255,.2);"></span>
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#FDF8F0; border:1px solid rgba(255,255,255,.2);"></span>
+            
+            <div class="theme-card-body" style="padding:1.25rem; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+                  <h3 style="margin:0; font-size:1.1rem; font-weight:600; color:#FAF6F0;">Nirmaan Classic</h3>
+                  <span class="badge" style="background:#FAF6F0; color:#C9A96E; border:1px solid #C9A96E; font-size:0.65rem; padding:0.15rem 0.5rem; border-radius:10px;">DEFAULT 🔒</span>
+                </div>
+                
+                <div style="display:flex; gap:0.4rem; margin-bottom:0.75rem;">
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#7B1530; border:1px solid rgba(255,255,255,.2);" title="#7B1530"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#C9A96E; border:1px solid rgba(255,255,255,.2);" title="#C9A96E"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#FAF6F0; border:1px solid rgba(255,255,255,.2);" title="#FAF6F0"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#2A0A12; border:1px solid rgba(255,255,255,.2);" title="#2A0A12"></span>
+                </div>
+                
+                <p style="font-size:0.75rem; color:var(--text-muted); margin:0; line-height:1.4;">Rich Crimson and Gold palette. A classic premium, academic look.</p>
+              </div>
+              
+              <div style="margin-top:1rem;">
+                <button class="btn btn-solid btn-active-indicator" style="width:100%; font-size:0.75rem; padding:0.5rem;" disabled>✓ Active</button>
+              </div>
             </div>
-            <p style="font-size:.8rem; color:var(--text-muted); margin:0;">Rich Crimson and Gold palette. A classic premium, academic look.</p>
           </div>
 
-          <!-- Raksha Bandhan -->
-          <div class="card theme-card-preset" data-theme="raksha_bandhan" style="cursor:pointer; border:2px solid transparent;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-              <h3 style="margin:0;">Raksha Bandhan</h3>
+          <!-- Theme Card: Raksha Bandhan -->
+          <div class="card theme-card-preset" data-theme="raksha-bandhan" style="cursor:pointer; border:2px solid transparent; display:flex; flex-direction:column; justify-content:space-between; min-height:360px;">
+            <div class="theme-mini-preview" style="height:140px; background:#FFF8EE; position:relative; overflow:hidden; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:center;">
+              <div style="position:absolute; width:100%; height:100%; background: #FFF8EE; opacity: 1;"></div>
+              <!-- Mini marigold pattern dots representation -->
+              <div style="position:absolute; top:10px; left:10px; width:6px; height:6px; border-radius:50%; background:#D4A017; opacity:0.3;"></div>
+              <div style="position:absolute; top:20px; right:30px; width:6px; height:6px; border-radius:50%; background:#D4A017; opacity:0.3;"></div>
+              <div style="position:absolute; bottom:30px; left:40px; width:6px; height:6px; border-radius:50%; background:#D4A017; opacity:0.3;"></div>
+              <div style="position:absolute; bottom:15px; right:15px; width:6px; height:6px; border-radius:50%; background:#D4A017; opacity:0.3;"></div>
+              <!-- Small Diya Silhouette representation -->
+              <svg width="40" height="40" viewBox="0 0 100 100" style="position:absolute; color:#C44B11; z-index:1;">
+                <path d="M20 60 C20 80, 80 80, 80 60 C80 50, 65 45, 50 45 C35 45, 20 50, 20 60 Z" fill="currentColor"/>
+                <path d="M50 42 C45 35, 45 20, 50 10 C55 20, 55 35, 50 42 Z" fill="#D4A017"/>
+              </svg>
             </div>
-            <div style="display:flex; gap:.5rem; margin-bottom:1rem;">
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#E65c00; border:1px solid rgba(255,255,255,.2);"></span>
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#F9D976; border:1px solid rgba(255,255,255,.2);"></span>
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#FFF5E6; border:1px solid rgba(255,255,255,.2);"></span>
+            
+            <div class="theme-card-body" style="padding:1.25rem; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+                  <h3 style="margin:0; font-size:1.1rem; font-weight:600; color:#FAF6F0;">Raksha Bandhan</h3>
+                  <span class="badge" style="background:#FFF1D6; color:#C44B11; font-size:0.65rem; padding:0.15rem 0.5rem; border-radius:10px;">Festive & Warm</span>
+                </div>
+                
+                <div style="display:flex; gap:0.4rem; margin-bottom:0.75rem;">
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#C44B11; border:1px solid rgba(255,255,255,.2);" title="#C44B11"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#D4A017; border:1px solid rgba(255,255,255,.2);" title="#D4A017"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#FFF8EE; border:1px solid rgba(255,255,255,.2);" title="#FFF8EE"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#3B1F0A; border:1px solid rgba(255,255,255,.2);" title="#3B1F0A"></span>
+                </div>
+                
+                <p style="font-size:0.75rem; color:var(--text-muted); margin:0; line-height:1.4;">Traditional warm Indian festive theme with saffron, marigold yellow, and warm cream colors.</p>
+              </div>
+              
+              <div style="margin-top:1rem;">
+                <button class="btn btn-red btn-theme-apply-action" style="width:100%; font-size:0.75rem; padding:0.5rem;">Apply Theme</button>
+              </div>
             </div>
-            <p style="font-size:.8rem; color:var(--text-muted); margin:0;">Traditional warm Indian festive theme with saffron, marigold yellow, and warm cream colors.</p>
           </div>
 
-          <!-- Diwali -->
-          <div class="card theme-card-preset" data-theme="diwali" style="cursor:pointer; border:2px solid transparent;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-              <h3 style="margin:0;">Deepavali Spark</h3>
+          <!-- Theme Card: Deepavali Spark -->
+          <div class="card theme-card-preset" data-theme="deepavali-spark" style="cursor:pointer; border:2px solid transparent; display:flex; flex-direction:column; justify-content:space-between; min-height:360px;">
+            <div class="theme-mini-preview" style="height:140px; background:#0A0614; position:relative; overflow:hidden; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:center;">
+              <div style="position:absolute; width:100%; height:100%; background: #0A0614; opacity: 1;"></div>
+              <!-- Star points representation -->
+              <div style="position:absolute; top:20px; left:15px; width:2px; height:2px; background:#fff; border-radius:50%;"></div>
+              <div style="position:absolute; top:40px; right:45px; width:3px; height:3px; background:#fff; border-radius:50%;"></div>
+              <div style="position:absolute; bottom:25px; left:60px; width:2px; height:2px; background:#fff; border-radius:50%;"></div>
+              <!-- Firework burst outline SVG -->
+              <svg width="50" height="50" viewBox="0 0 100 100" style="position:absolute; color:#FFB830; z-index:1;">
+                <g stroke="currentColor" stroke-width="1.5" fill="none">
+                  <line x1="50" y1="20" x2="50" y2="80"/>
+                  <line x1="20" y1="50" x2="80" y2="50"/>
+                  <line x1="28.78" y1="28.78" x2="71.22" y2="71.22"/>
+                  <line x1="28.78" y1="71.22" x2="71.22" y2="28.78"/>
+                  <circle cx="50" cy="50" r="3" fill="#FFB830"/>
+                </g>
+              </svg>
             </div>
-            <div style="display:flex; gap:.5rem; margin-bottom:1rem;">
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#FF9900; border:1px solid rgba(255,255,255,.2);"></span>
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#4A154B; border:1px solid rgba(255,255,255,.2);"></span>
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#1E0A24; border:1px solid rgba(255,255,255,.2);"></span>
+            
+            <div class="theme-card-body" style="padding:1.25rem; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+                  <h3 style="margin:0; font-size:1.1rem; font-weight:600; color:#FAF6F0;">Deepavali Spark</h3>
+                  <span class="badge" style="background:#1E1030; color:#FFB830; font-size:0.65rem; padding:0.15rem 0.5rem; border-radius:10px;">Magical & Festive</span>
+                </div>
+                
+                <div style="display:flex; gap:0.4rem; margin-bottom:0.75rem;">
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#9B2B8A; border:1px solid rgba(255,255,255,.2);" title="#9B2B8A"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#FFB830; border:1px solid rgba(255,255,255,.2);" title="#FFB830"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#0A0614; border:1px solid rgba(255,255,255,.2);" title="#0A0614"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#FFF5E0; border:1px solid rgba(255,255,255,.2);" title="#FFF5E0"></span>
+                </div>
+                
+                <p style="font-size:0.75rem; color:var(--text-muted); margin:0; line-height:1.4;">Brilliant deep violet night skies with sparkling oil lamp golden accents.</p>
+              </div>
+              
+              <div style="margin-top:1rem;">
+                <button class="btn btn-red btn-theme-apply-action" style="width:100%; font-size:0.75rem; padding:0.5rem;">Apply Theme</button>
+              </div>
             </div>
-            <p style="font-size:.8rem; color:var(--text-muted); margin:0;">Brilliant deep violet night skies with sparkling oil lamp golden accents.</p>
           </div>
 
-          <!-- Avengers -->
-          <div class="card theme-card-preset" data-theme="avengers" style="cursor:pointer; border:2px solid transparent;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-              <h3 style="margin:0;">Avengers Initiative</h3>
+          <!-- Theme Card: Avengers Initiative -->
+          <div class="card theme-card-preset" data-theme="avengers-initiative" style="cursor:pointer; border:2px solid transparent; display:flex; flex-direction:column; justify-content:space-between; min-height:360px;">
+            <div class="theme-mini-preview" style="height:140px; background:#0B0D0F; position:relative; overflow:hidden; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:center;">
+              <div style="position:absolute; width:100%; height:100%; background: #0B0D0F; opacity: 1;"></div>
+              <!-- Grid lines representation -->
+              <div style="position:absolute; width:100%; height:1px; top:35px; background:rgba(74, 144, 217, 0.08);"></div>
+              <div style="position:absolute; width:100%; height:1px; top:70px; background:rgba(74, 144, 217, 0.08);"></div>
+              <div style="position:absolute; width:1px; height:100%; left:80px; background:rgba(74, 144, 217, 0.08);"></div>
+              <div style="position:absolute; width:1px; height:100%; left:160px; background:rgba(74, 144, 217, 0.08);"></div>
+              <!-- Arc Reactor SVG representation -->
+              <svg width="45" height="45" viewBox="0 0 100 100" style="position:absolute; color:#4A90D9; z-index:1;">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="4,2"/>
+                <circle cx="50" cy="50" r="28" fill="none" stroke="currentColor" stroke-width="2"/>
+                <circle cx="50" cy="50" r="10" fill="#0B0D0F" stroke="currentColor" stroke-width="2.5"/>
+              </svg>
             </div>
-            <div style="display:flex; gap:.5rem; margin-bottom:1rem;">
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#E62429; border:1px solid rgba(255,255,255,.2);"></span>
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#151515; border:1px solid rgba(255,255,255,.2);"></span>
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#2A75D3; border:1px solid rgba(255,255,255,.2);"></span>
+            
+            <div class="theme-card-body" style="padding:1.25rem; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+                  <h3 style="margin:0; font-size:1.1rem; font-weight:600; color:#FAF6F0;">Avengers Initiative</h3>
+                  <span class="badge" style="background:#1C2430; color:#CC1B1B; font-size:0.65rem; padding:0.15rem 0.5rem; border-radius:10px;">Cinematic & Bold</span>
+                </div>
+                
+                <div style="display:flex; gap:0.4rem; margin-bottom:0.75rem;">
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#CC1B1B; border:1px solid rgba(255,255,255,.2);" title="#CC1B1B"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#4A90D9; border:1px solid rgba(255,255,255,.2);" title="#4A90D9"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#D4A837; border:1px solid rgba(255,255,255,.2);" title="#D4A837"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#0B0D0F; border:1px solid rgba(255,255,255,.2);" title="#0B0D0F"></span>
+                </div>
+                
+                <p style="font-size:0.75rem; color:var(--text-muted); margin:0; line-height:1.4;">Cinematic Marvel Sci-Fi theme. Dark charcoal backgrounds, hot red, Stark gold, and bold blue.</p>
+              </div>
+              
+              <div style="margin-top:1rem;">
+                <button class="btn btn-red btn-theme-apply-action" style="width:100%; font-size:0.75rem; padding:0.5rem;">Apply Theme</button>
+              </div>
             </div>
-            <p style="font-size:.8rem; color:var(--text-muted); margin:0;">Cinematic Marvel Sci-Fi theme. Dark charcoal backgrounds, hot red, Stark gold, and bold blue.</p>
           </div>
 
-          <!-- UN Theme -->
-          <div class="card theme-card-preset" data-theme="un" style="cursor:pointer; border:2px solid transparent;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-              <h3 style="margin:0;">United Nations</h3>
+          <!-- Theme Card: United Nations -->
+          <div class="card theme-card-preset" data-theme="united-nations" style="cursor:pointer; border:2px solid transparent; display:flex; flex-direction:column; justify-content:space-between; min-height:360px;">
+            <div class="theme-mini-preview" style="height:140px; background:#F4F7FB; position:relative; overflow:hidden; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:center;">
+              <div style="position:absolute; width:100%; height:100%; background: #F4F7FB; opacity: 1;"></div>
+              <!-- Faint Map lines representation -->
+              <svg width="120" height="70" viewBox="0 0 100 50" opacity="0.06" style="position:absolute; color:#1A6DAB;">
+                <path d="M10 10 H90 M10 25 H90 M10 40 H90 M25 5 V45 M50 5 V45 M75 5 V45" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+              <!-- UN Globe representation -->
+              <svg width="45" height="45" viewBox="0 0 100 100" style="position:absolute; color:#1A6DAB; z-index:1;">
+                <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M25 65 A30 30 0 0 1 25 35 M75 65 A30 30 0 0 0 75 35" fill="none" stroke="currentColor" stroke-width="2"/>
+                <circle cx="50" cy="50" r="18" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2"/>
+              </svg>
             </div>
-            <div style="display:flex; gap:.5rem; margin-bottom:1rem;">
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#009EDB; border:1px solid rgba(255,255,255,.2);"></span>
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#FFFFFF; border:1px solid rgba(255,255,255,.2);"></span>
-              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#4A90E2; border:1px solid rgba(255,255,255,.2);"></span>
+            
+            <div class="theme-card-body" style="padding:1.25rem; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+                  <h3 style="margin:0; font-size:1.1rem; font-weight:600; color:#FAF6F0;">United Nations</h3>
+                  <span class="badge" style="background:#DDE6F0; color:#1A6DAB; font-size:0.65rem; padding:0.15rem 0.5rem; border-radius:10px;">Official & Diplomatic</span>
+                </div>
+                
+                <div style="display:flex; gap:0.4rem; margin-bottom:0.75rem;">
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#1A6DAB; border:1px solid rgba(255,255,255,.2);" title="#1A6DAB"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#B8960C; border:1px solid rgba(255,255,255,.2);" title="#B8960C"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#F4F7FB; border:1px solid rgba(255,255,255,.2);" title="#F4F7FB"></span>
+                  <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#0D1B2A; border:1px solid rgba(255,255,255,.2);" title="#0D1B2A"></span>
+                </div>
+                
+                <p style="font-size:0.75rem; color:var(--text-muted); margin:0; line-height:1.4;">Crisp diplomatic global blue and stark whites. Elegant, high-level official appearance.</p>
+              </div>
+              
+              <div style="margin-top:1rem;">
+                <button class="btn btn-red btn-theme-apply-action" style="width:100%; font-size:0.75rem; padding:0.5rem;">Apply Theme</button>
+              </div>
             </div>
-            <p style="font-size:.8rem; color:var(--text-muted); margin:0;">Crisp diplomatic global blue and stark whites. Elegant, high-level official appearance.</p>
           </div>
-        </div>
-
-        <div style="margin-top:3rem; display:flex; justify-content:flex-end;">
-          <button class="btn btn-gold" id="applyThemeBtn" style="padding:1rem 2rem; font-size:1rem; font-weight:600;">Apply Active Theme</button>
+          
         </div>
       </div>
 

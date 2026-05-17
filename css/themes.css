@@ -1,0 +1,492 @@
+/* ==========================================================================
+   NIRMAAN MUN — Complete Themes System Upgrades
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   🏛️ THEME 1: NIRMAAN CLASSIC (Default Preset)
+   -------------------------------------------------------------------------- */
+body.nirmaan-classic {
+  --bg-primary: #FAF6F0;
+  --bg-secondary: #FDF8F0;
+  --bg-card: #FAF6F0;
+  --crimson: #7B1530;
+  --crimson-glow: #C92A54;
+  --gold: #C9A96E;
+  --gold-muted: #B49359;
+  --text-primary: #2A0A12;
+  --text-secondary: #6B3A4A;
+  --text-muted: #8E5A6A;
+  --border: rgba(123, 21, 48, 0.12);
+  --surface: #F0D4DA;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Outfit', sans-serif;
+  --font-hindi: 'Noto Serif Devanagari', serif;
+}
+
+/* --------------------------------------------------------------------------
+   🪔 THEME 2: RAKSHA BANDHAN
+   -------------------------------------------------------------------------- */
+body.raksha-bandhan {
+  --bg-primary: #FFF8EE;
+  --bg-secondary: #FFF1D6;
+  --bg-card: #FFFAF0;
+  --crimson: #C44B11;
+  --crimson-glow: #E05A1A;
+  --gold: #D4A017;
+  --gold-muted: #B8860B;
+  --text-primary: #3B1F0A;
+  --text-secondary: #7A4420;
+  --text-muted: #A06830;
+  --border: rgba(196, 75, 17, 0.2);
+  --surface: #F5E6CC;
+  --accent: #E8572A;
+  --font-display: 'Yatra One', serif;
+  --font-body: 'Hind', sans-serif;
+}
+
+/* Background Pattern & Texture for Raksha Bandhan */
+body.raksha-bandhan {
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.25), transparent),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23D4A017' fill-opacity='0.06'%3E%3Ccircle cx='40' cy='30' r='8'/%3E%3Ccircle cx='49.5' cy='37' r='8'/%3E%3Ccircle cx='46' cy='48' r='8'/%3E%3Ccircle cx='34' cy='48' r='8'/%3E%3Ccircle cx='30.5' cy='37' r='8'/%3E%3Ccircle cx='40' cy='40' r='5' fill='%23C44B11' fill-opacity='0.08'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed;
+}
+
+/* Linen texture overlay */
+body.raksha-bandhan::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Rangoli Mandala in Hero */
+body.raksha-bandhan #hero::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 600px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%23C44B11' stroke-width='1.5' stroke-opacity='0.08'%3E%3Ccircle cx='100' cy='100' r='90'/%3E%3Ccircle cx='100' cy='100' r='75'/%3E%3Ccircle cx='100' cy='100' r='60'/%3E%3Ccircle cx='100' cy='100' r='45'/%3E%3Cpath d='M100 10v180M10 100h180M36.36 36.36l127.28 127.28M36.36 163.64L163.64 36.36'/%3E%3Cpath d='M100 55a45 45 0 0 1 45 45M100 145a45 45 0 0 1-45-45'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --------------------------------------------------------------------------
+   🌌 THEME 3: DEEPAVALI SPARK
+   -------------------------------------------------------------------------- */
+body.deepavali-spark {
+  --bg-primary: #0A0614;
+  --bg-secondary: #100820;
+  --bg-card: #160C28;
+  --crimson: #9B2B8A;
+  --crimson-glow: #C438AC;
+  --gold: #FFB830;
+  --gold-muted: #CC8800;
+  --text-primary: #FFF5E0;
+  --text-secondary: #D4B8FF;
+  --text-muted: #8070A0;
+  --border: rgba(155, 43, 138, 0.35);
+  --surface: #1E1030;
+  --accent: #FF6B35;
+  --font-display: 'Rozha One', serif;
+  --font-body: 'Poppins', sans-serif;
+}
+
+/* Stars & Fireworks Backgrounds */
+body.deepavali-spark {
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,0.2) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 76% 38%, rgba(255,255,255,0.18) 1px, transparent 1px),
+    radial-gradient(circle at 45% 68%, rgba(255,255,255,0.15) 2px, transparent 2px),
+    radial-gradient(circle at 88% 82%, rgba(255,255,255,0.22) 1px, transparent 1px),
+    radial-gradient(circle at 22% 88%, rgba(255,255,255,0.12) 2.5px, transparent 2.5px),
+    radial-gradient(circle at 62% 12%, rgba(255,255,255,0.25) 1.5px, transparent 1.5px);
+  background-size: 350px 350px;
+  background-repeat: repeat;
+  background-attachment: fixed;
+  animation: starTwinkle 4s infinite alternate ease-in-out;
+}
+
+@keyframes starTwinkle {
+  0% { opacity: 0.9; }
+  100% { opacity: 0.75; }
+}
+
+/* Rangoli Glow behind Hero Logo */
+body.deepavali-spark #hero::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; height: 500px;
+  background: radial-gradient(ellipse 350px 350px at center, rgba(155, 43, 138, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --------------------------------------------------------------------------
+   ⚡ THEME 4: AVENGERS INITIATIVE
+   -------------------------------------------------------------------------- */
+body.avengers-initiative {
+  --bg-primary: #0B0D0F;
+  --bg-secondary: #111418;
+  --bg-card: #161C22;
+  --crimson: #CC1B1B;
+  --crimson-glow: #FF2222;
+  --gold: #D4A837;
+  --gold-muted: #A07820;
+  --text-primary: #E8EDF2;
+  --text-secondary: #9AAABB;
+  --text-muted: #556070;
+  --border: rgba(74, 144, 217, 0.25);
+  --surface: #1C2430;
+  --accent-blue: #4A90D9;
+  --accent-red: #CC1B1B;
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Exo 2', sans-serif;
+}
+
+/* HUD Hexagonal/Square Grid Background */
+body.avengers-initiative {
+  background-color: var(--bg-primary);
+  background-image: 
+    linear-gradient(rgba(74,144,217,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,144,217,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-attachment: fixed;
+}
+
+/* Large Pulsing Arc Reactor behind Hero Logo */
+body.avengers-initiative #hero::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; height: 500px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='%234A90D9' stroke-width='1' stroke-opacity='0.08' stroke-dasharray='5,3'/%3E%3Ccircle cx='50' cy='50' r='35' fill='none' stroke='%234A90D9' stroke-width='1.5' stroke-opacity='0.15'/%3E%3Ccircle cx='50' cy='50' r='18' fill='none' stroke='%234A90D9' stroke-width='2' stroke-opacity='0.2'/%3E%3Cpolygon points='50,22 74,64 26,64' fill='none' stroke='%234A90D9' stroke-width='1' stroke-opacity='0.08'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+  animation: arcReactorPulse 3s infinite ease-in-out;
+}
+
+@keyframes arcReactorPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+  50% { transform: translate(-50%, -50%) scale(1.04); opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   🌐 THEME 5: UNITED NATIONS
+   -------------------------------------------------------------------------- */
+body.united-nations {
+  --bg-primary: #F4F7FB;
+  --bg-secondary: #EBF0F7;
+  --bg-card: #FFFFFF;
+  --crimson: #1A6DAB;
+  --crimson-glow: #2280CC;
+  --gold: #B8960C;
+  --gold-muted: #8A7000;
+  --text-primary: #0D1B2A;
+  --text-secondary: #3A5070;
+  --text-muted: #6A85A0;
+  --border: rgba(26, 109, 171, 0.15);
+  --surface: #DDE6F0;
+  --font-display: 'Libre Baskerville', serif;
+  --font-body: 'Source Sans 3', sans-serif;
+}
+
+/* Clean Document Paper Grid and backgrounds */
+body.united-nations {
+  background-color: var(--bg-primary);
+  background-image: 
+    linear-gradient(rgba(26, 109, 171, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 109, 171, 0.02) 1px, transparent 1px);
+  background-size: 25px 25px;
+  background-attachment: fixed;
+}
+
+/* World Map Watermark behind Hero Logo */
+body.united-nations #hero::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px; height: 500px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 500'%3E%3Cpath d='M150 150 Q 200 100, 300 120 T 500 150 T 700 120 T 900 180 M200 250 Q 300 200, 450 280 T 700 220 T 850 300 M100 350 H900 M250 100 V400 M500 100 V400 M750 100 V400' fill='none' stroke='%231A6DAB' stroke-width='1.5' stroke-opacity='0.05'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ==========================================================================
+   GLOBAL STYLE RULES DRIVE BY THEME CLASSES
+   ========================================================================== */
+
+/* Global body transition */
+body {
+  transition: background-color 0.5s ease, color 0.3s ease;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+}
+
+/* Scoped head fonts */
+h1, h2, h3, h4, .section-title {
+  font-family: var(--font-display) !important;
+  color: var(--crimson);
+}
+
+/* Card Styling overrides */
+body .card {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  transition: all 0.3s ease;
+}
+
+body .card::before {
+  background: linear-gradient(90deg, var(--crimson), var(--gold)) !important;
+}
+
+body .card:hover {
+  border-color: var(--gold) !important;
+  box-shadow: 0 8px 30px rgba(123, 21, 48, 0.08);
+  transform: translateY(-4px);
+}
+
+/* Raksha Bandhan custom card styles */
+body.raksha-bandhan .card {
+  box-shadow: 0 2px 10px rgba(196,75,17,0.04);
+}
+body.raksha-bandhan .card:hover {
+  box-shadow: 0 8px 30px rgba(196,75,17,0.2) !important;
+}
+
+/* Diwali custom card styles */
+body.deepavali-spark .card {
+  background-image: radial-gradient(circle at 100% 0%, rgba(255, 184, 48, 0.04), transparent 50%);
+}
+body.deepavali-spark .card:hover {
+  box-shadow: 0 8px 40px rgba(155,43,138,0.4) !important;
+  border-color: rgba(255,184,48,0.4) !important;
+}
+
+/* Avengers custom card styles */
+body.avengers-initiative .card {
+  border-left: 2px solid rgba(74, 144, 217, 0.2) !important;
+}
+body.avengers-initiative .card:hover {
+  background: #1A2230 !important;
+  box-shadow: 0 0 20px rgba(74,144,217,0.2), 0 0 60px rgba(204,27,27,0.1) !important;
+  border-color: rgba(74,144,217,0.5) !important;
+}
+
+/* UN custom card styles */
+body.united-nations .card {
+  border-radius: 2px !important;
+  box-shadow: 0 2px 12px rgba(26,109,171,0.08) !important;
+}
+body.united-nations .card:hover {
+  box-shadow: 0 8px 30px rgba(26,109,171,0.15) !important;
+  border-color: rgba(26,109,171,0.3) !important;
+}
+
+/* Navbar Theme Styling Overrides */
+body nav.navbar {
+  background: var(--bg-primary) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+body nav.navbar .nav-logo-text {
+  color: var(--crimson) !important;
+  font-family: var(--font-display) !important;
+}
+
+body nav.navbar .nav-links a {
+  color: var(--text-secondary);
+}
+
+body nav.navbar .nav-links a:hover,
+body nav.navbar .nav-links a.active {
+  color: var(--crimson);
+  text-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+/* Primary and Secondary Buttons Overrides */
+body .btn-primary {
+  background: linear-gradient(135deg, var(--crimson), var(--crimson-glow)) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 15px rgba(123, 21, 48, 0.2) !important;
+  border: none !important;
+}
+
+body .btn-primary:hover {
+  background: var(--gold) !important;
+  color: var(--text-primary) !important;
+  transform: translateY(-2px);
+}
+
+/* Avengers Button Overrides */
+body.avengers-initiative .btn-primary {
+  border-radius: 2px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.15em !important;
+}
+body.avengers-initiative .btn-primary:hover {
+  background: linear-gradient(135deg, var(--gold), #FFB830) !important;
+  color: #0B0D0F !important;
+}
+
+/* UN Button Overrides */
+body.united-nations .btn-primary {
+  font-family: 'Source Sans 3', sans-serif !important;
+  font-weight: 600 !important;
+  border-radius: 3px !important;
+}
+body.united-nations .btn-primary:hover {
+  background: #0D4F82 !important;
+  color: #fff !important;
+}
+
+
+/* ==========================================================================
+   DYNAMIC ILLUSTRATIONS HANDLERS
+   ========================================================================== */
+
+.theme-decorations {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.decor-item {
+  position: absolute;
+  display: none;
+}
+
+/* Class toggles scoped to body themes */
+body.raksha-bandhan .theme-illustration-rb { display: block !important; }
+body.deepavali-spark .theme-illustration-dw { display: block !important; }
+body.avengers-initiative .theme-illustration-ai { display: block !important; }
+body.united-nations .theme-illustration-un { display: block !important; }
+
+/* Positional coordinates for illustrations */
+.decor-item.rb-rakhi {
+  top: 15%; right: 10%;
+  animation: rakhiRotate 20s infinite linear;
+}
+
+@keyframes rakhiRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.decor-item.dw-diya {
+  bottom: 10%; left: 8%;
+}
+
+.decor-item.dw-diya-string {
+  top: 5%; right: 5%;
+}
+
+/* Diya flames animation */
+.diya-flame {
+  animation: flameFlicker 0.8s infinite alternate ease-in-out;
+  transform-origin: center bottom;
+}
+
+@keyframes flameFlicker {
+  0% { transform: scale(1) opacity(0.85); }
+  100% { transform: scale(1.1) opacity(1); }
+}
+
+.decor-item.ai-reactor {
+  top: 10%; right: 8%;
+  animation: reactorRotate 12s infinite linear;
+}
+
+@keyframes reactorRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.decor-item.ai-shield {
+  bottom: 15%; left: 10%;
+}
+
+.decor-item.un-emblem {
+  top: 12%; left: 8%;
+  animation: emblemRotate 60s infinite linear;
+}
+
+@keyframes emblemRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Stat Monospaced override for Avengers Initiative */
+body.avengers-initiative .countdown-value,
+body.avengers-initiative .stat-number,
+body.avengers-initiative .time-pill {
+  font-family: 'Share Tech Mono', monospace !important;
+}
+
+/* Stat Monospaced override for United Nations */
+body.united-nations .countdown-value,
+body.united-nations .stat-number,
+body.united-nations .time-pill {
+  font-family: 'Roboto Mono', monospace !important;
+}
+
+
+/* ==========================================================================
+   THEME SECTION DIVIDERS OVERRIDES
+   ========================================================================== */
+
+body.raksha-bandhan .section-divider svg,
+body.deepavali-spark .section-divider svg,
+body.avengers-initiative .section-divider svg,
+body.united-nations .section-divider svg {
+  display: none !important; /* Hide defaults */
+}
+
+/* Raksha Bandhan custom divider */
+body.raksha-bandhan .section-divider {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='24' viewBox='0 0 120 24'%3E%3Cpath d='M0 12 Q 30 20, 60 12 T 120 12' fill='none' stroke='%23C44B11' stroke-width='2' stroke-opacity='0.2'/%3E%3Ccircle cx='60' cy='6' r='3' fill='%23C44B11' fill-opacity='0.25'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: auto 24px;
+}
+
+/* Diwali spark custom divider */
+body.deepavali-spark .section-divider {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='24' viewBox='0 0 150 24'%3E%3Cg fill='%23FFB830' fill-opacity='0.25'%3E%3Cpath d='M75 18 C70 18, 65 14, 65 8 C65 5, 75 0, 75 0 C75 0, 85 5, 85 8 C85 14, 80 18, 75 18 Z'/%3E%3C/g%3E%3Cline x1='0' y1='18' x2='150' y2='18' stroke='%23FFB830' stroke-opacity='0.15' stroke-width='1'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: auto 24px;
+}
+
+/* Avengers Chevron tactical divider */
+body.avengers-initiative .section-divider {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='24' viewBox='0 0 100 24'%3E%3Cg stroke='%234A90D9' stroke-opacity='0.2' fill='none' stroke-width='1'%3E%3Cline x1='0' y1='12' x2='100' y2='12'/%3E%3Cpolygon points='45,8 50,12 45,16' fill='%234A90D9' fill-opacity='0.2'/%3E%3Cpolygon points='55,8 60,12 55,16' fill='%234A90D9' fill-opacity='0.2'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: auto 24px;
+}
+
+/* UN Olive Branch Divider */
+body.united-nations .section-divider {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='24' viewBox='0 0 200 24'%3E%3Cline x1='0' y1='12' x2='200' y2='12' stroke='%231A6DAB' stroke-opacity='0.15' stroke-width='1.5'/%3E%3Cg fill='%231A6DAB' fill-opacity='0.25'%3E%3Cpath d='M90 12 C90 6, 95 2, 100 2 C100 2, 105 6, 105 12' fill='none' stroke='%231A6DAB' stroke-width='1.5'/%3E%3Ccircle cx='100' cy='12' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: auto 24px;
+}

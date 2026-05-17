@@ -448,58 +448,99 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ====== THEMES TAB ======
-  let selectedTheme = 'default';
+  let selectedTheme = 'nirmaan-classic';
+
+  const themeDisplayNames = {
+    'nirmaan-classic': 'Nirmaan Classic',
+    'raksha-bandhan': 'Raksha Bandhan',
+    'deepavali-spark': 'Deepavali Spark',
+    'avengers-initiative': 'Avengers Initiative',
+    'united-nations': 'United Nations'
+  };
   
   async function loadThemes() {
     try {
-      const { data, error } = await supabase.from('site_settings').select('value').eq('key', 'current_theme').single();
+      const { data, error } = await supabase
+        .from('site_settings')
+        .select('value')
+        .eq('key', 'active_theme')
+        .single();
+      
       if (error && error.code !== 'PGRST116') throw error;
+      
       if (data) {
-        selectedTheme = data.value;
+        let rawTheme = data.value;
+        // Map old legacy slugs to the new slugs cleanly
+        if (rawTheme === 'default') rawTheme = 'nirmaan-classic';
+        if (rawTheme === 'raksha_bandhan') rawTheme = 'raksha-bandhan';
+        if (rawTheme === 'diwali') rawTheme = 'deepavali-spark';
+        if (rawTheme === 'avengers') rawTheme = 'avengers-initiative';
+        if (rawTheme === 'un') rawTheme = 'united-nations';
+        
+        selectedTheme = rawTheme;
+      } else {
+        selectedTheme = 'nirmaan-classic';
       }
+      
       updateThemeCardsUI();
     } catch (err) {
-      console.error('Error loading theme:', err);
+      console.error('Error loading active theme:', err);
     }
   }
 
   function updateThemeCardsUI() {
     document.querySelectorAll('.theme-card-preset').forEach(card => {
-      if (card.dataset.theme === selectedTheme) {
+      const themeSlug = card.dataset.theme;
+      const btn = card.querySelector('button');
+      
+      if (themeSlug === selectedTheme) {
         card.classList.add('active');
-        card.style.borderColor = 'var(--gold-accent)';
-        if (!card.querySelector('.badge')) {
-          const badge = document.createElement('span');
-          badge.className = 'badge badge-ok';
-          badge.textContent = 'Active';
-          card.querySelector('div').appendChild(badge);
-        } else {
-          card.querySelector('.badge').textContent = 'Active';
+        card.style.border = '2px solid var(--gold-accent)';
+        if (btn) {
+          btn.textContent = '✓ Active';
+          btn.disabled = true;
+          btn.className = 'btn btn-solid btn-active-indicator';
         }
       } else {
         card.classList.remove('active');
-        card.style.borderColor = 'transparent';
-        const badge = card.querySelector('.badge');
-        if (badge) badge.remove();
+        card.style.border = '2px solid transparent';
+        if (btn) {
+          btn.textContent = 'Apply Theme';
+          btn.disabled = false;
+          btn.className = 'btn btn-red btn-theme-apply-action';
+        }
       }
     });
   }
 
-  // Hook theme card clicks
+  // Hook apply buttons & card clicks
   document.querySelectorAll('.theme-card-preset').forEach(card => {
-    card.addEventListener('click', () => {
-      selectedTheme = card.dataset.theme;
-      document.querySelectorAll('.theme-card-preset').forEach(c => {
-        c.style.borderColor = c.dataset.theme === selectedTheme ? 'var(--gold-accent)' : 'transparent';
+    const themeSlug = card.dataset.theme;
+    
+    // Clicking the apply button
+    const btn = card.querySelector('.btn-theme-apply-action');
+    if (btn) {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        await applyThemeAction(themeSlug);
       });
+    }
+
+    // Clicking the card itself
+    card.addEventListener('click', async () => {
+      if (themeSlug !== selectedTheme) {
+        await applyThemeAction(themeSlug);
+      }
     });
   });
 
-  document.getElementById('applyThemeBtn').addEventListener('click', async () => {
-    const ok = await saveSetting('current_theme', selectedTheme);
+  async function applyThemeAction(themeSlug) {
+    const displayName = themeDisplayNames[themeSlug] || themeSlug;
+    const ok = await saveSetting('active_theme', themeSlug);
     if (ok) {
-      toast('Theme applied successfully! Refreshing page...');
-      setTimeout(() => window.location.reload(), 1500);
+      selectedTheme = themeSlug;
+      updateThemeCardsUI();
+      toast(`Theme "${displayName}" activated successfully! ✨`);
     }
-  });
+  }
 });
