@@ -115,3 +115,35 @@ CREATE POLICY "anon_delete_messages" ON public.messages FOR DELETE TO anon USING
 -- Add dates_announced setting
 INSERT INTO public.site_settings (key, value) VALUES ('dates_announced', 'true') ON CONFLICT (key) DO NOTHING;
 INSERT INTO public.site_settings (key, value) VALUES ('schedule_announced', 'true') ON CONFLICT (key) DO NOTHING;
+INSERT INTO public.site_settings (key, value) VALUES ('current_theme', 'default') ON CONFLICT (key) DO NOTHING;
+
+-- Schedule table
+CREATE TABLE IF NOT EXISTS public.schedule (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  day INT NOT NULL,
+  time TEXT NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT,
+  venue TEXT,
+  color TEXT DEFAULT 'gold',
+  display_order INT DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE public.schedule ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "anon_read_schedule" ON public.schedule FOR SELECT TO anon USING (true);
+CREATE POLICY "anon_insert_schedule" ON public.schedule FOR INSERT TO anon WITH CHECK (true);
+CREATE POLICY "anon_update_schedule" ON public.schedule FOR UPDATE TO anon USING (true) WITH CHECK (true);
+CREATE POLICY "anon_delete_schedule" ON public.schedule FOR DELETE TO anon USING (true);
+
+-- Insert default schedule data
+INSERT INTO public.schedule (day, time, title, description, venue, color, display_order) VALUES
+  (1, '09:00 AM', 'Opening Ceremony', 'Inaugural addresses, lighting of the lamp, and cultural performances.', 'Main Auditorium', 'gold', 1),
+  (1, '11:30 AM', 'Committee Session I', 'Roll call, setting the agenda, and opening statements.', 'Respective Committee Rooms', 'rose', 2),
+  (1, '01:30 PM', 'Networking Lunch', '', 'Dining Hall', 'burgundy', 3),
+  (1, '02:30 PM', 'Committee Session II', 'Moderated caucuses and initial draft resolutions.', 'Respective Committee Rooms', 'rose', 4),
+  (2, '09:00 AM', 'Committee Session III', 'Continuation of debate, working papers, and draft resolutions.', 'Respective Committee Rooms', 'gold', 5),
+  (2, '11:30 AM', 'Committee Session IV', 'Final debate, voting on resolutions, and Moot Court finals.', 'Respective Committee Rooms', 'rose', 6),
+  (2, '01:00 PM', 'Lunch & Refreshments', '', 'Dining Hall', 'burgundy', 7),
+  (2, '02:30 PM', 'Closing Ceremony & Awards', 'Merit-based awards, special recognitions, and farewell addresses.', 'Main Auditorium', 'gold', 8)
+ON CONFLICT DO NOTHING;

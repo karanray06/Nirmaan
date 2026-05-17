@@ -125,6 +125,8 @@
       <div class="nav-item" data-tab="team"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Team</div>
       <div class="nav-item" data-tab="payments"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Payments</div>
       <div class="nav-item" data-tab="messages"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>Messages</div>
+      <div class="nav-item" data-tab="schedule"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Schedule</div>
+      <div class="nav-item" data-tab="themes"><svg viewBox="0 0 24 24"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"/><path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/></svg>Themes</div>
       <div class="nav-item" data-tab="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</div>
       <div class="nav-spacer"></div>
       <div class="db-status"><span class="db-dot err" id="dbDot"></span><span id="dbText">Checking...</span></div>
@@ -214,6 +216,160 @@
               <tbody id="messagesTable"><tr><td colspan="5" class="empty">Loading messages...</td></tr></tbody>
             </table>
           </div>
+        </div>
+      </div>
+
+      <!-- TAB: SCHEDULE -->
+      <div class="tab-view" id="tab-schedule">
+        <div class="page-header">
+          <h1>Schedule <span>Management</span></h1>
+          <button class="btn btn-solid" id="addSchedBtn">+ Add Event</button>
+        </div>
+        
+        <div class="card" id="schedForm" style="display:none; margin-bottom:2rem;">
+          <h3 id="schedFormTitle">Add Event</h3>
+          <input type="hidden" id="schedEditId">
+          <div class="field-row-3">
+            <div class="field">
+              <label>Day Number</label>
+              <input type="number" id="scDay" placeholder="e.g. 1" min="1" value="1">
+            </div>
+            <div class="field">
+              <label>Time</label>
+              <input type="text" id="scTime" placeholder="e.g. 09:00 AM">
+            </div>
+            <div class="field">
+              <label>Venue</label>
+              <input type="text" id="scVenue" placeholder="e.g. Main Auditorium">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Event Title</label>
+              <input type="text" id="scTitle" placeholder="e.g. Opening Ceremony">
+            </div>
+            <div class="field">
+              <label>Timeline Color</label>
+              <select id="scColor">
+                <option value="gold">Gold Accent</option>
+                <option value="rose">Rose Mid</option>
+                <option value="burgundy">Deep Burgundy</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Description / Details</label>
+            <textarea id="scDesc" rows="3" placeholder="Explain the event details..." style="width:100%; padding:10px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:4px; color:#fff; font-family:inherit;"></textarea>
+          </div>
+          <div class="field">
+            <label>Display Order (relative sorting order)</label>
+            <input type="number" id="scOrder" value="0">
+          </div>
+          <div style="display:flex;gap:.5rem;margin-top:.5rem">
+            <button class="btn btn-solid" id="schedSaveBtn">Save Event</button>
+            <button class="btn btn-red" id="schedCancelBtn">Cancel</button>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+          <div style="overflow-x:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Day</th>
+                  <th>Time</th>
+                  <th>Title</th>
+                  <th>Venue</th>
+                  <th>Color</th>
+                  <th>Order</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="schedTable">
+                <tr><td colspan="7" class="empty">Loading schedule events...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: THEMES -->
+      <div class="tab-view" id="tab-themes">
+        <div class="page-header">
+          <h1>Theme <span>Customization</span></h1>
+        </div>
+        <p style="color:var(--text-muted); margin-bottom:2rem; font-size:.9rem;">Select a visual style preset for the Nirmaan MUN platform. The theme changes color palettes, backgrounds, and fonts instantly across the site.</p>
+        
+        <div class="theme-selection-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:2rem;">
+          <!-- Default -->
+          <div class="card theme-card-preset active" data-theme="default" style="cursor:pointer; border:2px solid var(--gold-accent); position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <h3 style="margin:0;">Nirmaan Classic</h3>
+              <span class="badge badge-ok">Default</span>
+            </div>
+            <div style="display:flex; gap:.5rem; margin-bottom:1rem;">
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#7B1530; border:1px solid rgba(255,255,255,.2);"></span>
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#C9A96E; border:1px solid rgba(255,255,255,.2);"></span>
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#FDF8F0; border:1px solid rgba(255,255,255,.2);"></span>
+            </div>
+            <p style="font-size:.8rem; color:var(--text-muted); margin:0;">Rich Crimson and Gold palette. A classic premium, academic look.</p>
+          </div>
+
+          <!-- Raksha Bandhan -->
+          <div class="card theme-card-preset" data-theme="raksha_bandhan" style="cursor:pointer; border:2px solid transparent;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <h3 style="margin:0;">Raksha Bandhan</h3>
+            </div>
+            <div style="display:flex; gap:.5rem; margin-bottom:1rem;">
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#E65c00; border:1px solid rgba(255,255,255,.2);"></span>
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#F9D976; border:1px solid rgba(255,255,255,.2);"></span>
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#FFF5E6; border:1px solid rgba(255,255,255,.2);"></span>
+            </div>
+            <p style="font-size:.8rem; color:var(--text-muted); margin:0;">Traditional warm Indian festive theme with saffron, marigold yellow, and warm cream colors.</p>
+          </div>
+
+          <!-- Diwali -->
+          <div class="card theme-card-preset" data-theme="diwali" style="cursor:pointer; border:2px solid transparent;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <h3 style="margin:0;">Deepavali Spark</h3>
+            </div>
+            <div style="display:flex; gap:.5rem; margin-bottom:1rem;">
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#FF9900; border:1px solid rgba(255,255,255,.2);"></span>
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#4A154B; border:1px solid rgba(255,255,255,.2);"></span>
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#1E0A24; border:1px solid rgba(255,255,255,.2);"></span>
+            </div>
+            <p style="font-size:.8rem; color:var(--text-muted); margin:0;">Brilliant deep violet night skies with sparkling oil lamp golden accents.</p>
+          </div>
+
+          <!-- Avengers -->
+          <div class="card theme-card-preset" data-theme="avengers" style="cursor:pointer; border:2px solid transparent;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <h3 style="margin:0;">Avengers Initiative</h3>
+            </div>
+            <div style="display:flex; gap:.5rem; margin-bottom:1rem;">
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#E62429; border:1px solid rgba(255,255,255,.2);"></span>
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#151515; border:1px solid rgba(255,255,255,.2);"></span>
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#2A75D3; border:1px solid rgba(255,255,255,.2);"></span>
+            </div>
+            <p style="font-size:.8rem; color:var(--text-muted); margin:0;">Cinematic Marvel Sci-Fi theme. Dark charcoal backgrounds, hot red, Stark gold, and bold blue.</p>
+          </div>
+
+          <!-- UN Theme -->
+          <div class="card theme-card-preset" data-theme="un" style="cursor:pointer; border:2px solid transparent;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <h3 style="margin:0;">United Nations</h3>
+            </div>
+            <div style="display:flex; gap:.5rem; margin-bottom:1rem;">
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#009EDB; border:1px solid rgba(255,255,255,.2);"></span>
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#FFFFFF; border:1px solid rgba(255,255,255,.2);"></span>
+              <span style="display:inline-block; width:24px; height:24px; border-radius:50%; background:#4A90E2; border:1px solid rgba(255,255,255,.2);"></span>
+            </div>
+            <p style="font-size:.8rem; color:var(--text-muted); margin:0;">Crisp diplomatic global blue and stark whites. Elegant, high-level official appearance.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:3rem; display:flex; justify-content:flex-end;">
+          <button class="btn btn-gold" id="applyThemeBtn" style="padding:1rem 2rem; font-size:1rem; font-weight:600;">Apply Active Theme</button>
         </div>
       </div>
 

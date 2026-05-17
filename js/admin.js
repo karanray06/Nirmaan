@@ -38,6 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
       loadDelegates();
       loadTeam();
       loadMessages();
+      loadSchedule();
+      loadThemes();
       loadSettings();
     } else {
       loginError.style.display = 'block';
@@ -61,8 +63,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const target = document.getElementById('tab-' + item.dataset.tab);
       if(target) target.classList.add('active');
       
-      // Refresh messages if clicking messages tab
+      // Refresh messages / schedule / themes if clicking respective tab
       if (item.dataset.tab === 'messages') loadMessages();
+      if (item.dataset.tab === 'schedule') loadSchedule();
+      if (item.dataset.tab === 'themes') loadThemes();
     });
   });
 
@@ -331,5 +335,171 @@ document.addEventListener('DOMContentLoaded', () => {
     const ok2 = await saveSetting('dates_announced', dAnn.toString());
     const ok3 = await saveSetting('schedule_announced', sAnn.toString());
     if (ok1 && ok2 && ok3) toast('Settings saved!');
+  });
+
+  // ====== SCHEDULE TAB ======
+  let scheduleEvents = [];
+  async function loadSchedule() {
+    try {
+      const { data, error } = await supabase.from('schedule').select('*').order('day').order('display_order');
+      if (error) throw error;
+      scheduleEvents = data || [];
+      renderScheduleTable();
+    } catch (err) {
+      document.getElementById('schedTable').innerHTML = `<tr><td colspan="7" class="empty">Error loading schedule: ${err.message}</td></tr>`;
+    }
+  }
+
+  function renderScheduleTable() {
+    const tbody = document.getElementById('schedTable');
+    if (!scheduleEvents.length) {
+      tbody.innerHTML = '<tr><td colspan="7" class="empty">No events scheduled. Click "+ Add Event" above.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = scheduleEvents.map(ev => `
+      <tr>
+        <td><strong>Day ${ev.day}</strong></td>
+        <td>${ev.time}</td>
+        <td><strong>${ev.title}</strong>${ev.description ? `<br><small style="color:rgba(240,212,218,.4);">${ev.description}</small>` : ''}</td>
+        <td>${ev.venue || '—'}</td>
+        <td><span class="badge ${ev.color === 'rose' ? 'badge-warn' : ev.color === 'burgundy' ? 'badge-err' : 'badge-ok'}">${ev.color}</span></td>
+        <td>${ev.display_order}</td>
+        <td>
+          <button class="btn btn-gold" style="padding:.2rem .5rem;font-size:.65rem" onclick="window._editSched('${ev.id}')">Edit</button>
+          <button class="btn btn-red" style="padding:.2rem .5rem;font-size:.65rem;margin-left:.2rem" onclick="window._delSched('${ev.id}')">Delete</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  document.getElementById('addSchedBtn').addEventListener('click', () => {
+    document.getElementById('schedEditId').value = '';
+    document.getElementById('schedFormTitle').textContent = 'Add Event';
+    document.getElementById('scDay').value = 1;
+    document.getElementById('scTime').value = '';
+    document.getElementById('scVenue').value = '';
+    document.getElementById('scTitle').value = '';
+    document.getElementById('scColor').value = 'gold';
+    document.getElementById('scDesc').value = '';
+    document.getElementById('scOrder').value = scheduleEvents.length + 1;
+    document.getElementById('schedForm').style.display = 'block';
+  });
+
+  document.getElementById('schedCancelBtn').addEventListener('click', () => {
+    document.getElementById('schedForm').style.display = 'none';
+  });
+
+  window._editSched = id => {
+    const ev = scheduleEvents.find(e => e.id === id);
+    if (!ev) return;
+    document.getElementById('schedEditId').value = id;
+    document.getElementById('schedFormTitle').textContent = 'Edit Event';
+    document.getElementById('scDay').value = ev.day;
+    document.getElementById('scTime').value = ev.time;
+    document.getElementById('scVenue').value = ev.venue || '';
+    document.getElementById('scTitle').value = ev.title;
+    document.getElementById('scColor').value = ev.color || 'gold';
+    document.getElementById('scDesc').value = ev.description || '';
+    document.getElementById('scOrder').value = ev.display_order || 0;
+    document.getElementById('schedForm').style.display = 'block';
+  };
+
+  window._delSched = async id => {
+    if (!confirm('Delete this schedule event?')) return;
+    try {
+      const { error } = await supabase.from('schedule').delete().eq('id', id);
+      if (error) throw error;
+      toast('Event deleted', 'err');
+      loadSchedule();
+    } catch (err) {
+      toast('Delete failed: ' + err.message, 'err');
+    }
+  };
+
+  document.getElementById('schedSaveBtn').addEventListener('click', async () => {
+    const day = parseInt(document.getElementById('scDay').value) || 1;
+    const time = document.getElementById('scTime').value.trim();
+    const venue = document.getElementById('scVenue').value.trim();
+    const title = document.getElementById('scTitle').value.trim();
+    const color = document.getElementById('scColor').value;
+    const description = document.getElementById('scDesc').value.trim();
+    const display_order = parseInt(document.getElementById('scOrder').value) || 0;
+
+    if (!time || !title) return toast('Time and Title are required', 'err');
+
+    const obj = { day, time, venue, title, color, description, display_order };
+    const editId = document.getElementById('schedEditId').value;
+
+    try {
+      if (editId) {
+        const { error } = await supabase.from('schedule').update(obj).eq('id', editId);
+        if (error) throw error;
+        toast('Event updated!');
+      } else {
+        const { error } = await supabase.from('schedule').insert(obj);
+        if (error) throw error;
+        toast('Event added!');
+      }
+      document.getElementById('schedForm').style.display = 'none';
+      loadSchedule();
+    } catch (err) {
+      toast('Save failed: ' + err.message, 'err');
+    }
+  });
+
+  // ====== THEMES TAB ======
+  let selectedTheme = 'default';
+  
+  async function loadThemes() {
+    try {
+      const { data, error } = await supabase.from('site_settings').select('value').eq('key', 'current_theme').single();
+      if (error && error.code !== 'PGRST116') throw error;
+      if (data) {
+        selectedTheme = data.value;
+      }
+      updateThemeCardsUI();
+    } catch (err) {
+      console.error('Error loading theme:', err);
+    }
+  }
+
+  function updateThemeCardsUI() {
+    document.querySelectorAll('.theme-card-preset').forEach(card => {
+      if (card.dataset.theme === selectedTheme) {
+        card.classList.add('active');
+        card.style.borderColor = 'var(--gold-accent)';
+        if (!card.querySelector('.badge')) {
+          const badge = document.createElement('span');
+          badge.className = 'badge badge-ok';
+          badge.textContent = 'Active';
+          card.querySelector('div').appendChild(badge);
+        } else {
+          card.querySelector('.badge').textContent = 'Active';
+        }
+      } else {
+        card.classList.remove('active');
+        card.style.borderColor = 'transparent';
+        const badge = card.querySelector('.badge');
+        if (badge) badge.remove();
+      }
+    });
+  }
+
+  // Hook theme card clicks
+  document.querySelectorAll('.theme-card-preset').forEach(card => {
+    card.addEventListener('click', () => {
+      selectedTheme = card.dataset.theme;
+      document.querySelectorAll('.theme-card-preset').forEach(c => {
+        c.style.borderColor = c.dataset.theme === selectedTheme ? 'var(--gold-accent)' : 'transparent';
+      });
+    });
+  });
+
+  document.getElementById('applyThemeBtn').addEventListener('click', async () => {
+    const ok = await saveSetting('current_theme', selectedTheme);
+    if (ok) {
+      toast('Theme applied successfully! Refreshing page...');
+      setTimeout(() => window.location.reload(), 1500);
+    }
   });
 });
