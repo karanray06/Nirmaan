@@ -69,20 +69,20 @@ body.raksha-bandhan #hero::after {
    -------------------------------------------------------------------------- */
 body.deepavali-spark {
   /* Rich mystical night-skies and glowing warm firework colors */
-  --primary-crimson: #9D1C8F;
+  --primary-crimson: #C12BB1;
   --deep-burgundy: #250B52;
   --dark-wine: #0E0422;
-  --rose-mid: #D31475;
+  --rose-mid: #E81A89;
   --gold-accent: #FFAE19;
   --warm-cream: #0E0422;
-  --blush-pale: #31175C;
+  --blush-pale: #EAD9FF;          /* High contrast pale lavender for stat labels & ticker */
   --sunset-amber: #FF7700;
   --ivory: #160B30;
-  --text-dark: #FFF6E5;
-  --text-muted: #9E8DBF;
+  --text-dark: #FFF6E5;           /* Bright text for dark theme */
+  --text-muted: #C4B4E6;          /* High contrast light pastel lavender for descriptions */
   --text-light: #FFE3B3;
-  --border-subtle: rgba(255, 174, 25, 0.2);
-  --border-medium: rgba(255, 174, 25, 0.4);
+  --border-subtle: rgba(255, 174, 25, 0.25);
+  --border-medium: rgba(255, 174, 25, 0.45);
   --shadow-glow: 0 0 40px rgba(255, 174, 25, 0.5);
 
   --font-display: 'Rozha One', serif;
@@ -114,7 +114,7 @@ body.deepavali-spark #hero::after {
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: 500px; height: 500px;
-  background: radial-gradient(ellipse 350px 350px at center, rgba(157, 28, 143, 0.18) 0%, transparent 70%);
+  background: radial-gradient(ellipse 350px 350px at center, rgba(193, 43, 177, 0.18) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -130,14 +130,14 @@ body.avengers-initiative {
   --rose-mid: #00E5FF;
   --gold-accent: #FFC72C;
   --warm-cream: #0A0D14;
-  --blush-pale: #1E2736;
+  --blush-pale: #B5CADE;          /* High contrast pale cyber-blue for stat labels & ticker */
   --sunset-amber: #FF3B30;
   --ivory: #0F131C;
-  --text-dark: #E2EDF8;
-  --text-muted: #738496;
+  --text-dark: #E2EDF8;           /* Bright text for dark theme */
+  --text-muted: #A6BACD;          /* High contrast light cyber-slate for descriptions */
   --text-light: #E2EDF8;
-  --border-subtle: rgba(0, 229, 255, 0.18);
-  --border-medium: rgba(0, 229, 255, 0.35);
+  --border-subtle: rgba(0, 229, 255, 0.22);
+  --border-medium: rgba(0, 229, 255, 0.4);
   --shadow-glow: 0 0 40px rgba(200, 16, 46, 0.45);
 
   --font-display: 'Orbitron', sans-serif;
@@ -232,13 +232,23 @@ body.united-nations {
   font-family: var(--font-body) !important;
 }
 
-/* Scoped headers strictly under custom themes */
-body.raksha-bandhan h1, body.raksha-bandhan h2, body.raksha-bandhan h3, body.raksha-bandhan h4, body.raksha-bandhan .section-title,
-body.deepavali-spark h1, body.deepavali-spark h2, body.deepavali-spark h3, body.deepavali-spark h4, body.deepavali-spark .section-title,
-body.avengers-initiative h1, body.avengers-initiative h2, body.avengers-initiative h3, body.avengers-initiative h4, body.avengers-initiative .section-title,
-body.united-nations h1, body.united-nations h2, body.united-nations h3, body.united-nations h4, body.united-nations .section-title {
+/* High-specificity Headings overrides strictly under custom themes */
+body.raksha-bandhan h1, body.raksha-bandhan h2, body.raksha-bandhan h3, body.raksha-bandhan h4, body.raksha-bandhan .section-title, body.raksha-bandhan .card h3, body.raksha-bandhan .pillar h3,
+body.deepavali-spark h1, body.deepavali-spark h2, body.deepavali-spark h3, body.deepavali-spark h4, body.deepavali-spark .section-title, body.deepavali-spark .card h3, body.deepavali-spark .pillar h3,
+body.avengers-initiative h1, body.avengers-initiative h2, body.avengers-initiative h3, body.avengers-initiative h4, body.avengers-initiative .section-title, body.avengers-initiative .card h3, body.avengers-initiative .pillar h3,
+body.united-nations h1, body.united-nations h2, body.united-nations h3, body.united-nations h4, body.united-nations .section-title, body.united-nations .card h3, body.united-nations .pillar h3 {
   font-family: var(--font-display) !important;
   color: var(--primary-crimson) !important;
+}
+
+/* Specific glowing headlines for dark modes */
+body.deepavali-spark h1, body.deepavali-spark h2, body.deepavali-spark h3, body.deepavali-spark h4, body.deepavali-spark .section-title, body.deepavali-spark .card h3, body.deepavali-spark .pillar h3 {
+  color: var(--gold-accent) !important;
+  text-shadow: 0 0 15px rgba(255, 174, 25, 0.25);
+}
+body.avengers-initiative h1, body.avengers-initiative h2, body.avengers-initiative h3, body.avengers-initiative h4, body.avengers-initiative .section-title, body.avengers-initiative .card h3, body.avengers-initiative .pillar h3 {
+  color: var(--rose-mid) !important;
+  text-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
 }
 
 /* Card Styling overrides strictly under custom themes */
@@ -268,10 +278,11 @@ body.united-nations .card:hover {
   transform: translateY(-4px);
 }
 
-body.raksha-bandhan .card p,
-body.deepavali-spark .card p,
-body.avengers-initiative .card p,
-body.united-nations .card p {
+/* Scoped paragraph colors inside components under custom themes to ensure readability */
+body.raksha-bandhan .card p, body.raksha-bandhan .pillar p, body.raksha-bandhan .committee-card p, body.raksha-bandhan .speaker-card p,
+body.deepavali-spark .card p, body.deepavali-spark .pillar p, body.deepavali-spark .committee-card p, body.deepavali-spark .speaker-card p,
+body.avengers-initiative .card p, body.avengers-initiative .pillar p, body.avengers-initiative .committee-card p, body.avengers-initiative .speaker-card p,
+body.united-nations .card p, body.united-nations .pillar p, body.united-nations .committee-card p, body.united-nations .speaker-card p {
   color: var(--text-muted) !important;
 }
 
