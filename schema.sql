@@ -35,6 +35,14 @@ CREATE POLICY "Allow public insert" ON registrations
 CREATE POLICY "Allow read own" ON registrations
   FOR SELECT USING (true);
 
+-- Allow anonymous updates (admin verify/reject/edit)
+CREATE POLICY "Allow public update" ON registrations
+  FOR UPDATE USING (true) WITH CHECK (true);
+
+-- Allow anonymous deletes (admin delete)
+CREATE POLICY "Allow public delete" ON registrations
+  FOR DELETE USING (true);
+
 -- Storage bucket for payment proofs
 INSERT INTO storage.buckets (id, name, public) 
 VALUES ('payment-proofs', 'payment-proofs', false);
