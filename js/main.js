@@ -25,6 +25,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (countdownContainer) countdownContainer.style.display = isDatesAnnounced ? 'block' : 'none';
         if (tbaContainer) tbaContainer.style.display = isDatesAnnounced ? 'none' : 'block';
 
+        if (settings['conference_date'] && window.updateCountdownTarget) {
+          window.updateCountdownTarget(settings['conference_date']);
+        }
+
         // Schedule
         const isScheduleAnnounced = settings['schedule_announced'] === 'true';
         const scheduleContainer = document.getElementById('scheduleContainer');

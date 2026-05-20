@@ -1,30 +1,64 @@
-document.addEventListener('DOMContentLoaded', () => {
+import { supabase } from './supabase.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
   // Conference Date from ENV or fallback
   let confDateStr = '2026-08-08T09:00:00+05:30';
+  
   try {
+    const { data } = await supabase
+      .from('site_settings')
+      .select('value')
+      .eq('key', 'conference_date')
+      .maybeSingle();
+    
+    if (data && data.value) {
+      let val = data.value;
+      if (!val.includes('T')) {
+        val = `${val}T09:00:00+05:30`;
+      }
+      confDateStr = val;
+    } else {
+      if (import.meta.env && import.meta.env.VITE_CONFERENCE_DATE) {
+        confDateStr = import.meta.env.VITE_CONFERENCE_DATE;
+      }
+    }
+  } catch (e) {
     if (import.meta.env && import.meta.env.VITE_CONFERENCE_DATE) {
       confDateStr = import.meta.env.VITE_CONFERENCE_DATE;
     }
-  } catch (e) {}
-  const countDownDate = new Date(confDateStr).getTime();
+  }
+
+  let countDownDate = new Date(confDateStr).getTime();
 
   const elDays = document.getElementById('cdDays');
   const elHours = document.getElementById('cdHours');
   const elMins = document.getElementById('cdMins');
   const elSecs = document.getElementById('cdSecs');
   const countdownContainer = document.getElementById('countdown');
-  const dateDisplay = document.getElementById('heroDateDisplay');
 
-  if (dateDisplay) {
-    const d = new Date(confDateStr);
-    const options = { month: 'long', day: 'numeric', year: 'numeric' };
-    const formatted = d.toLocaleDateString('en-US', options);
-    // Add next day for the "- 9" part
+  function updateDateDisplay(dateStr) {
+    const dateDisplay = document.getElementById('heroDateDisplay');
+    if (!dateDisplay) return;
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return;
+    
     const nextDay = new Date(d);
     nextDay.setDate(d.getDate() + 1);
     const endDay = nextDay.getDate();
     dateDisplay.innerText = `${d.toLocaleString('en-US', {month: 'long'})} ${d.getDate()} - ${endDay}, ${d.getFullYear()}`;
   }
+
+  updateDateDisplay(confDateStr);
+
+  window.updateCountdownTarget = (newDateStr) => {
+    let val = newDateStr;
+    if (!val.includes('T')) {
+      val = `${val}T09:00:00+05:30`;
+    }
+    confDateStr = val;
+    countDownDate = new Date(confDateStr).getTime();
+    updateDateDisplay(confDateStr);
+  };
 
   function updateCountdown() {
     const now = new Date().getTime();
@@ -52,10 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!el) return;
     if (el.innerText !== newValue.toString()) {
       el.innerText = newValue;
-      // Optional: Add CSS class for flip animation here if desired
-      // el.classList.remove('flip');
-      // void el.offsetWidth;
-      // el.classList.add('flip');
     }
   }
 
