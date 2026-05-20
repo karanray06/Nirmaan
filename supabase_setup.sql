@@ -147,3 +147,11 @@ INSERT INTO public.schedule (day, time, title, description, venue, color, displa
   (2, '01:00 PM', 'Lunch & Refreshments', '', 'Dining Hall', 'burgundy', 7),
   (2, '02:30 PM', 'Closing Ceremony & Awards', 'Merit-based awards, special recognitions, and farewell addresses.', 'Main Auditorium', 'gold', 8)
 ON CONFLICT DO NOTHING;
+
+-- Reform Delegate registrations fields
+ALTER TABLE public.registrations ADD COLUMN IF NOT EXISTS age TEXT;
+ALTER TABLE public.registrations ADD COLUMN IF NOT EXISTS portfolio_pref_1 TEXT;
+ALTER TABLE public.registrations ADD COLUMN IF NOT EXISTS portfolio_pref_2 TEXT;
+ALTER TABLE public.registrations ADD COLUMN IF NOT EXISTS referral TEXT;
+ALTER TABLE public.registrations ADD COLUMN IF NOT EXISTS anything_else TEXT;
+

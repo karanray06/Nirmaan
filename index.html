@@ -508,18 +508,24 @@
                 <input type="email" class="form-input" id="regEmail" required>
               </div>
               <div class="form-group">
-                <label class="form-label">Phone Number</label>
+                <label class="form-label">Phone Number (WhatsApp enabled)</label>
                 <input type="tel" class="form-input" id="regPhone" required>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">School / College</label>
+                <label class="form-label">School / College / Institution</label>
                 <input type="text" class="form-input" id="regSchool" required>
               </div>
-              <div class="form-group">
-                <label class="form-label">Grade / Year</label>
-                <input type="text" class="form-input" id="regGrade" required>
+              <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                  <label class="form-label">Grade / Year</label>
+                  <input type="text" class="form-input" id="regGrade" required>
+                </div>
+                <div>
+                  <label class="form-label">Age</label>
+                  <input type="number" class="form-input" id="regAge" min="5" max="99" required>
+                </div>
               </div>
             </div>
             <div class="form-nav" style="justify-content: flex-end;">
@@ -535,40 +541,44 @@
                 <label class="form-label">1st Choice Committee</label>
                 <select class="form-input" id="regCom1" required>
                   <option value="">Select...</option>
-                  <option value="UNCSW">UNCSW</option>
-                  <option value="UNHRC">UNHRC</option>
-                  <option value="AIPPM">AIPPM</option>
-                  <option value="IIA">IIA</option>
-                  <option value="IP">International Press</option>
+                  <option value="UNCSW">UNCSW (UN Commission on the Status of Women)</option>
+                  <option value="UNHRC">UNHRC (UN Human Rights Council)</option>
+                  <option value="AIPPM">AIPPM (All India Political Parties Meet)</option>
+                  <option value="IIA">IIA (Indian Intellectuals' Assembly)</option>
+                  <option value="IP">IP (International Press)</option>
                   <option value="Moot Court">Moot Court</option>
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label">2nd Choice Committee</label>
-                <select class="form-input" id="regCom2" required>
-                  <option value="">Select...</option>
-                  <option value="UNCSW">UNCSW</option>
-                  <option value="UNHRC">UNHRC</option>
-                  <option value="AIPPM">AIPPM</option>
-                  <option value="IIA">IIA</option>
-                  <option value="IP">International Press</option>
-                  <option value="Moot Court">Moot Court</option>
-                </select>
+                <label class="form-label">Portfolio Preference 1 (Top 3 in order)</label>
+                <input type="text" class="form-input" id="regPort1" placeholder="e.g. USA, UK, India or Photographer/Journalist for IP" required>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">Country Preference</label>
-                <input type="text" class="form-input" id="regCountry" placeholder="e.g. USA, UK, India" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label">MUN Experience</label>
-                <select class="form-input" id="regExp" required>
-                  <option value="beginner">Beginner (0-2 MUNs)</option>
-                  <option value="intermediate">Intermediate (3-5 MUNs)</option>
-                  <option value="advanced">Advanced (6+ MUNs)</option>
+                <label class="form-label">2nd Choice Committee</label>
+                <select class="form-input" id="regCom2" required>
+                  <option value="">Select...</option>
+                  <option value="UNCSW">UNCSW (UN Commission on the Status of Women)</option>
+                  <option value="UNHRC">UNHRC (UN Human Rights Council)</option>
+                  <option value="AIPPM">AIPPM (All India Political Parties Meet)</option>
+                  <option value="IIA">IIA (Indian Intellectuals' Assembly)</option>
+                  <option value="IP">IP (International Press)</option>
+                  <option value="Moot Court">Moot Court</option>
                 </select>
               </div>
+              <div class="form-group">
+                <label class="form-label">Portfolio Preference 2 (Top 3 in order)</label>
+                <input type="text" class="form-input" id="regPort2" placeholder="e.g. USA, UK, India or Photographer/Journalist for IP" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">MUN Experience</label>
+              <select class="form-input" id="regExp" required>
+                <option value="beginner">Beginner (0-2 MUNs)</option>
+                <option value="intermediate">Intermediate (3-5 MUNs)</option>
+                <option value="advanced">Advanced (6+ MUNs)</option>
+              </select>
             </div>
             <div class="form-nav">
               <button type="button" class="btn btn-outline-light" onclick="prevStep(1)">Back</button>
@@ -592,6 +602,16 @@
                 <p>Click to upload or drag and drop<br>PNG, JPG up to 5MB</p>
                 <input type="file" id="regFile" accept="image/*" style="display:none;" required>
               </label>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Referral (If Any)</label>
+                <input type="text" class="form-input" id="regReferral" placeholder="e.g. Kavya Nidhi, Vihaan Pandey">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Anything else you'd like to share with us?</label>
+                <input type="text" class="form-input" id="regAnythingElse" placeholder="e.g. Special requirements or diets">
+              </div>
             </div>
             <div class="form-nav">
               <button type="button" class="btn btn-outline-light" onclick="prevStep(2)">Back</button>

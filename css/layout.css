@@ -170,6 +170,7 @@
 .register .form-input::placeholder{color:rgba(255,255,255,.3)}
 .register .form-label{color:var(--blush-pale)}
 .register select.form-input{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23C9A96E' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")}
+.register select.form-input option{background:#2a1520;color:#fff}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 .form-nav{display:flex;justify-content:space-between;margin-top:2rem;gap:1rem}
 .payment-info{background:rgba(201,169,110,.1);border:1px solid rgba(201,169,110,.2);border-radius:4px;padding:1.25rem;margin-bottom:1.5rem}

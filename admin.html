@@ -102,6 +102,94 @@
     @keyframes slideIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
     @media(max-width:900px){.sidebar{display:none}.main{margin-left:0;padding:1.25rem}.stats-grid{grid-template-columns:repeat(2,1fr)}.comm-grid{grid-template-columns:1fr}.field-row,.field-row-3{grid-template-columns:1fr}}
     @media(max-width:500px){.stats-grid{grid-template-columns:1fr}}
+
+    /* Clickable row and Modals styling */
+    .clickable-row { cursor: pointer; transition: background 0.2s; }
+    .clickable-row:hover td { background: rgba(255, 255, 255, 0.05) !important; }
+    
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10, 3, 7, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+      animation: fadeIn 0.25s ease-out;
+    }
+    .modal-content {
+      background: #221018;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      width: 90%;
+      max-width: 720px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 2.5rem;
+      position: relative;
+      box-shadow: 0 24px 50px rgba(0,0,0,0.6);
+      animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .close-btn {
+      position: absolute;
+      top: 1rem; right: 1.5rem;
+      font-size: 1.8rem;
+      color: rgba(240, 212, 218, 0.5);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .close-btn:hover {
+      color: #fff;
+    }
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem 2rem;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+    .detail-item {
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      padding-bottom: 0.5rem;
+    }
+    .detail-label {
+      font-size: 0.7rem;
+      color: rgba(240, 212, 218, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.25rem;
+    }
+    .detail-val {
+      font-size: 0.88rem;
+      color: #fff;
+      font-weight: 500;
+    }
+    .detail-full {
+      grid-column: span 2;
+    }
+    .proof-preview {
+      width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 0.5rem;
+      background: rgba(0,0,0,0.25);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @media(max-width: 600px) {
+      .details-grid { grid-template-columns: 1fr; }
+      .detail-full { grid-column: span 1; }
+      .modal-content { padding: 1.5rem; }
+    }
   </style>
 </head>
 <body>
@@ -140,6 +228,7 @@
           <div class="hdr-actions">
             <button class="btn btn-green" id="refreshBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Refresh</button>
             <button class="btn btn-gold" id="exportBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button>
+            <button class="btn btn-solid" id="addDelegateBtn">+ Add Delegate</button>
             <button class="btn btn-red" id="logoutBtn">Logout</button>
           </div>
         </div>
@@ -529,6 +618,129 @@
       </div>
     </main>
   </div>
+
+  <!-- Modal for Delegate Details -->
+  <div class="modal" id="delegateModal" style="display:none;">
+    <div class="modal-content">
+      <span class="close-btn" id="closeDelModal">&times;</span>
+      <h2 style="font-family:'Playfair Display',serif; color:#c9a96e; margin-bottom:1.5rem;">Delegate Details</h2>
+      <div id="delegateModalBody"></div>
+    </div>
+  </div>
+
+  <!-- Modal for Creating/Editing Delegate -->
+  <div class="modal" id="delegateFormModal" style="display:none;">
+    <div class="modal-content" style="max-width: 650px;">
+      <span class="close-btn" id="closeDelFormModal">&times;</span>
+      <h2 style="font-family:'Playfair Display',serif; color:#c9a96e; margin-bottom:1.5rem;" id="delegateFormTitle">Add Delegate Manually</h2>
+      <form id="adminDelForm">
+        <input type="hidden" id="adminDelEditId">
+        <div class="field-row">
+          <div class="field">
+            <label>Full Name</label>
+            <input type="text" id="admDelName" required>
+          </div>
+          <div class="field">
+            <label>Email Address</label>
+            <input type="email" id="admDelEmail" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Phone Number (WhatsApp)</label>
+            <input type="tel" id="admDelPhone" required>
+          </div>
+          <div class="field-row-3" style="grid-template-columns: 2fr 1fr 1fr; gap: 0.5rem; width: 100%;">
+            <div class="field">
+              <label>Institution</label>
+              <input type="text" id="admDelSchool" required>
+            </div>
+            <div class="field">
+              <label>Grade / Year</label>
+              <input type="text" id="admDelGrade" required>
+            </div>
+            <div class="field">
+              <label>Age</label>
+              <input type="number" id="admDelAge" min="5" max="99" required>
+            </div>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>1st Choice Committee</label>
+            <select class="flt" style="width:100%;" id="admDelCom1" required>
+              <option value="">Select...</option>
+              <option value="UNCSW">UNCSW (UN Commission on the Status of Women)</option>
+              <option value="UNHRC">UNHRC (UN Human Rights Council)</option>
+              <option value="AIPPM">AIPPM (All India Political Parties Meet)</option>
+              <option value="IIA">IIA (Indian Intellectuals' Assembly)</option>
+              <option value="IP">IP (International Press)</option>
+              <option value="Moot Court">Moot Court</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>1st Choice Portfolios (Top 3)</label>
+            <input type="text" id="admDelPort1" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>2nd Choice Committee</label>
+            <select class="flt" style="width:100%;" id="admDelCom2" required>
+              <option value="">Select...</option>
+              <option value="UNCSW">UNCSW (UN Commission on the Status of Women)</option>
+              <option value="UNHRC">UNHRC (UN Human Rights Council)</option>
+              <option value="AIPPM">AIPPM (All India Political Parties Meet)</option>
+              <option value="IIA">IIA (Indian Intellectuals' Assembly)</option>
+              <option value="IP">IP (International Press)</option>
+              <option value="Moot Court">Moot Court</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>2nd Choice Portfolios (Top 3)</label>
+            <input type="text" id="admDelPort2" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>MUN Experience</label>
+            <select class="flt" style="width:100%;" id="admDelExp" required>
+              <option value="beginner">Beginner (0-2 MUNs)</option>
+              <option value="intermediate">Intermediate (3-5 MUNs)</option>
+              <option value="advanced">Advanced (6+ MUNs)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Referral (If Any)</label>
+            <input type="text" id="admDelReferral">
+          </div>
+        </div>
+        <div class="field">
+          <label>Anything else you'd like to share?</label>
+          <input type="text" id="admDelAnythingElse">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Payment Status</label>
+            <select class="flt" style="width:100%;" id="admDelStatus">
+              <option value="pending">Pending</option>
+              <option value="verified">Verified</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Payment Proof Path / URL</label>
+            <input type="text" id="admDelProof" placeholder="e.g. proof.jpg or storage path">
+          </div>
+        </div>
+        <div style="display:flex; gap:.5rem; margin-top:1.5rem; justify-content: flex-end;">
+          <button type="button" class="btn btn-red" id="cancelDelFormBtn">Cancel</button>
+          <button type="submit" class="btn btn-solid" style="padding:.55rem 1.5rem;">Save Delegate</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
   <script type="module" src="/js/supabase.js"></script>
   <script type="module" src="/js/admin.js"></script>

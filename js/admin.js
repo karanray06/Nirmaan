@@ -127,14 +127,20 @@ document.addEventListener('DOMContentLoaded', () => {
     tbody.innerHTML = filtered.map(d => {
       const s = d.payment_status || 'pending';
       const bc = s === 'verified' ? 'badge-ok' : s === 'rejected' ? 'badge-err' : 'badge-warn';
-      const proof = d.payment_proof ? `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/payment-proofs/${d.payment_proof}` : null;
-      return `<tr>
+      const proof = d.payment_proof ? (d.payment_proof.startsWith('http') ? d.payment_proof : `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/payment-proofs/${d.payment_proof}`) : null;
+      return `<tr class="clickable-row" onclick="window._viewDelegateDetails('${d.id}', event)">
         <td style="color:#c9a96e;font-weight:600;font-size:.8rem">${d.delegate_id || '—'}</td>
         <td><strong>${d.full_name || '—'}</strong><br><span style="font-size:.7rem;color:rgba(240,212,218,.35)">${d.email || ''}</span></td>
         <td>${d.phone || '—'}</td><td>${d.school || '—'}</td><td>${d.committee_1 || '—'}</td>
         <td style="text-transform:capitalize">${d.experience || '—'}</td>
         <td><span class="badge ${bc}">${s}</span></td>
-        <td>${proof ? `<a href="${proof}" target="_blank" style="font-size:.7rem;color:#c9a96e;text-decoration:underline;display:block;margin-bottom:.3rem">Proof</a>` : ''}${s !== 'verified' ? `<button class="btn btn-green" style="padding:.2rem .5rem;font-size:.65rem" onclick="window._verify('${d.id}')">✓</button>` : ''}${s !== 'rejected' ? `<button class="btn btn-red" style="padding:.2rem .5rem;font-size:.65rem;margin-left:.2rem" onclick="window._reject('${d.id}')">✗</button>` : ''}</td>
+        <td onclick="event.stopPropagation()">
+          ${proof ? `<a href="${proof}" target="_blank" style="font-size:.7rem;color:#c9a96e;text-decoration:underline;display:inline-block;margin-right:.5rem">Proof</a>` : ''}
+          ${s !== 'verified' ? `<button class="btn btn-green" style="padding:.2rem .5rem;font-size:.65rem" onclick="window._verify('${d.id}')">✓</button>` : ''}
+          ${s !== 'rejected' ? `<button class="btn btn-red" style="padding:.2rem .5rem;font-size:.65rem;margin-left:.2rem" onclick="window._reject('${d.id}')">✗</button>` : ''}
+          <button class="btn btn-gold" style="padding:.2rem .5rem;font-size:.65rem;margin-left:.2rem" onclick="window._editDelegate('${d.id}')">✏️</button>
+          <button class="btn btn-red" style="padding:.2rem .5rem;font-size:.65rem;margin-left:.2rem" onclick="window._deleteDelegate('${d.id}')">🗑️</button>
+        </td>
       </tr>`;
     }).join('');
   }
@@ -150,6 +156,217 @@ document.addEventListener('DOMContentLoaded', () => {
   window._verify = async id => { if (!confirm('Verify this payment?')) return; await supabase.from('registrations').update({ payment_status: 'verified' }).eq('id', id); toast('Payment verified!'); loadDelegates(); };
   window._reject = async id => { if (!confirm('Reject this payment?')) return; await supabase.from('registrations').update({ payment_status: 'rejected' }).eq('id', id); toast('Payment rejected', 'err'); loadDelegates(); };
 
+  // Details Modal logic
+  window._viewDelegateDetails = (id, event) => {
+    const d = delegates.find(item => item.id === id);
+    if (!d) return;
+    const s = d.payment_status || 'pending';
+    const bc = s === 'verified' ? 'badge-ok' : s === 'rejected' ? 'badge-err' : 'badge-warn';
+    const proof = d.payment_proof ? (d.payment_proof.startsWith('http') ? d.payment_proof : `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/payment-proofs/${d.payment_proof}`) : null;
+    
+    const body = document.getElementById('delegateModalBody');
+    body.innerHTML = `
+      <div class="details-grid">
+        <div class="detail-item">
+          <div class="detail-label">Delegate ID</div>
+          <div class="detail-val" style="color:#c9a96e; font-weight:700;">${d.delegate_id || '—'}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Full Name</div>
+          <div class="detail-val">${d.full_name || '—'}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Email Address</div>
+          <div class="detail-val">${d.email || '—'}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Phone Number</div>
+          <div class="detail-val">${d.phone || '—'}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Institution / School</div>
+          <div class="detail-val">${d.school || '—'}</div>
+        </div>
+        <div class="detail-item" style="display: flex; gap: 2rem;">
+          <div>
+            <div class="detail-label">Grade / Year</div>
+            <div class="detail-val">${d.grade_year || '—'}</div>
+          </div>
+          <div>
+            <div class="detail-label">Age</div>
+            <div class="detail-val">${d.age || '—'}</div>
+          </div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">1st Choice Committee</div>
+          <div class="detail-val">${d.committee_1 || '—'}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">1st Choice Portfolios</div>
+          <div class="detail-val">${d.portfolio_pref_1 || '—'}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">2nd Choice Committee</div>
+          <div class="detail-val">${d.committee_2 || '—'}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">2nd Choice Portfolios</div>
+          <div class="detail-val">${d.portfolio_pref_2 || '—'}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">MUN Experience</div>
+          <div class="detail-val" style="text-transform:capitalize">${d.experience || '—'}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Referral Source</div>
+          <div class="detail-val">${d.referral || '—'}</div>
+        </div>
+        <div class="detail-item detail-full">
+          <div class="detail-label">Notes / Anything Else</div>
+          <div class="detail-val">${d.anything_else || '—'}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Payment Status</div>
+          <div>
+            <span class="badge ${bc}">${s}</span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Registered On</div>
+          <div class="detail-val">${d.created_at ? new Date(d.created_at).toLocaleString() : '—'}</div>
+        </div>
+        <div class="detail-item detail-full">
+          <div class="detail-label">Payment Proof Screenshot</div>
+          ${proof ? `
+            <a href="${proof}" target="_blank" style="display:block; margin-bottom: 0.5rem; color:#c9a96e; text-decoration:underline; font-size:0.8rem;">Open Full Image &nearr;</a>
+            <img class="proof-preview" src="${proof}" alt="Payment Proof" />
+          ` : '<div class="detail-val" style="color:rgba(240,212,218,0.3)">No payment screenshot uploaded.</div>'}
+        </div>
+      </div>
+      <div style="display:flex; gap:0.5rem; justify-content:flex-end; border-top:1px solid rgba(255,255,255,0.06); padding-top:1.5rem;">
+        ${s !== 'verified' ? `<button class="btn btn-green" onclick="window._verify('${d.id}'); document.getElementById('delegateModal').style.display='none';">Verify Payment ✓</button>` : ''}
+        ${s !== 'rejected' ? `<button class="btn btn-red" onclick="window._reject('${d.id}'); document.getElementById('delegateModal').style.display='none';">Reject Payment ✗</button>` : ''}
+        <button class="btn btn-gold" onclick="window._editDelegate('${d.id}'); document.getElementById('delegateModal').style.display='none';">Edit ✏️</button>
+        <button class="btn btn-red" onclick="window._deleteDelegate('${d.id}'); document.getElementById('delegateModal').style.display='none';">Delete 🗑️</button>
+      </div>
+    `;
+    document.getElementById('delegateModal').style.display = 'flex';
+  };
+
+  // Edit/Form modal triggers
+  window._editDelegate = (id) => {
+    const d = delegates.find(item => item.id === id);
+    if (!d) return;
+    document.getElementById('delegateFormTitle').textContent = 'Edit Delegate Details';
+    document.getElementById('adminDelEditId').value = d.id;
+    document.getElementById('admDelName').value = d.full_name || '';
+    document.getElementById('admDelEmail').value = d.email || '';
+    document.getElementById('admDelPhone').value = d.phone || '';
+    document.getElementById('admDelSchool').value = d.school || '';
+    document.getElementById('admDelGrade').value = d.grade_year || '';
+    document.getElementById('admDelAge').value = d.age || '';
+    document.getElementById('admDelCom1').value = d.committee_1 || '';
+    document.getElementById('admDelPort1').value = d.portfolio_pref_1 || '';
+    document.getElementById('admDelCom2').value = d.committee_2 || '';
+    document.getElementById('admDelPort2').value = d.portfolio_pref_2 || '';
+    document.getElementById('admDelExp').value = d.experience || 'beginner';
+    document.getElementById('admDelReferral').value = d.referral || '';
+    document.getElementById('admDelAnythingElse').value = d.anything_else || '';
+    document.getElementById('admDelStatus').value = d.payment_status || 'pending';
+    document.getElementById('admDelProof').value = d.payment_proof || '';
+    
+    document.getElementById('delegateFormModal').style.display = 'flex';
+  };
+
+  window._deleteDelegate = async id => {
+    if (!confirm('Are you sure you want to permanently delete this delegate registration? This action cannot be undone.')) return;
+    try {
+      const { error } = await supabase.from('registrations').delete().eq('id', id);
+      if (error) throw error;
+      toast('Delegate deleted successfully!');
+      loadDelegates();
+    } catch(err) {
+      toast('Error deleting: ' + err.message, 'err');
+    }
+  };
+
+  // Bind close buttons
+  document.getElementById('closeDelModal').addEventListener('click', () => {
+    document.getElementById('delegateModal').style.display = 'none';
+  });
+  document.getElementById('closeDelFormModal').addEventListener('click', () => {
+    document.getElementById('delegateFormModal').style.display = 'none';
+  });
+  document.getElementById('cancelDelFormBtn').addEventListener('click', () => {
+    document.getElementById('delegateFormModal').style.display = 'none';
+  });
+
+  document.getElementById('addDelegateBtn').addEventListener('click', () => {
+    document.getElementById('delegateFormTitle').textContent = 'Add Delegate Manually';
+    document.getElementById('adminDelEditId').value = '';
+    document.getElementById('adminDelForm').reset();
+    document.getElementById('admDelStatus').value = 'pending';
+    document.getElementById('delegateFormModal').style.display = 'flex';
+  });
+
+  document.getElementById('adminDelForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('adminDelEditId').value;
+    const name = document.getElementById('admDelName').value;
+    const email = document.getElementById('admDelEmail').value;
+    const phone = document.getElementById('admDelPhone').value;
+    const school = document.getElementById('admDelSchool').value;
+    const grade = document.getElementById('admDelGrade').value;
+    const age = document.getElementById('admDelAge').value;
+    const com1 = document.getElementById('admDelCom1').value;
+    const port1 = document.getElementById('admDelPort1').value;
+    const com2 = document.getElementById('admDelCom2').value;
+    const port2 = document.getElementById('admDelPort2').value;
+    const exp = document.getElementById('admDelExp').value;
+    const referral = document.getElementById('admDelReferral').value;
+    const anything = document.getElementById('admDelAnythingElse').value;
+    const status = document.getElementById('admDelStatus').value;
+    const proof = document.getElementById('admDelProof').value;
+
+    const data = {
+      full_name: name,
+      email: email,
+      phone: phone,
+      school: school,
+      grade_year: grade,
+      age: age,
+      committee_1: com1,
+      portfolio_pref_1: port1,
+      committee_2: com2,
+      portfolio_pref_2: port2,
+      experience: exp,
+      referral: referral,
+      anything_else: anything,
+      payment_status: status,
+      payment_proof: proof
+    };
+
+    try {
+      if (id) {
+        // Update existing delegate
+        const { error } = await supabase.from('registrations').update(data).eq('id', id);
+        if (error) throw error;
+        toast('Delegate updated successfully!');
+      } else {
+        // Insert new delegate
+        const delegateId = 'NMN-2026-' + Math.floor(1000 + Math.random() * 9000);
+        data.delegate_id = delegateId;
+        const { error } = await supabase.from('registrations').insert([data]);
+        if (error) throw error;
+        toast('Delegate created successfully!');
+      }
+      document.getElementById('delegateFormModal').style.display = 'none';
+      loadDelegates();
+    } catch(err) {
+      toast('Error saving: ' + err.message, 'err');
+    }
+  });
+
   document.getElementById('searchInput').addEventListener('input', renderDelegates);
   document.getElementById('filterComm').addEventListener('change', renderDelegates);
   document.getElementById('filterStatus').addEventListener('change', renderDelegates);
@@ -158,8 +375,27 @@ document.addEventListener('DOMContentLoaded', () => {
   // CSV Export
   document.getElementById('exportBtn').addEventListener('click', () => {
     if (!delegates.length) return toast('No data', 'err');
-    let csv = 'Delegate ID,Name,Email,Phone,School,Grade,Committee 1,Committee 2,Country,Experience,Status,Date\n';
-    delegates.forEach(d => { csv += [d.delegate_id, `"${d.full_name || ''}"`, d.email, d.phone, `"${d.school || ''}"`, d.grade_year, d.committee_1, d.committee_2, `"${d.country_pref || ''}"`, d.experience, d.payment_status, new Date(d.created_at).toLocaleDateString()].join(',') + '\n'; });
+    let csv = 'Delegate ID,Name,Email,Phone,School,Grade,Age,Committee 1,Portfolio 1,Committee 2,Portfolio 2,Experience,Referral,Anything Else,Status,Date\n';
+    delegates.forEach(d => {
+      csv += [
+        d.delegate_id,
+        `"${d.full_name || ''}"`,
+        d.email,
+        d.phone,
+        `"${d.school || ''}"`,
+        d.grade_year,
+        d.age || '',
+        d.committee_1,
+        `"${d.portfolio_pref_1 || ''}"`,
+        d.committee_2,
+        `"${d.portfolio_pref_2 || ''}"`,
+        d.experience,
+        `"${d.referral || ''}"`,
+        `"${d.anything_else || ''}"`,
+        d.payment_status,
+        new Date(d.created_at).toLocaleDateString()
+      ].join(',') + '\n';
+    });
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = `nirmaan_${new Date().toISOString().slice(0, 10)}.csv`; a.click();
     toast('CSV exported!');
   });

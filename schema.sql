@@ -14,6 +14,11 @@ CREATE TABLE registrations (
   country_pref text,
   experience text,
   dietary text,
+  age text,
+  portfolio_pref_1 text,
+  portfolio_pref_2 text,
+  referral text,
+  anything_else text,
   payment_status text DEFAULT 'pending',
   payment_proof text,
   notes text

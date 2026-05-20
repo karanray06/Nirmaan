@@ -8,14 +8,18 @@ window.nextStep = (step) => {
     if(!document.getElementById('regName').checkValidity() || 
        !document.getElementById('regEmail').checkValidity() || 
        !document.getElementById('regPhone').checkValidity() || 
-       !document.getElementById('regSchool').checkValidity()) {
+       !document.getElementById('regSchool').checkValidity() ||
+       !document.getElementById('regGrade').checkValidity() ||
+       !document.getElementById('regAge').checkValidity()) {
       alert("Please fill all fields in Step 1 correctly.");
       return;
     }
   } else if(step === 3) {
     if(!document.getElementById('regCom1').checkValidity() || 
+       !document.getElementById('regPort1').checkValidity() || 
        !document.getElementById('regCom2').checkValidity() || 
-       !document.getElementById('regCountry').checkValidity()) {
+       !document.getElementById('regPort2').checkValidity() ||
+       !document.getElementById('regExp').checkValidity()) {
       alert("Please fill all fields in Step 2 correctly.");
       return;
     }
@@ -97,10 +101,14 @@ document.addEventListener('DOMContentLoaded', () => {
         phone: document.getElementById('regPhone').value,
         school: document.getElementById('regSchool').value,
         grade_year: document.getElementById('regGrade').value,
+        age: document.getElementById('regAge').value,
         committee_1: document.getElementById('regCom1').value,
+        portfolio_pref_1: document.getElementById('regPort1').value,
         committee_2: document.getElementById('regCom2').value,
-        country_pref: document.getElementById('regCountry').value,
+        portfolio_pref_2: document.getElementById('regPort2').value,
         experience: document.getElementById('regExp').value,
+        referral: document.getElementById('regReferral').value,
+        anything_else: document.getElementById('regAnythingElse').value,
         payment_proof: proofUrl,
         payment_status: 'pending'
       };
