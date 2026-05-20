@@ -155,3 +155,11 @@ ALTER TABLE public.registrations ADD COLUMN IF NOT EXISTS portfolio_pref_2 TEXT;
 ALTER TABLE public.registrations ADD COLUMN IF NOT EXISTS referral TEXT;
 ALTER TABLE public.registrations ADD COLUMN IF NOT EXISTS anything_else TEXT;
 
+-- Create Storage Bucket for Payment Proofs
+INSERT INTO storage.buckets (id, name, public) 
+VALUES ('payment-proofs', 'payment-proofs', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Set up storage policies for payment-proofs bucket
+CREATE POLICY "Public Access" ON storage.objects FOR SELECT USING (bucket_id = 'payment-proofs');
+CREATE POLICY "Anon Insert" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'payment-proofs');

@@ -86,12 +86,37 @@ document.addEventListener('DOMContentLoaded', () => {
         // Upload to Supabase Storage
         const fileExt = file.name.split('.').pop();
         const fileName = `${delegateId}-${Date.now()}.${fileExt}`;
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('payment-proofs')
-          .upload(fileName, file);
+        
+        try {
+          // Try to upload directly first
+          let { data: uploadData, error: uploadError } = await supabase.storage
+            .from('payment-proofs')
+            .upload(fileName, file);
           
-        if(uploadError) throw uploadError;
-        proofUrl = uploadData.path;
+          // If bucket doesn't exist, try creating it first
+          if (uploadError && (uploadError.message || '').toLowerCase().includes('bucket')) {
+            console.log('Bucket not found, attempting to create...');
+            await supabase.storage.createBucket('payment-proofs', { public: true });
+            // Retry upload after creating bucket
+            const retry = await supabase.storage
+              .from('payment-proofs')
+              .upload(fileName, file);
+            uploadData = retry.data;
+            uploadError = retry.error;
+          }
+            
+          if (uploadError) throw uploadError;
+          
+          // Build the full public URL
+          const { data: urlData } = supabase.storage
+            .from('payment-proofs')
+            .getPublicUrl(uploadData.path);
+          proofUrl = urlData?.publicUrl || uploadData.path;
+        } catch (storageErr) {
+          console.warn('Storage upload failed, saving without proof:', storageErr.message);
+          // If storage completely fails, still allow registration to proceed
+          proofUrl = '';
+        }
       }
 
       const record = {

@@ -39,6 +39,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (isScheduleAnnounced) {
           loadDynamicSchedule();
         }
+
+        // Registration Fees and UPI Details Injection
+        const feeStr = `Registration Fee: Early Bird ₹${settings['fee_early_bird'] || 1800} | Standard ₹${settings['fee_standard'] || 2100} | IP ₹${settings['fee_ip'] || 1900}`;
+        const displayFeeStr = document.getElementById('displayFeeStr');
+        if (displayFeeStr) displayFeeStr.textContent = feeStr;
+
+        const displayUpiId = document.getElementById('displayUpiId');
+        if (displayUpiId) displayUpiId.textContent = `UPI ID: ${settings['upi_id'] || 'nirmaan@bank'}`;
+
+        const qrCodeUrl = settings['qr_code_url'];
+        const displayQrCode = document.getElementById('displayQrCode');
+        const qrCodeImg = document.getElementById('qrCodeImg');
+        
+        if (qrCodeUrl && qrCodeUrl.trim() !== '') {
+          if (displayQrCode && qrCodeImg) {
+            qrCodeImg.src = qrCodeUrl;
+            displayQrCode.style.display = 'block';
+          }
+        } else {
+          if (displayQrCode) displayQrCode.style.display = 'none';
+        }
+
       }
     } catch (err) {
       console.error('Error fetching states:', err);

@@ -589,11 +589,14 @@
           <!-- Step 3: Payment -->
           <div class="form-step" id="step3">
             <h3>Payment & Confirmation</h3>
-            <div class="payment-info">
-              <h4>Registration Fee: Early Bird ₹1800 | Standard ₹2100 | IP ₹1900</h4>
-              <p>UPI ID: nirmaan@bank</p>
+            <div class="payment-info" id="paymentInfoBlock">
+              <h4 id="displayFeeStr">Registration Fee: Early Bird ₹1800 | Standard ₹2100 | IP ₹1900</h4>
+              <p id="displayUpiId">UPI ID: nirmaan@bank</p>
               <p>Name: Nirmaan MUN</p>
-              <p style="font-size:0.8rem; color:var(--primary-crimson); margin-top:0.75rem; font-style:italic;">⚠️ All delegate fees are strictly non-refundable under any circumstances. Once a registration is confirmed, no requests for cancellation or refund will be entertained.</p>
+              <div id="displayQrCode" style="display:none; margin-top:1rem; margin-bottom:1rem; text-align:center;">
+                <img id="qrCodeImg" src="" alt="UPI QR Code" style="max-width:150px; border-radius:8px; border:2px solid var(--gold-accent);">
+              </div>
+              <p style="font-size:0.85rem; color:#ff7a7a; margin-top:0.75rem; font-weight:500;">⚠️ All delegate fees are strictly non-refundable under any circumstances. Once a registration is confirmed, no requests for cancellation or refund will be entertained.</p>
             </div>
             <div class="form-group">
               <label class="form-label">Upload Payment Screenshot</label>
