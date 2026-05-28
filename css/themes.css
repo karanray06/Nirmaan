@@ -13,211 +13,189 @@ body.nirmaan-classic {
    🪔 THEME 2: RAKSHA BANDHAN
    -------------------------------------------------------------------------- */
 body.raksha-bandhan {
-  /* Rich terracotta-saffron and gold palace colors */
-  --primary-crimson: #B23B1E;
+  --primary-crimson: #C44B11;
   --deep-burgundy: #80230F;
   --dark-wine: #4D1004;
   --rose-mid: #E65C00;
-  --gold-accent: #D4A33B;
-  --warm-cream: #FFFBF4;
+  --gold-accent: #D4A017;
+  --warm-cream: #FFF8EE;
   --blush-pale: #FFEAD2;
   --sunset-amber: #FF9933;
-  --ivory: #FFFDF9;
+  --ivory: #FFFAF0;
   --text-dark: #3A120A;
   --text-muted: #8C4738;
   --text-light: #FFF3E0;
-  --border-subtle: rgba(178, 59, 30, 0.15);
-  --border-medium: rgba(178, 59, 30, 0.3);
-  --shadow-glow: 0 0 40px rgba(212, 163, 59, 0.35);
+  --border-subtle: rgba(196, 75, 17, 0.15);
+  --border-medium: rgba(196, 75, 17, 0.3);
+  --shadow-glow: 0 0 40px rgba(212, 160, 23, 0.35);
   
   --font-display: 'Yatra One', serif;
   --font-body: 'Hind', sans-serif;
 
   background-color: var(--warm-cream);
-  background-image: 
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.25), transparent),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23D4A33B' fill-opacity='0.05'%3E%3Ccircle cx='40' cy='30' r='8'/%3E%3Ccircle cx='49.5' cy='37' r='8'/%3E%3Ccircle cx='46' cy='48' r='8'/%3E%3Ccircle cx='34' cy='48' r='8'/%3E%3Ccircle cx='30.5' cy='37' r='8'/%3E%3Ccircle cx='40' cy='40' r='5' fill='%23B23B1E' fill-opacity='0.06'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: linear-gradient(to bottom, #FFF8EE, #F5E6CC);
   background-attachment: fixed;
 }
 
-/* Linen texture overlay */
 body.raksha-bandhan::before {
   content: '';
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+  background-color: rgba(212, 160, 23, 0.08); /* Warm amber overlay 8% */
   pointer-events: none;
   z-index: 9999;
 }
 
-/* Rangoli Mandala in Hero */
-body.raksha-bandhan #hero::after {
+body.raksha-bandhan .card {
+  background: var(--ivory) !important;
+  border-top: 3px solid transparent !important;
+  border-image: linear-gradient(to right, #C44B11, #D4A017) 1 !important;
+}
+body.raksha-bandhan .card::after {
   content: '';
   position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px; height: 600px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%23B23B1E' stroke-width='1.5' stroke-opacity='0.07'%3E%3Ccircle cx='100' cy='100' r='90'/%3E%3Ccircle cx='100' cy='100' r='75'/%3E%3Ccircle cx='100' cy='100' r='60'/%3E%3Ccircle cx='100' cy='100' r='45'/%3E%3Cpath d='M100 10v180M10 100h180M36.36 36.36l127.28 127.28M36.36 163.64L163.64 36.36'/%3E%3Cpath d='M100 55a45 45 0 0 1 45 45M100 145a45 45 0 0 1-45-45'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
+  top: 0; left: 0; right: 0; bottom: 0;
   pointer-events: none;
-  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='5' cy='5' r='2' fill='%23C44B11' opacity='0.1'/%3E%3Ccircle cx='35' cy='35' r='2' fill='%23D4A017' opacity='0.1'/%3E%3C/svg%3E");
 }
 
 /* --------------------------------------------------------------------------
    🌌 THEME 3: DEEPAVALI SPARK
    -------------------------------------------------------------------------- */
 body.deepavali-spark {
-  /* Rich mystical night-skies and glowing warm firework colors */
-  --primary-crimson: #C12BB1;
+  --primary-crimson: #C438AC;
   --deep-burgundy: #250B52;
-  --dark-wine: #0E0422;
-  --rose-mid: #E81A89;
-  --gold-accent: #FFAE19;
-  --warm-cream: #0E0422;
-  --blush-pale: #EAD9FF;          /* High contrast pale lavender for stat labels & ticker */
+  --dark-wine: #0A0614;
+  --rose-mid: #FF6B35;
+  --gold-accent: #FFB830;
+  --warm-cream: #1A0A2E;
+  --blush-pale: #EAD9FF;
   --sunset-amber: #FF7700;
-  --ivory: #160B30;
-  --text-dark: #FFF6E5;           /* Bright text for dark theme */
-  --text-muted: #C4B4E6;          /* High contrast light pastel lavender for descriptions */
+  --ivory: #160C28;
+  --text-dark: #FFF6E5;
+  --text-muted: #C4B4E6;
   --text-light: #FFE3B3;
-  --border-subtle: rgba(255, 174, 25, 0.25);
-  --border-medium: rgba(255, 174, 25, 0.45);
-  --shadow-glow: 0 0 40px rgba(255, 174, 25, 0.5);
+  --border-subtle: rgba(255, 184, 48, 0.25);
+  --border-medium: rgba(255, 184, 48, 0.45);
+  --shadow-glow: 0 0 40px rgba(255, 184, 48, 0.5);
 
   --font-display: 'Rozha One', serif;
   --font-body: 'Poppins', sans-serif;
 
-  background-color: var(--warm-cream);
+  background-color: var(--dark-wine);
   background-image: 
-    radial-gradient(circle at 12% 18%, rgba(255,255,255,0.2) 1.5px, transparent 1.5px),
-    radial-gradient(circle at 76% 38%, rgba(255,255,255,0.18) 1px, transparent 1px),
-    radial-gradient(circle at 45% 68%, rgba(255,255,255,0.15) 2px, transparent 2px),
-    radial-gradient(circle at 88% 82%, rgba(255,255,255,0.22) 1px, transparent 1px),
-    radial-gradient(circle at 22% 88%, rgba(255,255,255,0.12) 2.5px, transparent 2.5px),
-    radial-gradient(circle at 62% 12%, rgba(255,255,255,0.25) 1.5px, transparent 1.5px);
-  background-size: 350px 350px;
-  background-repeat: repeat;
+    radial-gradient(circle at center, #1A0A2E 0%, #0A0614 100%),
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,0.1) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 76% 38%, rgba(255,255,255,0.08) 1px, transparent 1px),
+    radial-gradient(circle at 45% 68%, rgba(255,255,255,0.12) 2px, transparent 2px),
+    radial-gradient(circle at 88% 82%, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 100% 100%, 350px 350px, 350px 350px, 350px 350px, 350px 350px;
+  background-repeat: no-repeat, repeat, repeat, repeat, repeat;
   background-attachment: fixed;
-  animation: starTwinkle 4s infinite alternate ease-in-out;
 }
 
-@keyframes starTwinkle {
-  0% { opacity: 0.9; }
-  100% { opacity: 0.75; }
+body.deepavali-spark .card {
+  background: var(--ivory) !important;
+  border-top: 3px solid transparent !important;
+  border-image: linear-gradient(to right, #9B2B8A, #FFB830) 1 !important;
+  box-shadow: inset 0 5px 15px rgba(155, 43, 138, 0.15), 0 8px 30px rgba(0,0,0,0.5) !important;
 }
-
-/* Rangoli Glow behind Hero Logo */
-body.deepavali-spark #hero::after {
+body.deepavali-spark .card::after {
   content: '';
   position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px; height: 500px;
-  background: radial-gradient(ellipse 350px 350px at center, rgba(193, 43, 177, 0.18) 0%, transparent 70%);
+  top: 0; left: 0; right: 0; bottom: 0;
   pointer-events: none;
-  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='1' fill='%23FFFFFF' opacity='0.1'/%3E%3C/svg%3E");
 }
 
 /* --------------------------------------------------------------------------
    ⚡ THEME 4: AVENGERS INITIATIVE
    -------------------------------------------------------------------------- */
 body.avengers-initiative {
-  /* Futuristic sci-fi tech graphite, hot laser-red and holographic blue */
-  --primary-crimson: #C8102E;
+  --primary-crimson: #CC1B1B;
   --deep-burgundy: #131A26;
-  --dark-wine: #0A0D14;
-  --rose-mid: #00E5FF;
+  --dark-wine: #0B0D0F;
+  --rose-mid: #4A90D9;
   --gold-accent: #FFC72C;
-  --warm-cream: #0A0D14;
-  --blush-pale: #B5CADE;          /* High contrast pale cyber-blue for stat labels & ticker */
+  --warm-cream: #0B0D0F;
+  --blush-pale: #B5CADE;
   --sunset-amber: #FF3B30;
-  --ivory: #0F131C;
-  --text-dark: #E2EDF8;           /* Bright text for dark theme */
-  --text-muted: #A6BACD;          /* High contrast light cyber-slate for descriptions */
+  --ivory: #161C22;
+  --text-dark: #E2EDF8;
+  --text-muted: #A6BACD;
   --text-light: #E2EDF8;
-  --border-subtle: rgba(0, 229, 255, 0.22);
-  --border-medium: rgba(0, 229, 255, 0.4);
-  --shadow-glow: 0 0 40px rgba(200, 16, 46, 0.45);
+  --border-subtle: rgba(74, 144, 217, 0.22);
+  --border-medium: rgba(74, 144, 217, 0.4);
+  --shadow-glow: 0 0 40px rgba(204, 27, 27, 0.45);
 
   --font-display: 'Orbitron', sans-serif;
   --font-body: 'Exo 2', sans-serif;
 
-  background-color: var(--warm-cream);
+  background-color: var(--dark-wine);
   background-image: 
-    linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='69.282' viewBox='0 0 40 69.282'%3E%3Cpath d='M40 11.547L20 0 0 11.547v23.094l20 11.547 20-11.547V11.547z' fill='none' stroke='%234A90D9' stroke-width='1' stroke-opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 40px 69.282px;
   background-attachment: fixed;
 }
 
-/* Large Pulsing Arc Reactor behind Hero Logo */
-body.avengers-initiative #hero::after {
+body.avengers-initiative .card {
+  background: var(--ivory) !important;
+  border-top: 3px solid transparent !important;
+  border-image: linear-gradient(to right, #CC1B1B, #4A90D9) 1 !important;
+}
+body.avengers-initiative .card::after {
   content: '';
   position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px; height: 500px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='%2300E5FF' stroke-width='1' stroke-opacity='0.08' stroke-dasharray='5,3'/%3E%3Ccircle cx='50' cy='50' r='35' fill='none' stroke='%2300E5FF' stroke-width='1.5' stroke-opacity='0.15'/%3E%3Ccircle cx='50' cy='50' r='18' fill='none' stroke='%2300E5FF' stroke-width='2' stroke-opacity='0.2'/%3E%3Cpolygon points='50,22 74,64 26,64' fill='none' stroke='%2300E5FF' stroke-width='1' stroke-opacity='0.08'/%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 100px; height: 100px;
   pointer-events: none;
-  z-index: 0;
-  animation: arcReactorPulse 3s infinite ease-in-out;
-}
-
-@keyframes arcReactorPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-  50% { transform: translate(-50%, -50%) scale(1.04); opacity: 1; }
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%234A90D9' stroke-width='1' opacity='0.05'/%3E%3Cpath d='M50 0v100M0 50h100' stroke='%234A90D9' stroke-width='1' opacity='0.05'/%3E%3C/svg%3E");
+  background-size: contain;
 }
 
 /* --------------------------------------------------------------------------
    🌐 THEME 5: UNITED NATIONS
    -------------------------------------------------------------------------- */
 body.united-nations {
-  /* Formal assembly global blue, champagne gold and crisp white */
-  --primary-crimson: #0A58CA;
+  --primary-crimson: #1A6DAB;
   --deep-burgundy: #032854;
   --dark-wine: #01142A;
   --rose-mid: #3B82F6;
   --gold-accent: #B8960C;
-  --warm-cream: #F8FAFC;
+  --warm-cream: #F4F7FB;
   --blush-pale: #E2E8F0;
   --sunset-amber: #E2B200;
   --ivory: #FFFFFF;
   --text-dark: #0F172A;
   --text-muted: #475569;
   --text-light: #FFFFFF;
-  --border-subtle: rgba(10, 88, 202, 0.12);
-  --border-medium: rgba(10, 88, 202, 0.25);
-  --shadow-glow: 0 0 40px rgba(10, 88, 202, 0.15);
+  --border-subtle: rgba(26, 109, 171, 0.12);
+  --border-medium: rgba(26, 109, 171, 0.25);
+  --shadow-glow: 0 0 40px rgba(26, 109, 171, 0.15);
 
   --font-display: 'Libre Baskerville', serif;
   --font-body: 'Source Sans 3', sans-serif;
 
   background-color: var(--warm-cream);
-  background-image: 
-    linear-gradient(rgba(10, 88, 202, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(10, 88, 202, 0.02) 1px, transparent 1px);
-  background-size: 25px 25px;
+  background-image: linear-gradient(to bottom, transparent 59px, rgba(26, 109, 171, 0.04) 60px);
+  background-size: 100% 60px;
   background-attachment: fixed;
 }
 
-/* World Map Watermark behind Hero Logo */
-body.united-nations #hero::after {
+body.united-nations .card {
+  background: var(--ivory) !important;
+  border-top: 3px solid #1A6DAB !important;
+  box-shadow: 0 2px 12px rgba(26, 109, 171, 0.08) !important;
+  border-image: none !important;
+}
+body.united-nations .card::after {
   content: '';
   position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 900px; height: 500px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 500'%3E%3Cpath d='M150 150 Q 200 100, 300 120 T 500 150 T 700 120 T 900 180 M200 250 Q 300 200, 450 280 T 700 220 T 850 300 M100 350 H900 M250 100 V400 M500 100 V400 M750 100 V400' fill='none' stroke='%230A58CA' stroke-width='1.5' stroke-opacity='0.05'/%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  bottom: 10px; right: 10px;
+  width: 60px; height: 60px;
   pointer-events: none;
-  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10 50 Q30 30, 50 50 T90 50' fill='none' stroke='%231A6DAB' stroke-width='2' opacity='0.05'/%3E%3C/svg%3E");
 }
-
 
 /* ==========================================================================
    GLOBAL STYLE RULES DRIVEN BY THEME CLASSES
@@ -228,218 +206,45 @@ body.raksha-bandhan,
 body.deepavali-spark,
 body.avengers-initiative,
 body.united-nations {
-  transition: background-color 0.5s ease, color 0.3s ease;
-  font-family: var(--font-body) !important;
+  --primary-crimson: #1A6DAB;
+  --deep-burgundy: #032854;
+  --dark-wine: #01142A;
+  --rose-mid: #3B82F6;
+  --gold-accent: #B8960C;
+  --warm-cream: #F4F7FB;
+  --blush-pale: #E2E8F0;
+  --sunset-amber: #E2B200;
+  --ivory: #FFFFFF;
+  --text-dark: #0F172A;
+  --text-muted: #475569;
+  --text-light: #FFFFFF;
+  --border-subtle: rgba(26, 109, 171, 0.12);
+  --border-medium: rgba(26, 109, 171, 0.25);
+  --shadow-glow: 0 0 40px rgba(26, 109, 171, 0.15);
+
+  --font-display: 'Libre Baskerville', serif;
+  --font-body: 'Source Sans 3', sans-serif;
+
+  background-color: var(--warm-cream);
+  background-image: linear-gradient(to bottom, transparent 59px, rgba(26, 109, 171, 0.04) 60px);
+  background-size: 100% 60px;
+  background-attachment: fixed;
 }
 
-/* High-specificity Headings overrides strictly under custom themes */
-body.raksha-bandhan h1, body.raksha-bandhan h2, body.raksha-bandhan h3, body.raksha-bandhan h4, body.raksha-bandhan .section-title, body.raksha-bandhan .card h3, body.raksha-bandhan .pillar h3,
-body.deepavali-spark h1, body.deepavali-spark h2, body.deepavali-spark h3, body.deepavali-spark h4, body.deepavali-spark .section-title, body.deepavali-spark .card h3, body.deepavali-spark .pillar h3,
-body.avengers-initiative h1, body.avengers-initiative h2, body.avengers-initiative h3, body.avengers-initiative h4, body.avengers-initiative .section-title, body.avengers-initiative .card h3, body.avengers-initiative .pillar h3,
-body.united-nations h1, body.united-nations h2, body.united-nations h3, body.united-nations h4, body.united-nations .section-title, body.united-nations .card h3, body.united-nations .pillar h3 {
-  font-family: var(--font-display) !important;
-  color: var(--primary-crimson) !important;
-}
-
-/* Specific glowing headlines for dark modes */
-body.deepavali-spark h1, body.deepavali-spark h2, body.deepavali-spark h3, body.deepavali-spark h4, body.deepavali-spark .section-title, body.deepavali-spark .card h3, body.deepavali-spark .pillar h3 {
-  color: var(--gold-accent) !important;
-  text-shadow: 0 0 15px rgba(255, 174, 25, 0.25);
-}
-body.avengers-initiative h1, body.avengers-initiative h2, body.avengers-initiative h3, body.avengers-initiative h4, body.avengers-initiative .section-title, body.avengers-initiative .card h3, body.avengers-initiative .pillar h3 {
-  color: var(--rose-mid) !important;
-  text-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
-}
-
-/* Card Styling overrides strictly under custom themes */
-body.raksha-bandhan .card,
-body.deepavali-spark .card,
-body.avengers-initiative .card,
 body.united-nations .card {
   background: var(--ivory) !important;
-  border: 1px solid var(--border-subtle) !important;
-  color: var(--text-dark) !important;
-  transition: all 0.3s ease;
+  border-top: 3px solid #1A6DAB !important;
+  box-shadow: 0 2px 12px rgba(26, 109, 171, 0.08) !important;
+  border-image: none !important;
 }
-
-body.raksha-bandhan .card::before,
-body.deepavali-spark .card::before,
-body.avengers-initiative .card::before,
-body.united-nations .card::before {
-  background: linear-gradient(90deg, var(--primary-crimson), var(--gold-accent)) !important;
+body.united-nations .card::after {
+  content: '';
+  position: absolute;
+  bottom: 10px; right: 10px;
+  width: 60px; height: 60px;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10 50 Q30 30, 50 50 T90 50' fill='none' stroke='%231A6DAB' stroke-width='2' opacity='0.05'/%3E%3C/svg%3E");
 }
-
-body.raksha-bandhan .card:hover,
-body.deepavali-spark .card:hover,
-body.avengers-initiative .card:hover,
-body.united-nations .card:hover {
-  border-color: var(--gold-accent) !important;
-  box-shadow: var(--shadow-md) !important;
-  transform: translateY(-4px);
-}
-
-/* Scoped paragraph colors inside components under custom themes to ensure readability */
-body.raksha-bandhan .card p, body.raksha-bandhan .pillar p, body.raksha-bandhan .committee-card p, body.raksha-bandhan .speaker-card p,
-body.deepavali-spark .card p, body.deepavali-spark .pillar p, body.deepavali-spark .committee-card p, body.deepavali-spark .speaker-card p,
-body.avengers-initiative .card p, body.avengers-initiative .pillar p, body.avengers-initiative .committee-card p, body.avengers-initiative .speaker-card p,
-body.united-nations .card p, body.united-nations .pillar p, body.united-nations .committee-card p, body.united-nations .speaker-card p {
-  color: var(--text-muted) !important;
-}
-
-/* Specific card styles for dark & high-tech presets */
-body.deepavali-spark .card {
-  background-image: radial-gradient(circle at 100% 0%, rgba(255, 174, 25, 0.04), transparent 50%) !important;
-}
-body.deepavali-spark .card:hover {
-  box-shadow: 0 8px 40px rgba(157, 28, 143, 0.35) !important;
-  border-color: rgba(255, 174, 25, 0.4) !important;
-}
-
-body.avengers-initiative .card {
-  border-left: 2px solid rgba(0, 229, 255, 0.2) !important;
-}
-body.avengers-initiative .card:hover {
-  background: #111520 !important;
-  box-shadow: 0 0 20px rgba(0, 229, 255, 0.18), 0 0 60px rgba(200, 16, 46, 0.1) !important;
-  border-color: rgba(0, 229, 255, 0.4) !important;
-}
-
-body.united-nations .card {
-  border-radius: 2px !important;
-  box-shadow: 0 2px 12px rgba(10, 88, 202, 0.06) !important;
-}
-body.united-nations .card:hover {
-  box-shadow: 0 8px 30px rgba(10, 88, 202, 0.12) !important;
-  border-color: rgba(10, 88, 202, 0.3) !important;
-}
-
-/* Navbar Scoped Themes Styling (Classic Default transparent-to-burgundy navbar remains 100% perfectly untouched) */
-
-/* 🪔 Raksha Bandhan Scoped Navbar: Deep palace burgundy background with gold/cream text and links */
-body.raksha-bandhan nav.navbar {
-  background: var(--deep-burgundy) !important;
-  backdrop-filter: blur(12px) !important;
-  border-bottom: 1px solid var(--border-medium) !important;
-}
-body.raksha-bandhan nav.navbar .nav-logo-text {
-  color: var(--gold-accent) !important;
-  font-family: var(--font-display) !important;
-}
-body.raksha-bandhan nav.navbar .nav-links a {
-  color: rgba(255, 243, 224, 0.85) !important;
-}
-body.raksha-bandhan nav.navbar .nav-links a:hover,
-body.raksha-bandhan nav.navbar .nav-links a.active {
-  color: var(--gold-accent) !important;
-}
-body.raksha-bandhan nav.navbar .hamburger span {
-  background: var(--gold-accent) !important;
-}
-
-/* 🌌 Deepavali Spark Scoped Navbar: Deep mystical night-sky background with gold/white text and links */
-body.deepavali-spark nav.navbar {
-  background: var(--dark-wine) !important;
-  backdrop-filter: blur(12px) !important;
-  border-bottom: 1px solid var(--border-subtle) !important;
-}
-body.deepavali-spark nav.navbar .nav-logo-text {
-  color: var(--gold-accent) !important;
-  font-family: var(--font-display) !important;
-}
-body.deepavali-spark nav.navbar .nav-links a {
-  color: rgba(255, 255, 255, 0.85) !important;
-}
-body.deepavali-spark nav.navbar .nav-links a:hover,
-body.deepavali-spark nav.navbar .nav-links a.active {
-  color: var(--gold-accent) !important;
-}
-body.deepavali-spark nav.navbar .hamburger span {
-  background: var(--gold-accent) !important;
-}
-
-/* ⚡ Avengers Initiative Scoped Navbar: Sleek tactical carbon black background with holographic cyan text and links */
-body.avengers-initiative nav.navbar {
-  background: var(--dark-wine) !important;
-  backdrop-filter: blur(12px) !important;
-  border-bottom: 1px solid var(--border-subtle) !important;
-}
-body.avengers-initiative nav.navbar .nav-logo-text {
-  color: var(--rose-mid) !important;
-  font-family: var(--font-display) !important;
-}
-body.avengers-initiative nav.navbar .nav-links a {
-  color: rgba(226, 237, 248, 0.85) !important;
-}
-body.avengers-initiative nav.navbar .nav-links a:hover,
-body.avengers-initiative nav.navbar .nav-links a.active {
-  color: var(--rose-mid) !important;
-}
-body.avengers-initiative nav.navbar .hamburger span {
-  background: var(--rose-mid) !important;
-}
-
-/* 🌐 United Nations Scoped Navbar: Formal diplomatic navy background with pure white and champagne text/links */
-body.united-nations nav.navbar {
-  background: var(--deep-burgundy) !important;
-  backdrop-filter: blur(12px) !important;
-  border-bottom: 1px solid var(--border-medium) !important;
-}
-body.united-nations nav.navbar .nav-logo-text {
-  color: #FFFFFF !important;
-  font-family: var(--font-display) !important;
-}
-body.united-nations nav.navbar .nav-links a {
-  color: rgba(248, 250, 252, 0.85) !important;
-}
-body.united-nations nav.navbar .nav-links a:hover,
-body.united-nations nav.navbar .nav-links a.active {
-  color: var(--gold-accent) !important;
-}
-body.united-nations nav.navbar .hamburger span {
-  background: #FFFFFF !important;
-}
-
-
-/* Primary Buttons Overrides strictly scoped under custom themes */
-body.raksha-bandhan .btn-primary,
-body.deepavali-spark .btn-primary,
-body.avengers-initiative .btn-primary,
-body.united-nations .btn-primary {
-  background: linear-gradient(135deg, var(--primary-crimson), var(--rose-mid)) !important;
-  color: var(--text-light) !important;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
-  border: none !important;
-}
-
-body.raksha-bandhan .btn-primary:hover,
-body.deepavali-spark .btn-primary:hover,
-body.avengers-initiative .btn-primary:hover,
-body.united-nations .btn-primary:hover {
-  background: var(--gold-accent) !important;
-  color: var(--dark-wine) !important;
-  transform: translateY(-2px);
-}
-
-/* Theme specific Button Overrides */
-body.avengers-initiative .btn-primary {
-  border-radius: 2px !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.15em !important;
-}
-body.avengers-initiative .btn-primary:hover {
-  background: linear-gradient(135deg, var(--gold-accent), #00E5FF) !important;
-  color: #0A0D14 !important;
-}
-
-body.united-nations .btn-primary {
-  font-weight: 600 !important;
-  border-radius: 3px !important;
-}
-body.united-nations .btn-primary:hover {
-  background: #004D80 !important;
-  color: #fff !important;
-}
-
 
 /* ==========================================================================
    DYNAMIC ILLUSTRATIONS HANDLERS
@@ -540,34 +345,21 @@ body.united-nations .time-pill {
 body.raksha-bandhan .section-divider svg,
 body.deepavali-spark .section-divider svg,
 body.avengers-initiative .section-divider svg,
-body.united-nations .section-divider svg {
-  display: none !important; /* Hide defaults */
-}
+body.united-nations .section-divider svg { display: none !important; }
 
-/* Raksha Bandhan custom divider */
 body.raksha-bandhan .section-divider {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='24' viewBox='0 0 120 24'%3E%3Cpath d='M0 12 Q 30 20, 60 12 T 120 12' fill='none' stroke='%23B23B1E' stroke-width='2' stroke-opacity='0.2'/%3E%3Ccircle cx='60' cy='6' r='3' fill='%23B23B1E' fill-opacity='0.25'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='24' viewBox='0 0 80 24'%3E%3Cpath d='M0 12 Q20 20, 40 12 T80 12' fill='none' stroke='%23C44B11' stroke-width='2' opacity='0.25'/%3E%3Ccircle cx='40' cy='12' r='4' fill='%23D4A017' opacity='0.4'/%3E%3C/svg%3E");
   background-repeat: repeat-x;
-  background-size: auto 24px;
 }
-
-/* Diwali spark custom divider */
 body.deepavali-spark .section-divider {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='24' viewBox='0 0 150 24'%3E%3Cg fill='%23FFAE19' fill-opacity='0.25'%3E%3Cpath d='M75 18 C70 18, 65 14, 65 8 C65 5, 75 0, 75 0 C75 0, 85 5, 85 8 C85 14, 80 18, 75 18 Z'/%3E%3C/g%3E%3Cline x1='0' y1='18' x2='150' y2='18' stroke='%23FFAE19' stroke-opacity='0.15' stroke-width='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='24' viewBox='0 0 100 24'%3E%3Cg fill='%23FFB830' opacity='0.5'%3E%3Cpath d='M50 18 C46 18, 43 14, 43 8 C43 5, 50 0, 50 0 C50 0, 57 5, 57 8 C57 14, 54 18, 50 18 Z'/%3E%3C/g%3E%3Cline x1='0' y1='18' x2='100' y2='18' stroke='%23FFB830' stroke-opacity='0.2' stroke-width='1'/%3E%3C/svg%3E");
   background-repeat: repeat-x;
-  background-size: auto 24px;
 }
-
-/* Avengers Chevron tactical divider */
 body.avengers-initiative .section-divider {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='24' viewBox='0 0 100 24'%3E%3Cg stroke='%2300E5FF' stroke-opacity='0.2' fill='none' stroke-width='1'%3E%3Cline x1='0' y1='12' x2='100' y2='12'/%3E%3Cpolygon points='45,8 50,12 45,16' fill='%2300E5FF' fill-opacity='0.2'/%3E%3Cpolygon points='55,8 60,12 55,16' fill='%2300E5FF' fill-opacity='0.2'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='24' viewBox='0 0 200 24'%3E%3Cline x1='0' y1='12' x2='200' y2='12' stroke='%234A90D9' stroke-width='1'/%3E%3Ccircle cx='100' cy='12' r='6' fill='none' stroke='%23CC1B1B' stroke-width='2'/%3E%3Ccircle cx='100' cy='12' r='2' fill='%23CC1B1B'/%3E%3C/svg%3E");
   background-repeat: repeat-x;
-  background-size: auto 24px;
 }
-
-/* UN Olive Branch Divider */
 body.united-nations .section-divider {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='24' viewBox='0 0 200 24'%3E%3Cline x1='0' y1='12' x2='200' y2='12' stroke='%230A58CA' stroke-opacity='0.15' stroke-width='1.5'/%3E%3Cg fill='%230A58CA' fill-opacity='0.25'%3E%3Cpath d='M90 12 C90 6, 95 2, 100 2 C100 2, 105 6, 105 12' fill='none' stroke='%230A58CA' stroke-width='1.5'/%3E%3Ccircle cx='100' cy='12' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='24' viewBox='0 0 200 24'%3E%3Cline x1='0' y1='12' x2='200' y2='12' stroke='%231A6DAB' stroke-width='1'/%3E%3Ccircle cx='100' cy='12' r='12' fill='none' stroke='%231A6DAB' stroke-width='1'/%3E%3Cpath d='M94 12 h12 M100 6 v12' stroke='%231A6DAB' stroke-width='1'/%3E%3C/svg%3E");
   background-repeat: repeat-x;
-  background-size: auto 24px;
 }
