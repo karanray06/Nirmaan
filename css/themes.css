@@ -43,7 +43,7 @@ body.raksha-bandhan::before {
   top: 0; left: 0; width: 100vw; height: 100vh;
   background-color: rgba(212, 160, 23, 0.08); /* Warm amber overlay 8% */
   pointer-events: none;
-  z-index: 9999;
+  z-index: 0;
 }
 
 body.raksha-bandhan .card {
@@ -201,49 +201,26 @@ body.united-nations .card::after {
    GLOBAL STYLE RULES DRIVEN BY THEME CLASSES
    ========================================================================== */
 
-/* Apply fonts and transitions strictly under custom themes */
+/* Shared transitions and font inheritance for all custom themes */
 body.raksha-bandhan,
 body.deepavali-spark,
 body.avengers-initiative,
 body.united-nations {
-  --primary-crimson: #1A6DAB;
-  --deep-burgundy: #032854;
-  --dark-wine: #01142A;
-  --rose-mid: #3B82F6;
-  --gold-accent: #B8960C;
-  --warm-cream: #F4F7FB;
-  --blush-pale: #E2E8F0;
-  --sunset-amber: #E2B200;
-  --ivory: #FFFFFF;
-  --text-dark: #0F172A;
-  --text-muted: #475569;
-  --text-light: #FFFFFF;
-  --border-subtle: rgba(26, 109, 171, 0.12);
-  --border-medium: rgba(26, 109, 171, 0.25);
-  --shadow-glow: 0 0 40px rgba(26, 109, 171, 0.15);
-
-  --font-display: 'Libre Baskerville', serif;
-  --font-body: 'Source Sans 3', sans-serif;
-
-  background-color: var(--warm-cream);
-  background-image: linear-gradient(to bottom, transparent 59px, rgba(26, 109, 171, 0.04) 60px);
-  background-size: 100% 60px;
-  background-attachment: fixed;
+  transition: background-color 0.4s ease, color 0.3s ease;
 }
 
-body.united-nations .card {
-  background: var(--ivory) !important;
-  border-top: 3px solid #1A6DAB !important;
-  box-shadow: 0 2px 12px rgba(26, 109, 171, 0.08) !important;
-  border-image: none !important;
+body.raksha-bandhan h1, body.raksha-bandhan h2, body.raksha-bandhan h3,
+body.deepavali-spark h1, body.deepavali-spark h2, body.deepavali-spark h3,
+body.avengers-initiative h1, body.avengers-initiative h2, body.avengers-initiative h3,
+body.united-nations h1, body.united-nations h2, body.united-nations h3 {
+  font-family: var(--font-display, inherit);
 }
-body.united-nations .card::after {
-  content: '';
-  position: absolute;
-  bottom: 10px; right: 10px;
-  width: 60px; height: 60px;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10 50 Q30 30, 50 50 T90 50' fill='none' stroke='%231A6DAB' stroke-width='2' opacity='0.05'/%3E%3C/svg%3E");
+
+body.raksha-bandhan p, body.raksha-bandhan span, body.raksha-bandhan a,
+body.deepavali-spark p, body.deepavali-spark span, body.deepavali-spark a,
+body.avengers-initiative p, body.avengers-initiative span, body.avengers-initiative a,
+body.united-nations p, body.united-nations span, body.united-nations a {
+  font-family: var(--font-body, inherit);
 }
 
 /* ==========================================================================
@@ -295,8 +272,8 @@ body.united-nations .theme-illustration-un { display: block !important; }
 }
 
 @keyframes flameFlicker {
-  0% { transform: scale(1) opacity(0.85); }
-  100% { transform: scale(1.1) opacity(1); }
+  0% { transform: scale(1); opacity: 0.85; }
+  100% { transform: scale(1.1); opacity: 1; }
 }
 
 .decor-item.ai-reactor {
