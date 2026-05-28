@@ -426,11 +426,41 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>`).join('');
   }
 
+  // Photo preview function
+  window._previewTeamPhoto = () => {
+    const fileInput = document.getElementById('tmPhotoFile');
+    const preview = document.getElementById('tmPhotoPreview');
+    const previewImg = document.getElementById('tmPhotoPreviewImg');
+    const uploadText = document.getElementById('tmPhotoUploadText');
+    if (fileInput.files && fileInput.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        previewImg.src = e.target.result;
+        preview.style.display = 'block';
+        uploadText.innerHTML = '<span style="font-size:.75rem;color:#4ade80;">✓ Image selected — click to change</span>';
+      };
+      reader.readAsDataURL(fileInput.files[0]);
+      // Clear the URL input since file takes priority
+      document.getElementById('tmPhoto').value = '';
+    }
+  };
+
+  function resetTeamPhotoUI() {
+    document.getElementById('tmPhotoFile').value = '';
+    document.getElementById('tmPhotoPreview').style.display = 'none';
+    document.getElementById('tmPhotoPreviewImg').src = '';
+    document.getElementById('tmPhotoUploadText').innerHTML = `
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(201,169,110,.5)" stroke-width="1.5" style="display:block;margin:0 auto .5rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <span style="font-size:.8rem;color:rgba(240,212,218,.4);">Click or drag & drop an image</span>
+    `;
+  }
+
   document.getElementById('addTeamBtn').addEventListener('click', () => {
     document.getElementById('teamEditId').value = '';
     document.getElementById('teamFormTitle').textContent = 'Add Team Member';
     ['tmName', 'tmRole', 'tmPhone', 'tmPhoto'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('tmOrder').value = teamMembers.length + 1;
+    resetTeamPhotoUI();
     document.getElementById('teamForm').style.display = 'block';
   });
 
@@ -445,6 +475,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('tmPhone').value = m.phone || '';
     document.getElementById('tmPhoto').value = m.photo_url || '';
     document.getElementById('tmOrder').value = m.display_order || 0;
+    // Show existing photo in preview if available
+    resetTeamPhotoUI();
+    if (m.photo_url) {
+      const previewImg = document.getElementById('tmPhotoPreviewImg');
+      previewImg.src = m.photo_url;
+      document.getElementById('tmPhotoPreview').style.display = 'block';
+      document.getElementById('tmPhotoUploadText').innerHTML = '<span style="font-size:.75rem;color:rgba(240,212,218,.4);">Current photo — click to change</span>';
+    }
     document.getElementById('teamForm').style.display = 'block';
   };
 
@@ -459,13 +497,55 @@ document.addEventListener('DOMContentLoaded', () => {
     const name = document.getElementById('tmName').value.trim();
     const role = document.getElementById('tmRole').value.trim();
     if (!name || !role) return toast('Name & role required', 'err');
-    const obj = { name, role, phone: document.getElementById('tmPhone').value.trim(), photo_url: document.getElementById('tmPhoto').value.trim(), display_order: parseInt(document.getElementById('tmOrder').value) || 0 };
+
+    let photoUrl = document.getElementById('tmPhoto').value.trim();
+    const fileInput = document.getElementById('tmPhotoFile');
+
+    // If a file was selected, upload it to Supabase Storage
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      const ext = file.name.split('.').pop().toLowerCase();
+      const fileName = `team_${Date.now()}_${Math.random().toString(36).substr(2, 6)}.${ext}`;
+
+      toast('Uploading photo...', 'ok');
+      try {
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('team-photos')
+          .upload(fileName, file, {
+            cacheControl: '3600',
+            upsert: false
+          });
+
+        if (uploadError) throw uploadError;
+
+        // Get the public URL
+        const { data: urlData } = supabase.storage
+          .from('team-photos')
+          .getPublicUrl(fileName);
+
+        photoUrl = urlData.publicUrl;
+      } catch (uploadErr) {
+        toast('Photo upload failed: ' + uploadErr.message, 'err');
+        return;
+      }
+    }
+
+    const obj = { name, role, phone: document.getElementById('tmPhone').value.trim(), photo_url: photoUrl, display_order: parseInt(document.getElementById('tmOrder').value) || 0 };
     const editId = document.getElementById('teamEditId').value;
-    if (editId) { await supabase.from('team_members').update(obj).eq('id', editId); }
-    else { await supabase.from('team_members').insert(obj); }
-    document.getElementById('teamForm').style.display = 'none';
-    toast(editId ? 'Member updated!' : 'Member added!');
-    loadTeam();
+    try {
+      if (editId) {
+        const { error } = await supabase.from('team_members').update(obj).eq('id', editId);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from('team_members').insert(obj);
+        if (error) throw error;
+      }
+      document.getElementById('teamForm').style.display = 'none';
+      toast(editId ? 'Member updated!' : 'Member added!');
+      loadTeam();
+    } catch (saveErr) {
+      toast('Save failed: ' + saveErr.message, 'err');
+    }
   });
 
   // ====== MESSAGES TAB ======

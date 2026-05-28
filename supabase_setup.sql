@@ -163,3 +163,14 @@ ON CONFLICT (id) DO NOTHING;
 -- Set up storage policies for payment-proofs bucket
 CREATE POLICY "Public Access" ON storage.objects FOR SELECT USING (bucket_id = 'payment-proofs');
 CREATE POLICY "Anon Insert" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'payment-proofs');
+
+-- Create Storage Bucket for Team Photos
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('team-photos', 'team-photos', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Set up storage policies for team-photos bucket
+CREATE POLICY "Team Photos Public Access" ON storage.objects FOR SELECT USING (bucket_id = 'team-photos');
+CREATE POLICY "Team Photos Anon Insert" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'team-photos');
+CREATE POLICY "Team Photos Anon Update" ON storage.objects FOR UPDATE USING (bucket_id = 'team-photos') WITH CHECK (bucket_id = 'team-photos');
+CREATE POLICY "Team Photos Anon Delete" ON storage.objects FOR DELETE USING (bucket_id = 'team-photos');
