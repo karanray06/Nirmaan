@@ -145,6 +145,60 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  // --- Dynamic Team Fetching and Rendering ---
+  async function loadDynamicTeam() {
+    try {
+      const { data, error } = await supabase
+        .from('team_members')
+        .select('*')
+        .eq('visible', true)
+        .order('display_order');
+        
+      if (error) throw error;
+
+      const container = document.getElementById('dynamicTeamGrid');
+      if (!container) return;
+
+      if (!data || data.length === 0) {
+        container.innerHTML = '<div style="text-align:center; width:100%; grid-column: 1 / -1; color:var(--text-muted);">Team details coming soon.</div>';
+        return;
+      }
+
+      container.innerHTML = data.map(m => {
+        // Special styling for Kavya and Awani to preserve their zoomed crops, or fallback to initials if no photo
+        let photoHtml = '';
+        if (m.photo_url) {
+          const imgUrl = m.photo_url;
+          let extraStyle = '';
+          if (m.name.toLowerCase().includes('kavya')) {
+            extraStyle = 'transform: scale(1.3); transform-origin: center 40%;';
+          } else if (m.name.toLowerCase().includes('awani')) {
+            extraStyle = 'transform: scale(2); transform-origin: center 45%;';
+          }
+          photoHtml = `<img src="${imgUrl}" alt="${m.name}" style="width:100%; height:100%; object-fit:cover; object-position: center; ${extraStyle}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                       <div class="initials" style="display:none; font-size: 2.5rem; color: var(--primary-crimson); font-family: var(--font-display); width:100%; height:100%; align-items:center; justify-content:center;">${m.name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase()}</div>`;
+        } else {
+          const initials = m.name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+          photoHtml = `<div class="initials" style="display:flex; font-size: 2.5rem; color: var(--primary-crimson); font-family: var(--font-display); width:100%; height:100%; align-items:center; justify-content:center;">${initials}</div>`;
+        }
+
+        return `
+          <div class="card speaker-card">
+            <div class="speaker-photo">
+              ${photoHtml}
+            </div>
+            <h4>${m.name}</h4>
+            <div class="designation">${m.role}</div>
+            ${m.phone ? `<p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem;">${m.phone}</p>` : ''}
+          </div>
+        `;
+      }).join('');
+
+    } catch (err) {
+      console.error('Error rendering dynamic team:', err);
+    }
+  }
+
   // --- Smooth Theme Application ---
   function applyTheme(theme) {
     const newThemeClass = theme || 'nirmaan-classic';
@@ -174,6 +228,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   setInterval(checkStates, 30000);
 
   checkStates();
+  loadDynamicTeam();
 
   // --- Navbar Scroll Effect ---
   const navbar = document.getElementById('navbar');
