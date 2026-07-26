@@ -318,6 +318,7 @@
     <aside class="sidebar">
       <div class="brand"><img src="/logo.jpg" alt=""><h3>Nirmaan</h3></div>
       <div class="nav-item active" data-tab="delegates"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Delegates</div>
+      <div class="nav-item" data-tab="secretariat"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Secretariat</div>
       <div class="nav-item" data-tab="team"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Team</div>
       <div class="nav-item" data-tab="payments"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Payments</div>
       <div class="nav-item" data-tab="messages"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>Messages</div>
@@ -359,6 +360,31 @@
         </div>
         <h3 style="margin-top:1.75rem;font-family:'Playfair Display',serif;color:#c9a96e;font-size:1.1rem">Committee Breakdown</h3>
         <div class="comm-grid" id="commBreakdown"></div>
+      </div>
+
+      <!-- TAB: SECRETARIAT -->
+      <div class="tab-view" id="tab-secretariat">
+        <div class="page-header">
+          <h1>Secretariat <span>Applications</span></h1>
+          <div class="hdr-actions">
+            <button class="btn btn-green" id="secRefreshBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Refresh</button>
+            <button class="btn btn-gold" id="secExportBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><h4>Total</h4><div class="stat-val" id="secStatTotal">0</div></div>
+          <div class="stat-card"><h4>Selected</h4><div class="stat-val" id="secStatSelected">0</div></div>
+          <div class="stat-card"><h4>Pending</h4><div class="stat-val" id="secStatPending">0</div></div>
+        </div>
+        <div class="controls">
+          <div class="search-wrap"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input id="secSearchInput" placeholder="Search applications..."></div>
+          <select class="flt" id="secFilterSector"><option value="all">All Sectors</option><option value="USG Design">USG Design</option><option value="USG Delegate Affairs">USG Delegate Affairs</option><option value="USG Content">USG Content</option><option value="USG Tech">USG Tech</option></select>
+          <select class="flt" id="secFilterStatus"><option value="all">All Status</option><option value="pending">Pending</option><option value="selected">Selected</option><option value="rejected">Rejected</option></select>
+        </div>
+        <div class="tbl-wrap">
+          <div class="tbl-info"><span id="secTblCount">0 applications</span><span id="secLastUp">—</span></div>
+          <div style="overflow-x:auto"><table><thead><tr><th>App ID</th><th>Name/Email</th><th>Grade</th><th>Sectors</th><th>Exp</th><th>Status</th><th>Actions</th></tr></thead><tbody id="secTable"><tr><td colspan="7" class="empty">Loading...</td></tr></tbody></table></div>
+        </div>
       </div>
 
       <!-- TAB: TEAM -->
@@ -895,6 +921,19 @@
           <button type="submit" class="btn btn-solid" style="padding:.55rem 1.5rem;">Save Delegate</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <div class="modal" id="secModal" style="display:none; position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,.8); z-index:100; align-items:center; justify-content:center; overflow-y:auto; padding:2rem;">
+    <div style="background:#2a1520; padding:2rem; border-radius:12px; border:1px solid rgba(255,255,255,.1); max-width:700px; width:100%; position:relative;">
+      <button class="btn btn-red" style="position:absolute; top:1rem; right:1rem; padding:.3rem .6rem;" onclick="document.getElementById('secModal').style.display='none'">Close</button>
+      <h2 style="font-family:'Playfair Display',serif; color:#c9a96e; margin-bottom:1.5rem;">Application Details</h2>
+      <div id="secModalBody" style="margin-bottom:1.5rem; font-size:0.9rem; line-height:1.6; color:#f0d4da;"></div>
+      <div style="display:flex; gap:.75rem; border-top:1px solid rgba(255,255,255,.1); padding-top:1.5rem;">
+        <button class="btn btn-green" id="secApproveBtn">Accept / Select</button>
+        <button class="btn btn-red" id="secRejectBtn">Reject</button>
+        <button class="btn btn-outline-light" id="secPendingBtn">Mark Pending</button>
+      </div>
     </div>
   </div>
 
