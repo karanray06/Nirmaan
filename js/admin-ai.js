@@ -123,8 +123,19 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       if (pendingToolCall) {
         if (text.toLowerCase() === 'confirm' || text.toLowerCase() === 'yes') {
-          const res = await executeToolAction(pendingToolCall.name, pendingToolCall.arguments);
-          appendMessage('System', res);
+          // Confirm via serverless function
+          const adminPassword = sessionStorage.getItem('adminToken') || '';
+          const confirmRes = await fetch('/api/admin-assistant', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${adminPassword}`
+            },
+            body: JSON.stringify({ confirmToolCall: pendingToolCall })
+          });
+          const confirmData = await confirmRes.json();
+          if (confirmData.error) throw new Error(confirmData.error);
+          appendMessage('System', confirmData.reply || 'Action completed.');
         } else {
           appendMessage('System', 'Action cancelled.');
         }
@@ -133,58 +144,35 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const apiKey = import.meta.env.VITE_GROQ_API_KEY;
-      if (!apiKey) throw new Error("Missing API Key");
-
-      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const adminPassword = sessionStorage.getItem('adminToken') || '';
+      const res = await fetch('/api/admin-assistant', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
+          'Authorization': `Bearer ${adminPassword}`
         },
-        body: JSON.stringify({
-          model: "llama-3.3-70b-versatile",
-          messages: [
-            { role: "system", content: "You are the Nirmaan MUN Admin Assistant. You have tools to mutate database state. ONLY use these tools when explicitly instructed. Be concise. NEVER instruct the user to run tools themselves." },
-            { role: "user", content: text }
-          ],
-          tools: tools,
-          tool_choice: "auto",
-          temperature: 0
-        })
+        body: JSON.stringify({ message: text })
       });
       
       const data = await res.json();
       
       if (!res.ok) {
-        throw new Error(data.error?.message || 'API Request failed');
+        throw new Error(data.error || 'API Request failed');
       }
-      
-      const responseMessage = data.choices?.[0]?.message;
-      if (!responseMessage) throw new Error("No response from AI");
 
-      if (responseMessage.tool_calls && responseMessage.tool_calls.length > 0) {
-        const toolCall = responseMessage.tool_calls[0];
-        const functionName = toolCall.function.name;
-        const functionArgs = JSON.parse(toolCall.function.arguments);
-        
-        if (functionName === 'add_schedule_event') {
-          const result = await executeToolAction(functionName, functionArgs);
-          appendMessage('System', `Success: ${result}`);
-        } else {
-          pendingToolCall = { name: functionName, arguments: functionArgs };
-          const msgHtml = `
-            <strong>System:</strong> I am about to execute the following action:<br>
-            <code style="display:block; background:#000; padding:10px; margin-top:5px; margin-bottom:5px;">
-              Action: ${functionName}<br>
-              Arguments: ${JSON.stringify(functionArgs)}
-            </code>
-            Please type <strong>Confirm</strong> to proceed, or anything else to cancel.
-          `;
-          appendMessage('System', msgHtml, true);
-        }
+      if (data.requiresConfirmation) {
+        pendingToolCall = data.toolCall;
+        const msgHtml = `
+          <strong>System:</strong> I am about to execute the following action:<br>
+          <code style="display:block; background:#000; padding:10px; margin-top:5px; margin-bottom:5px;">
+            Action: ${data.toolCall.name}<br>
+            Arguments: ${JSON.stringify(data.toolCall.arguments)}
+          </code>
+          Please type <strong>Confirm</strong> to proceed, or anything else to cancel.
+        `;
+        appendMessage('System', msgHtml, true);
       } else {
-        appendMessage('System', responseMessage.content || "I couldn't process that command.");
+        appendMessage('System', data.reply || "I couldn't process that command.");
       }
       
     } catch (err) {

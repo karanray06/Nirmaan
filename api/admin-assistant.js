@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   
   const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
   const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
-  const API_KEY = process.env.VITE_GROQ_API_KEY || process.env.GROK_API_KEY;
+  const API_KEY = process.env.GROQ_API_KEY || process.env.VITE_GROQ_API_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
     return res.status(500).json({ error: 'Server configuration error (Supabase credentials missing)' });
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
     }
   }
 
-  if (!API_KEY) return res.status(500).json({ error: 'Missing Grok API Key' });
+  if (!API_KEY) return res.status(500).json({ error: 'Missing Groq API Key' });
 
   const tools = [
     {
@@ -117,11 +117,11 @@ export default async function handler(req, res) {
   ];
 
   try {
-    const response = await fetch('https://api.x.ai/v1/chat/completions', {
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
       body: JSON.stringify({
-        model: "grok-3",
+        model: "llama-3.3-70b-versatile",
         messages: [
           {
             role: "system",
@@ -139,7 +139,7 @@ export default async function handler(req, res) {
     const responseMessage = data.choices?.[0]?.message;
 
     if (!responseMessage) {
-       return res.status(500).json({ error: 'No response from Grok API' });
+       return res.status(500).json({ error: 'No response from Groq API' });
     }
 
     if (responseMessage.tool_calls && responseMessage.tool_calls.length > 0) {

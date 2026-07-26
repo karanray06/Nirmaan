@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   loginBtn.addEventListener('click', async () => {
     if (pwdInput.value === adminPwd) {
+      sessionStorage.setItem('adminToken', pwdInput.value);
       loginSection.style.display = 'none';
       dashboard.style.display = 'block';
       checkDB();
@@ -46,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Logout
   document.getElementById('logoutBtn').addEventListener('click', () => {
+    sessionStorage.removeItem('adminToken');
     dashboard.style.display = 'none';
     loginSection.style.display = 'flex';
   });
