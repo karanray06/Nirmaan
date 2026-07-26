@@ -13,10 +13,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     if (data && data.value) {
       let val = data.value;
-      if (!val.includes('T')) {
+      if (/^\d{4}-\d{2}-\d{2}$/.test(val)) {
         val = `${val}T09:00:00+05:30`;
       }
-      confDateStr = val;
+      const testDate = new Date(val);
+      if (!isNaN(testDate.getTime())) {
+        confDateStr = val;
+      }
     } else {
       if (import.meta.env && import.meta.env.VITE_CONFERENCE_DATE) {
         confDateStr = import.meta.env.VITE_CONFERENCE_DATE;
@@ -52,12 +55,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   window.updateCountdownTarget = (newDateStr) => {
     let val = newDateStr;
-    if (!val.includes('T')) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(val)) {
       val = `${val}T09:00:00+05:30`;
     }
-    confDateStr = val;
-    countDownDate = new Date(confDateStr).getTime();
-    updateDateDisplay(confDateStr);
+    const testDate = new Date(val);
+    if (!isNaN(testDate.getTime())) {
+      confDateStr = val;
+      countDownDate = testDate.getTime();
+      updateDateDisplay(confDateStr);
+    }
   };
 
   function updateCountdown() {

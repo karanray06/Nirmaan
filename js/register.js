@@ -62,6 +62,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('regForm');
   if(!form) return;
 
+  // Fetch payment settings
+  supabase.from('site_settings').select('key, value').in('key', ['qr_code_url', 'upi_id']).then(({data, error}) => {
+    if (!error && data) {
+      const qrData = data.find(d => d.key === 'qr_code_url')?.value;
+      const upiData = data.find(d => d.key === 'upi_id')?.value;
+      if (upiData) document.getElementById('displayUpiId').innerText = `UPI ID: ${upiData}`;
+      if (qrData) {
+        document.getElementById('qrCodeImg').src = qrData;
+        document.getElementById('displayQrCode').style.display = 'block';
+      }
+    }
+  }).catch(err => console.error("Failed to load payment settings:", err));
+
   const fileInput = document.getElementById('regFile');
   fileInput.addEventListener('change', (e) => {
     const fileName = e.target.files[0]?.name;

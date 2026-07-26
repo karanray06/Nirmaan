@@ -240,7 +240,38 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // --- Mobile Menu ---
+  // --- Registration Toggle Logic ---
+  const showDelBtn = document.getElementById('showDelegateBtn');
+  const showSecBtn = document.getElementById('showSecretariatBtn');
+  const delContainer = document.getElementById('delegateFormContainer');
+  const secContainer = document.getElementById('secretariatFormContainer');
+  
+  if(showDelBtn && showSecBtn && delContainer && secContainer) {
+    function activateBtn(active, inactive) {
+      active.classList.add('active');
+      inactive.classList.remove('active');
+      active.style.background = 'linear-gradient(135deg, #8b1e3f, #3d0816)';
+      active.style.borderColor = '#c9a96e';
+      active.style.color = '#fff';
+      inactive.style.background = 'transparent';
+      inactive.style.borderColor = 'rgba(201,169,110,0.3)';
+      inactive.style.color = '#c9a96e';
+    }
+
+    showDelBtn.addEventListener('click', () => {
+      activateBtn(showDelBtn, showSecBtn);
+      delContainer.style.display = 'block';
+      secContainer.style.display = 'none';
+    });
+    
+    showSecBtn.addEventListener('click', () => {
+      activateBtn(showSecBtn, showDelBtn);
+      secContainer.style.display = 'block';
+      delContainer.style.display = 'none';
+    });
+  }
+  
+  // --- Ticker Logic ---
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   const mobileLinks = document.querySelectorAll('.mobile-link');

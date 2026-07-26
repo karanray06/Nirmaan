@@ -54,7 +54,7 @@
     <a href="#schedule" class="mobile-link">Schedule</a>
     <a href="#speakers" class="mobile-link">The Core</a>
     <a href="#resources" class="mobile-link">Resources</a>
-    <a href="#register" class="btn btn-primary mobile-link" style="margin-top: 2rem;">Register Now</a>
+    <a href="#register" onclick="document.getElementById('mobileMenu').classList.remove('active'); document.getElementById('hamburger').classList.remove('active');" class="btn btn-primary mobile-link" style="margin-top: 2rem;">Register Now</a>
   </div>
 
   <!-- 1. HERO -->
@@ -437,7 +437,7 @@
       </div>
       
       <div style="text-align: center; margin-top: 2rem;">
-          <a href="https://forms.gle/4gfagVaB4YyZR6Jt7" target="_blank" class="btn btn-secondary">Secretariat Applications</a>
+          <a href="#register" class="btn btn-secondary">Register Now</a>
       </div>
     </div>
   </section>
@@ -447,13 +447,16 @@
     <div class="container">
       <div class="section-header">
         <span class="section-label">Join Us</span>
-        <h2 class="section-title">Delegate Registration</h2>
+        <h2 class="section-title">Registration</h2>
         <p class="section-subtitle">Secure your spot at Nirmaan MUN. Please fill out all details accurately.</p>
-        <div style="margin-top: 1rem;">
-             <a href="https://forms.gle/W47aCKDvhhYWDzAr5" target="_blank" class="btn btn-outline-light">Delegate Applications Form</a>
-             <a href="https://docs.google.com/spreadsheets/d/1pucMn5LuCdF15KQ87fvnigmygXKCM3hgMWA5loGpIzs/edit?usp=sharing" target="_blank" class="btn btn-outline-light" style="margin-left: 10px;">Delegate Matrix</a>
+        <div class="registration-options" style="display:flex; justify-content:center; gap:1rem; margin-top:2rem; margin-bottom:2rem; flex-wrap:wrap;">
+          <button id="showDelegateBtn" class="btn btn-secondary" style="min-width:250px; background:transparent; border:1.5px solid rgba(201,169,110,0.3); color:#c9a96e; padding:0.9rem 2rem; font-size:0.95rem; font-weight:600; letter-spacing:0.05em; cursor:pointer; transition:all 0.3s ease; border-radius:8px;">DELEGATE APPLICATION</button>
+          <button id="showSecretariatBtn" class="btn btn-secondary" style="min-width:250px; background:transparent; border:1.5px solid rgba(201,169,110,0.3); color:#c9a96e; padding:0.9rem 2rem; font-size:0.95rem; font-weight:600; letter-spacing:0.05em; cursor:pointer; transition:all 0.3s ease; border-radius:8px;">SECRETARIAT APPLICATION</button>
         </div>
       </div>
+
+      <!-- DELEGATE CONTAINER -->
+      <div id="delegateFormContainer" style="display:none;">
 
       <div class="form-wizard" id="registrationFormWizard">
         <div class="steps-indicator">
@@ -484,13 +487,26 @@
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">School / College / Institution</label>
-                <input type="text" class="form-input" id="regSchool" required>
+                <label class="form-label">School / College / Institution (Optional)</label>
+                <input type="text" class="form-input" id="regSchool">
               </div>
               <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                 <div>
                   <label class="form-label">Grade / Year</label>
-                  <input type="text" class="form-input" id="regGrade" required>
+                  <select class="form-input" id="regGrade" required>
+                    <option value="">Select...</option>
+                    <option value="6th">6th</option>
+                    <option value="7th">7th</option>
+                    <option value="8th">8th</option>
+                    <option value="9th">9th</option>
+                    <option value="10th">10th</option>
+                    <option value="11th">11th</option>
+                    <option value="12th">12th</option>
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year">2nd Year</option>
+                    <option value="3rd Year">3rd Year</option>
+                    <option value="4th Year">4th Year</option>
+                  </select>
                 </div>
                 <div>
                   <label class="form-label">Age</label>
@@ -511,11 +527,11 @@
                 <label class="form-label">1st Choice Committee</label>
                 <select class="form-input" id="regCom1" required>
                   <option value="">Select...</option>
-                  <option value="UNCSW">UNCSW (UN Commission on the Status of Women)</option>
-                  <option value="UNHRC">UNHRC (UN Human Rights Council)</option>
-                  <option value="AIPPM">AIPPM (All India Political Parties Meet)</option>
-                  <option value="IIA">IIA (Indian Intellectuals' Assembly)</option>
-                  <option value="IP">IP (International Press)</option>
+                  <option value="AIPPM">AIPPM</option>
+                  <option value="UNHRC">UNHRC</option>
+                  <option value="IP">IP</option>
+                  <option value="UNCSW">UNCSW</option>
+                  <option value="International Intelligence Bureau">International Intelligence Bureau</option>
                   <option value="Moot Court">Moot Court</option>
                 </select>
               </div>
@@ -529,12 +545,12 @@
                 <label class="form-label">2nd Choice Committee</label>
                 <select class="form-input" id="regCom2" required>
                   <option value="">Select...</option>
-                  <option value="UNCSW">UNCSW (UN Commission on the Status of Women)</option>
-                  <option value="UNHRC">UNHRC (UN Human Rights Council)</option>
-                  <option value="AIPPM">AIPPM (All India Political Parties Meet)</option>
-                  <option value="IIA">IIA (Indian Intellectuals' Assembly)</option>
-                  <option value="IP">IP (International Press)</option>
-                  <option value="Moot Court">Moot Court</option>
+                  <option value="AIPPM">AIPPM</option>
+                  <option value="UNHRC">UNHRC</option>
+                  <option value="IP">IP</option>
+                  <option value="UNCSW">UNCSW</option>
+                  <option value="International Intelligence Bureau">International Intelligence Bureau</option>
+                  <option value="Mock Trial">Mock Trial</option>
                 </select>
               </div>
               <div class="form-group">
@@ -545,9 +561,12 @@
             <div class="form-group">
               <label class="form-label">MUN Experience</label>
               <select class="form-input" id="regExp" required>
-                <option value="beginner">Beginner (0-2 MUNs)</option>
-                <option value="intermediate">Intermediate (3-5 MUNs)</option>
-                <option value="advanced">Advanced (6+ MUNs)</option>
+                <option value="">Select...</option>
+                <option value="0 (First Timer)">0 (First Timer)</option>
+                <option value="1-5">1-5</option>
+                <option value="6-10">6-10</option>
+                <option value="11-15">11-15</option>
+                <option value="15+">15+</option>
               </select>
             </div>
             <div class="form-nav">
@@ -583,7 +602,7 @@
               </div>
               <div class="form-group">
                 <label class="form-label">Anything else you'd like to share with us?</label>
-                <input type="text" class="form-input" id="regAnythingElse" placeholder="e.g. Special requirements or diets">
+                <input type="text" class="form-input" id="regAnythingElse" placeholder="e.g. Special requirements or diets" required>
               </div>
             </div>
             <div class="form-nav">
@@ -599,6 +618,130 @@
           <p>Your unique Delegate ID is:</p>
           <div class="delegate-id" id="displayDelegateId">NMN-2026-0000</div>
           <p>We've sent a confirmation email. Our team will review your payment shortly.</p>
+        </div>
+      </div>
+      </div> <!-- End delegateFormContainer -->
+
+      <!-- SECRETARIAT CONTAINER -->
+      <div id="secretariatFormContainer" style="display:none;">
+        <div class="form-wizard" id="secretariatFormWizard">
+          <div class="steps-indicator">
+            <div class="step-dot active" id="secDot1">1</div>
+            <div class="step-line" id="secLine1"></div>
+            <div class="step-dot" id="secDot2">2</div>
+            <div class="step-line" id="secLine2"></div>
+            <div class="step-dot" id="secDot3">3</div>
+          </div>
+          <form id="secForm">
+            <!-- Step 1: Personal -->
+            <div class="form-step active" id="secStep1">
+              <h3>Personal Information</h3>
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" id="secName" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Email Address</label>
+                  <input type="email" class="form-input" id="secEmail" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Phone Number (WhatsApp enabled)</label>
+                  <input type="tel" class="form-input" id="secPhone" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Institution / School</label>
+                  <input type="text" class="form-input" id="secSchool" required>
+                </div>
+                <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                  <div>
+                    <label class="form-label">Grade / Year</label>
+                    <input type="text" class="form-input" id="secGrade" required>
+                  </div>
+                  <div>
+                    <label class="form-label">Age</label>
+                    <input type="number" class="form-input" id="secAge" min="10" max="99" required>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">City and State</label>
+                  <input type="text" class="form-input" id="secCityState" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Instagram Handle (Optional)</label>
+                  <input type="text" class="form-input" id="secInsta">
+                </div>
+              </div>
+              <div class="form-nav" style="justify-content: flex-end;">
+                <button type="button" class="btn btn-primary" onclick="window.nextSecStep(2)">Next Step</button>
+              </div>
+            </div>
+            <!-- Step 2: Preferences -->
+            <div class="form-step" id="secStep2">
+              <h3>Preferences & Experience</h3>
+              <div class="form-group">
+                <label class="form-label">Sector Preferences</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem;" id="secSectors">
+                  <label style="color:var(--text-body); font-size:0.85rem;"><input type="checkbox" name="sectors" value="Research & Content Writing"> Research & Content Writing</label>
+                  <label style="color:var(--text-body); font-size:0.85rem;"><input type="checkbox" name="sectors" value="Hospitality"> Hospitality</label>
+                  <label style="color:var(--text-body); font-size:0.85rem;"><input type="checkbox" name="sectors" value="Marketing & Public Relations"> Marketing & Public Relations</label>
+                  <label style="color:var(--text-body); font-size:0.85rem;"><input type="checkbox" name="sectors" value="Media"> Media</label>
+                  <label style="color:var(--text-body); font-size:0.85rem;"><input type="checkbox" name="sectors" value="Delegate Affairs"> Delegate Affairs</label>
+                  <label style="color:var(--text-body); font-size:0.85rem;"><input type="checkbox" name="sectors" value="Project and Initiatives"> Project and Initiatives</label>
+                  <label style="color:var(--text-body); font-size:0.85rem;"><input type="checkbox" name="sectors" value="Logistics & Operations"> Logistics & Operations</label>
+                  <label style="color:var(--text-body); font-size:0.85rem;"><input type="checkbox" name="sectors" value="Design & Creatives"> Design & Creatives</label>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Rate your MUN Experience (1-10)</label>
+                  <input type="number" class="form-input" id="secMunExp" min="1" max="10" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Upload your MUN CV (Optional, PDF/Image up to 5MB)</label>
+                  <label class="file-upload" style="padding: 1rem;">
+                    <span class="upload-icon" style="font-size: 1.5rem;">📄</span>
+                    <p style="font-size: 0.8rem;">Click to upload<br>or drag and drop</p>
+                    <input type="file" id="secFile" accept="image/*,.pdf" style="display:none;">
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Have you been a part of a Secretariat before? (If yes, describe)</label>
+                <textarea class="form-input" id="secPriorExp" rows="3" required></textarea>
+              </div>
+              <div class="form-nav">
+                <button type="button" class="btn btn-outline-light" onclick="window.prevSecStep(1)">Back</button>
+                <button type="button" class="btn btn-primary" onclick="window.nextSecStep(3)">Next Step</button>
+              </div>
+            </div>
+            <!-- Step 3: Motivation -->
+            <div class="form-step" id="secStep3">
+              <h3>Motivation & Declaration</h3>
+              <div class="form-group">
+                <label class="form-label">Why do you think you are suitable for the selected departments?</label>
+                <textarea class="form-input" id="secWhySuitable" rows="4" required></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">What is one unique idea/strategy you can bring to your preferred department?</label>
+                <textarea class="form-input" id="secUniqueIdea" rows="4" required></textarea>
+              </div>
+              <div class="form-nav">
+                <button type="button" class="btn btn-outline-light" onclick="window.prevSecStep(2)">Back</button>
+                <button type="submit" class="btn btn-primary" id="secSubmitBtn">Submit Application</button>
+              </div>
+            </div>
+          </form>
+          <div class="success-screen" id="secSuccessScreen" style="display:none;">
+            <div class="checkmark">✓</div>
+            <h3>Application Submitted!</h3>
+            <p>Your unique Secretariat Application ID is:</p>
+            <div class="delegate-id" id="displaySecAppId">NMN-SEC-2026-0000</div>
+          </div>
         </div>
       </div>
     </div>
@@ -764,9 +907,6 @@
             <a href="https://www.instagram.com/nirmaan.indraja" target="_blank" class="social-link" title="Instagram">
               <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
             </a>
-            <a href="https://linktr.ee/nirmaan.indraja" target="_blank" class="social-link" title="Linktree">
-              <svg viewBox="0 0 24 24"><path d="M7.5 21V11.5L3 15.5l-1-1.5 5.5-5L3 4l1-1.5 4.5 4V3h2v3.5L15 2.5l1 1.5-4.5 5L17 14l-1 1.5-4.5-4V21z"/></svg>
-            </a>
           </div>
         </div>
 
@@ -821,7 +961,7 @@
         </div>
         <div class="footer-col">
           <h4>Resources</h4>
-          <a href="https://linktr.ee/nirmaan.indraja">Linktree</a>
+          <a href="#register" class="btn btn-primary">Register Now</a>
           <a href="#resources">Prep Hub</a>
           <a href="#ai-research">AI Assistant</a>
         </div>
@@ -882,6 +1022,18 @@
     </div>
   </div>
 
+  <!-- SINGLE ENTRY MODAL -->
+  <div class="modal" id="regModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8); align-items:center; justify-content:center;">
+    <div class="modal-content" style="background:var(--bg-card); padding:2rem; border-radius:12px; text-align:center; max-width:400px; width:90%; border:1px solid var(--gold-accent); position:relative;">
+      <span class="close-btn" onclick="document.getElementById('regModal').style.display='none'" style="position:absolute; right:1.5rem; top:1rem; cursor:pointer; font-size:1.5rem;">&times;</span>
+      <h2 style="font-family:var(--font-display); color:var(--gold-accent); margin-bottom:1.5rem;">Select Application Type</h2>
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <button class="btn btn-primary" onclick="document.getElementById('regModal').style.display='none'; document.getElementById('register').scrollIntoView({behavior: 'smooth'})" style="width:100%;">Delegate Application</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('regModal').style.display='none'; document.getElementById('register').scrollIntoView({behavior: 'smooth'}); setTimeout(() => document.getElementById('showSecretariatBtn').click(), 500)" style="width:100%;">Secretariat Application</button>
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="/js/supabase.js"></script>
   <script type="module" src="/js/main.js"></script>
   <script type="module" src="/js/countdown.js"></script>
@@ -889,6 +1041,7 @@
   <script type="module" src="/js/stats.js"></script>
   <script type="module" src="/js/committees.js"></script>
   <script type="module" src="/js/register.js"></script>
+  <script type="module" src="/js/secretariat.js"></script>
   <script type="module" src="/js/ai-chat.js"></script>
 
   <script>

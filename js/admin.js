@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginError = document.getElementById('loginError');
 
   let delegates = [];
-  let adminPwd = import.meta.env.VITE_ADMIN_PASSWORD || 'nirmaan2026admin';
+  let secretariatApps = [];
 
   // Toast
   function toast(msg, type = 'ok') {
@@ -19,29 +19,26 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => t.style.display = 'none', 3000);
   }
 
+  let adminPwd = import.meta.env.VITE_ADMIN_PASSWORD || 'nirmaan2026admin';
+
   // Login
   pwdInput.addEventListener('keydown', e => { if (e.key === 'Enter') loginBtn.click(); });
+  
   loginBtn.addEventListener('click', async () => {
-    // Try DB password first
-    let dbPwd = null;
-    try {
-      const { data } = await supabase.from('site_settings').select('value').eq('key', 'admin_password').single();
-      if (data) dbPwd = data.value;
-    } catch (e) { /* table may not exist yet */ }
-
-    const valid = pwdInput.value === (dbPwd || adminPwd);
-    if (valid) {
-      if (dbPwd) adminPwd = dbPwd;
+    if (pwdInput.value === adminPwd) {
       loginSection.style.display = 'none';
       dashboard.style.display = 'block';
       checkDB();
       loadDelegates();
+      loadSecretariat();
       loadTeam();
       loadMessages();
       loadSchedule();
       loadThemes();
       loadSettings();
+      pwdInput.value = '';
     } else {
+      loginError.textContent = 'Incorrect password. Try again.';
       loginError.style.display = 'block';
       setTimeout(() => loginError.style.display = 'none', 3000);
     }
@@ -51,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('logoutBtn').addEventListener('click', () => {
     dashboard.style.display = 'none';
     loginSection.style.display = 'flex';
-    pwdInput.value = '';
   });
 
   // Tab Navigation
@@ -64,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if(target) target.classList.add('active');
       
       // Refresh messages / schedule / themes if clicking respective tab
+      if (item.dataset.tab === 'secretariat') loadSecretariat();
       if (item.dataset.tab === 'messages') loadMessages();
       if (item.dataset.tab === 'schedule') loadSchedule();
       if (item.dataset.tab === 'themes') loadThemes();
@@ -400,6 +397,172 @@ document.addEventListener('DOMContentLoaded', () => {
     toast('CSV exported!');
   });
 
+  // ====== SECRETARIAT TAB ======
+  async function loadSecretariat() {
+    try {
+      const { data, error } = await supabase.from('secretariat_applications').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      secretariatApps = data || [];
+      const up = document.getElementById('secLastUp');
+      if (up) up.textContent = 'Updated: ' + new Date().toLocaleTimeString();
+      renderSecStats();
+      renderSecretariat();
+    } catch (err) {
+      const tb = document.getElementById('secTable');
+      if (tb) tb.innerHTML = `<tr><td colspan="7" class="empty">Error: ${err.message}</td></tr>`;
+    }
+  }
+
+  function renderSecStats() {
+    const stotal = document.getElementById('secStatTotal');
+    if(!stotal) return;
+    stotal.textContent = secretariatApps.length;
+    document.getElementById('secStatSelected').textContent = secretariatApps.filter(a => a.status === 'selected').length;
+    document.getElementById('secStatPending').textContent = secretariatApps.filter(a => a.status === 'pending').length;
+    document.getElementById('secStatShortlisted').textContent = secretariatApps.filter(a => a.status === 'shortlisted').length;
+    document.getElementById('secStatInterview').textContent = secretariatApps.filter(a => a.status === 'interview').length;
+  }
+
+  function renderSecretariat() {
+    const tbody = document.getElementById('secTable');
+    if (!tbody) return;
+
+    const q = (document.getElementById('secSearchInput')?.value || '').toLowerCase();
+    const sf = document.getElementById('secFilterSector')?.value || 'all';
+    const st = document.getElementById('secFilterStatus')?.value || 'all';
+
+    let list = secretariatApps;
+    if (q) list = list.filter(a => (a.full_name||'').toLowerCase().includes(q) || (a.email||'').toLowerCase().includes(q) || (a.phone||'').includes(q) || (a.application_id||'').toLowerCase().includes(q));
+    if (sf !== 'all') list = list.filter(a => (a.sectors || []).includes(sf));
+    if (st !== 'all') list = list.filter(a => a.status === st);
+
+    document.getElementById('secTblCount').textContent = `${list.length} applications`;
+    if (!list.length) { tbody.innerHTML = '<tr><td colspan="7" class="empty">No applications found.</td></tr>'; return; }
+    
+    tbody.innerHTML = list.map(a => `<tr onclick="window._openSec('${a.id}')" style="cursor:pointer;">
+      <td><span class="badge" style="background:rgba(201,169,110,.1);color:var(--gold-accent)">${a.application_id}</span></td>
+      <td><strong>${a.full_name}</strong><br><small style="color:var(--text-muted)">${a.email}</small></td>
+      <td>${a.phone}</td>
+      <td>${a.institution}</td>
+      <td>${a.mun_experience_rating}/10</td>
+      <td><span class="badge ${a.status==='selected'?'bg-green':a.status==='rejected'?'bg-red':a.status==='pending'?'bg-gray':'bg-gold'}">${a.status.toUpperCase()}</span></td>
+      <td><button class="btn btn-outline-light" style="padding:.25rem .5rem;font-size:.7rem" onclick="event.stopPropagation();window._openSec('${a.id}')">View</button></td>
+    </tr>`).join('');
+  }
+
+  window._openSec = (id) => {
+    const app = secretariatApps.find(a => a.id === id);
+    if (!app) return;
+    
+    let cvLink = 'Not provided';
+    if(app.mun_cv_url) {
+      cvLink = `<button class="btn btn-outline-light" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="window._downloadSecCv('${app.mun_cv_url}')">Download / View CV</button>`;
+    }
+    
+    document.getElementById('secModalBody').innerHTML = `
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+        <div>
+          <p><strong>App ID:</strong> ${app.application_id}</p>
+          <p><strong>Name:</strong> ${app.full_name}</p>
+          <p><strong>Email:</strong> <a href="mailto:${app.email}" style="color:var(--gold-accent)">${app.email}</a></p>
+          <p><strong>Phone:</strong> ${app.phone}</p>
+          <p><strong>Institution:</strong> ${app.institution}</p>
+          <p><strong>Grade/Age:</strong> ${app.grade_year} / ${app.age}</p>
+          <p><strong>City & State:</strong> ${app.city_state}</p>
+          <p><strong>Instagram:</strong> ${app.instagram_handle || 'N/A'}</p>
+        </div>
+        <div>
+          <p><strong>Preferences:</strong> ${(app.sectors || []).join(', ')}</p>
+          <p><strong>Exp Rating:</strong> ${app.mun_experience_rating}/10</p>
+          <p><strong>Prior Sec Exp:</strong> ${app.prior_secretariat_experience}</p>
+          <p><strong>Portfolio:</strong> ${app.portfolio_links ? `<a href="${app.portfolio_links}" target="_blank" style="color:var(--gold-accent)">Link</a>` : 'N/A'}</p>
+          <p><strong>Reference:</strong> ${app.reference || 'None'}</p>
+          <p><strong>CV:</strong> ${cvLink}</p>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem;">
+        <h4 style="color:#fff; margin-bottom:0.5rem;">Motivation & Ideas</h4>
+        <div style="background:rgba(255,255,255,0.03); padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">
+          <p><strong>Why Suitable:</strong><br>${(app.why_suitable||'').replace(/\\n/g, '<br>')}</p>
+          <p style="margin-top:0.75rem;"><strong>Unique Idea:</strong><br>${(app.unique_idea||'').replace(/\\n/g, '<br>')}</p>
+          <p style="margin-top:0.75rem;"><strong>Why Passionate:</strong><br>${(app.why_passionate||'').replace(/\\n/g, '<br>')}</p>
+          ${app.anything_else ? `<p style="margin-top:0.75rem;"><strong>Anything Else:</strong><br>${app.anything_else}</p>` : ''}
+        </div>
+      </div>
+      <div style="margin-top:1.5rem; display:flex; gap:1rem; align-items:center;">
+        <label>Update Status:</label>
+        <select id="secUpdStatus" class="flt" style="min-width:120px;">
+          <option value="pending" ${app.status==='pending'?'selected':''}>Pending</option>
+          <option value="shortlisted" ${app.status==='shortlisted'?'selected':''}>Shortlisted</option>
+          <option value="interview" ${app.status==='interview'?'selected':''}>Interview</option>
+          <option value="selected" ${app.status==='selected'?'selected':''}>Selected</option>
+          <option value="rejected" ${app.status==='rejected'?'selected':''}>Rejected</option>
+        </select>
+        <button class="btn btn-solid" style="padding:0.4rem 1rem;" onclick="window._saveSecStatus('${app.id}')">Save Status</button>
+      </div>
+    `;
+    document.getElementById('secModal').style.display = 'flex';
+  };
+
+  window._downloadSecCv = async (path) => {
+    try {
+      const { data, error } = await supabase.storage.from('secretariat-cvs').createSignedUrl(path, 60);
+      if(error) throw error;
+      window.open(data.signedUrl, '_blank');
+    } catch(err) {
+      toast('Could not fetch CV: ' + err.message, 'err');
+    }
+  };
+
+  window._saveSecStatus = async (id) => {
+    const val = document.getElementById('secUpdStatus').value;
+    try {
+      const { error } = await supabase.from('secretariat_applications').update({ status: val }).eq('id', id);
+      if (error) throw error;
+      toast('Status updated!');
+      loadSecretariat();
+      document.getElementById('secModal').style.display = 'none';
+    } catch(err) {
+      toast('Update failed: ' + err.message, 'err');
+    }
+  };
+
+  document.getElementById('closeSecModal')?.addEventListener('click', () => { document.getElementById('secModal').style.display = 'none'; });
+
+  document.getElementById('secSearchInput')?.addEventListener('input', renderSecretariat);
+  document.getElementById('secFilterSector')?.addEventListener('change', renderSecretariat);
+  document.getElementById('secFilterStatus')?.addEventListener('change', renderSecretariat);
+  document.getElementById('secRefreshBtn')?.addEventListener('click', loadSecretariat);
+
+  document.getElementById('secExportBtn')?.addEventListener('click', () => {
+    if (!secretariatApps.length) return toast('No data', 'err');
+    let csv = 'Application ID,Name,Email,Phone,Institution,Grade,Age,City State,Instagram,Sectors,Mun Exp,Prior Sec Exp,Portfolio,Reference,Status,Date\n';
+    secretariatApps.forEach(a => {
+      csv += [
+        a.application_id,
+        `"${(a.full_name||'').replace(/"/g, '""')}"`,
+        a.email,
+        a.phone,
+        `"${(a.institution||'').replace(/"/g, '""')}"`,
+        `"${(a.grade_year||'').replace(/"/g, '""')}"`,
+        a.age || '',
+        `"${(a.city_state||'').replace(/"/g, '""')}"`,
+        a.instagram_handle || '',
+        `"${(a.sectors||[]).join('; ')}"`,
+        a.mun_experience_rating || '',
+        `"${(a.prior_secretariat_experience||'').replace(/"/g, '""')}"`,
+        `"${(a.portfolio_links||'').replace(/"/g, '""')}"`,
+        `"${(a.reference||'').replace(/"/g, '""')}"`,
+        a.status,
+        new Date(a.created_at).toLocaleDateString()
+      ].join(',') + '\n';
+    });
+    const lnk = document.createElement('a'); lnk.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); 
+    lnk.download = `nirmaan_secretariat_${new Date().toISOString().slice(0, 10)}.csv`; 
+    lnk.click();
+    toast('CSV exported!');
+  });
+
   // ====== TEAM TAB ======
   let teamMembers = [];
   async function loadTeam() {
@@ -638,6 +801,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cur !== adminPwd) return toast('Current password is wrong', 'err');
     if (!nw || nw.length < 6) return toast('New password must be 6+ chars', 'err');
     if (nw !== conf) return toast('Passwords do not match', 'err');
+    
     const ok = await saveSetting('admin_password', nw);
     if (ok) { adminPwd = nw; toast('Password updated!'); ['curPwd', 'newPwd', 'confPwd'].forEach(id => document.getElementById(id).value = ''); }
   });
