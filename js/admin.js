@@ -421,8 +421,10 @@ document.addEventListener('DOMContentLoaded', () => {
     stotal.textContent = secretariatApps.length;
     document.getElementById('secStatSelected').textContent = secretariatApps.filter(a => a.status === 'selected').length;
     document.getElementById('secStatPending').textContent = secretariatApps.filter(a => a.status === 'pending').length;
-    document.getElementById('secStatShortlisted').textContent = secretariatApps.filter(a => a.status === 'shortlisted').length;
-    document.getElementById('secStatInterview').textContent = secretariatApps.filter(a => a.status === 'interview').length;
+    const shortEl = document.getElementById('secStatShortlisted');
+    if (shortEl) shortEl.textContent = secretariatApps.filter(a => a.status === 'shortlisted').length;
+    const intEl = document.getElementById('secStatInterview');
+    if (intEl) intEl.textContent = secretariatApps.filter(a => a.status === 'interview').length;
   }
 
   function renderSecretariat() {
