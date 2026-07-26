@@ -446,8 +446,8 @@ document.addEventListener('DOMContentLoaded', () => {
     tbody.innerHTML = list.map(a => `<tr onclick="window._openSec('${a.id}')" style="cursor:pointer;">
       <td><span class="badge" style="background:rgba(201,169,110,.1);color:var(--gold-accent)">${a.application_id}</span></td>
       <td><strong>${a.full_name}</strong><br><small style="color:var(--text-muted)">${a.email}</small></td>
-      <td>${a.phone}</td>
-      <td>${a.institution}</td>
+      <td>${a.grade_year}</td>
+      <td>${(a.sectors || []).join(', ')}</td>
       <td>${a.mun_experience_rating}/10</td>
       <td><span class="badge ${a.status==='selected'?'bg-green':a.status==='rejected'?'bg-red':a.status==='pending'?'bg-gray':'bg-gold'}">${a.status.toUpperCase()}</span></td>
       <td><button class="btn btn-outline-light" style="padding:.25rem .5rem;font-size:.7rem" onclick="event.stopPropagation();window._openSec('${a.id}')">View</button></td>
