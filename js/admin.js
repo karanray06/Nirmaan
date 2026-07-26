@@ -1025,4 +1025,46 @@ document.addEventListener('DOMContentLoaded', () => {
       toast(`Theme "${displayName}" activated successfully! ✨`);
     }
   }
+
+  // --- SECRETARIAT FORM MODAL ---
+  document.getElementById('addSecretariatBtn')?.addEventListener('click', () => {
+    document.getElementById('adminSecForm').reset();
+    document.getElementById('secFormModal').style.display = 'flex';
+  });
+
+  document.getElementById('cancelSecFormBtn')?.addEventListener('click', () => {
+    document.getElementById('secFormModal').style.display = 'none';
+  });
+
+  document.getElementById('closeSecFormModal')?.addEventListener('click', () => {
+    document.getElementById('secFormModal').style.display = 'none';
+  });
+
+  document.getElementById('adminSecForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {
+      full_name: document.getElementById('admSecName').value,
+      email: document.getElementById('admSecEmail').value,
+      phone: document.getElementById('admSecPhone').value,
+      institution: document.getElementById('admSecSchool').value,
+      why_suitable: document.getElementById('admSecSuitable').value,
+      unique_idea: document.getElementById('admSecIdea').value,
+      why_passionate: document.getElementById('admSecPassionate').value,
+      declaration_agreed: true
+    };
+    
+    const rn = Math.floor(1000 + Math.random() * 9000);
+    const ts = Date.now().toString().slice(-4);
+    data.application_id = 'SEC-' + rn + ts;
+
+    try {
+      const { error } = await supabase.from('secretariat_applications').insert([data]);
+      if (error) throw error;
+      toast('Secretariat added successfully!', 'ok');
+      document.getElementById('secFormModal').style.display = 'none';
+      if(typeof loadSecretariat === 'function') loadSecretariat();
+    } catch(err) {
+      toast(err.message, 'err');
+    }
+  });
 });

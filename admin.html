@@ -339,7 +339,6 @@
             <button class="btn btn-green" id="refreshBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Refresh</button>
             <button class="btn btn-gold" id="exportBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button>
             <button class="btn btn-solid" id="addDelegateBtn">+ Add Delegate</button>
-            <button class="btn btn-red" id="logoutBtn">Logout</button>
           </div>
         </div>
         <div class="stats-grid">
@@ -369,6 +368,7 @@
           <div class="hdr-actions">
             <button class="btn btn-green" id="secRefreshBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Refresh</button>
             <button class="btn btn-gold" id="secExportBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button>
+            <button class="btn btn-solid" id="addSecretariatBtn">+ Add Secretariat</button>
           </div>
         </div>
         <div class="stats-grid">
@@ -798,6 +798,11 @@
           </div>
           <button class="btn btn-solid" id="saveDateBtn" style="margin-top:1rem;">Save Visibility Settings</button>
         </div>
+        <div class="card" style="margin-top:2rem; border-color: rgba(255,107,107,0.3);">
+          <h3 style="color:#ff6b6b;">Logout</h3>
+          <p style="margin-bottom:1rem; color:var(--text-muted); font-size:0.9rem;">Sign out of the admin portal securely.</p>
+          <button class="btn btn-red" id="logoutBtn" style="padding:0.75rem 2rem;">Logout</button>
+        </div>
       </div>
     </main>
   </div>
@@ -919,6 +924,54 @@
         <div style="display:flex; gap:.5rem; margin-top:1.5rem; justify-content: flex-end;">
           <button type="button" class="btn btn-red" id="cancelDelFormBtn">Cancel</button>
           <button type="submit" class="btn btn-solid" style="padding:.55rem 1.5rem;">Save Delegate</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for Creating Secretariat -->
+  <div class="modal" id="secFormModal" style="display:none;">
+    <div class="modal-content" style="max-width: 650px;">
+      <span class="close-btn" id="closeSecFormModal">&times;</span>
+      <h2 style="font-family:'Playfair Display',serif; color:#c9a96e; margin-bottom:1.5rem;">Add Secretariat Manually</h2>
+      <form id="adminSecForm">
+        <div class="field-row">
+          <div class="field">
+            <label>Full Name</label>
+            <input type="text" id="admSecName" required>
+          </div>
+          <div class="field">
+            <label>Email Address</label>
+            <input type="email" id="admSecEmail" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Phone Number (WhatsApp)</label>
+            <input type="tel" id="admSecPhone" required>
+          </div>
+          <div class="field">
+            <label>Institution</label>
+            <input type="text" id="admSecSchool">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Why are they suitable?</label>
+            <textarea id="admSecSuitable" required style="width:100%; padding:10px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:4px; color:#fff; font-family:inherit;"></textarea>
+          </div>
+          <div class="field">
+            <label>Unique Idea</label>
+            <textarea id="admSecIdea" required style="width:100%; padding:10px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:4px; color:#fff; font-family:inherit;"></textarea>
+          </div>
+        </div>
+        <div class="field">
+          <label>Why passionate?</label>
+          <textarea id="admSecPassionate" required style="width:100%; padding:10px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:4px; color:#fff; font-family:inherit;"></textarea>
+        </div>
+        <div style="display:flex; gap:.5rem; margin-top:1.5rem; justify-content: flex-end;">
+          <button type="button" class="btn btn-red" id="cancelSecFormBtn">Cancel</button>
+          <button type="submit" class="btn btn-solid" style="padding:.55rem 1.5rem;">Save Secretariat</button>
         </div>
       </form>
     </div>
