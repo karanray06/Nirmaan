@@ -977,11 +977,11 @@
     </div>
   </div>
 
-  <div class="modal" id="secModal" style="display:none; position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,.8); z-index:100; align-items:center; justify-content:center; overflow-y:auto; padding:2rem;">
-    <div style="background:#2a1520; padding:2rem; border-radius:12px; border:1px solid rgba(255,255,255,.1); max-width:700px; width:100%; position:relative;">
-      <button class="btn btn-red" style="position:absolute; top:1rem; right:1rem; padding:.3rem .6rem;" onclick="document.getElementById('secModal').style.display='none'">Close</button>
+  <div class="modal" id="secModal" style="display:none;">
+    <div class="modal-content" style="max-width: 750px;">
+      <span class="close-btn" onclick="document.getElementById('secModal').style.display='none'">&times;</span>
       <h2 style="font-family:'Playfair Display',serif; color:#c9a96e; margin-bottom:1.5rem;">Application Details</h2>
-      <div id="secModalBody" style="margin-bottom:1.5rem; font-size:0.9rem; line-height:1.6; color:#f0d4da;"></div>
+      <div id="secModalBody" style="max-height: 65vh; overflow-y: auto; padding-right: 1rem; margin-bottom:1.5rem; font-size:0.9rem; line-height:1.6; color:#f0d4da;"></div>
     </div>
   </div>
 
