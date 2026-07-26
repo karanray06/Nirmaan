@@ -503,6 +503,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <option value="rejected" ${app.status==='rejected'?'selected':''}>Rejected</option>
         </select>
         <button class="btn btn-solid" style="padding:0.4rem 1rem;" onclick="window._saveSecStatus('${app.id}')">Save Status</button>
+        <button class="btn btn-red" style="padding:0.4rem 1rem;" onclick="window._deleteSec('${app.id}')">Delete</button>
       </div>
     `;
     document.getElementById('secModal').style.display = 'flex';
@@ -528,6 +529,19 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('secModal').style.display = 'none';
     } catch(err) {
       toast('Update failed: ' + err.message, 'err');
+    }
+  };
+
+  window._deleteSec = async (id) => {
+    if (!confirm('Are you sure you want to delete this application?')) return;
+    try {
+      const { error } = await supabase.from('secretariat_applications').delete().eq('id', id);
+      if (error) throw error;
+      toast('Application deleted!');
+      loadSecretariat();
+      document.getElementById('secModal').style.display = 'none';
+    } catch(err) {
+      toast('Delete failed: ' + err.message, 'err');
     }
   };
 
