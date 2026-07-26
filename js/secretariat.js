@@ -123,14 +123,14 @@ document.addEventListener('DOMContentLoaded', () => {
         mun_experience_rating: parseInt(document.getElementById('secMunExp').value, 10),
         mun_cv_url: cvUrl,
         prior_secretariat_experience: document.getElementById('secPriorExp').value,
-        portfolio_links: document.getElementById('secPortfolio').value,
+        portfolio_links: document.getElementById('secPortfolio')?.value || '',
         
-        why_suitable: document.getElementById('secWhySuitable').value,
-        unique_idea: document.getElementById('secUniqueIdea').value,
-        why_passionate: document.getElementById('secWhyPassionate').value,
-        reference: document.getElementById('secReference').value,
-        anything_else: document.getElementById('secAnythingElse').value,
-        declaration_agreed: document.getElementById('secDeclaration').checked,
+        why_suitable: document.getElementById('secWhySuitable')?.value || '',
+        unique_idea: document.getElementById('secUniqueIdea')?.value || '',
+        why_passionate: document.getElementById('secWhyPassionate')?.value || '',
+        reference: document.getElementById('secReference')?.value || '',
+        anything_else: document.getElementById('secAnythingElse')?.value || '',
+        declaration_agreed: document.getElementById('secDeclaration')?.checked || true,
         
         status: 'pending'
       };
