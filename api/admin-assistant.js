@@ -10,25 +10,38 @@ export default async function handler(req, res) {
   const token = authHeader.split(' ')[1];
   
   const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
-  const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const API_KEY = process.env.GROQ_API_KEY || process.env.VITE_GROQ_API_KEY;
 
-  if (!supabaseUrl || !supabaseAnonKey) {
-    return res.status(500).json({ error: 'Server configuration error (Supabase credentials missing)' });
+  if (!supabaseUrl || !supabaseServiceKey) {
+    return res.status(500).json({ error: 'Server configuration error' });
   }
 
-  const validPassword = process.env.VITE_ADMIN_PASSWORD || 'nirmaan2026admin';
-  if (token !== validPassword) {
-    return res.status(401).json({ error: 'Unauthorized: Invalid admin password' });
+  // Use Service Role to verify token and check allowlist
+  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  
+  const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+  if (authError || !user) {
+    return res.status(401).json({ error: 'Unauthorized: Invalid token' });
   }
 
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+  const { data: allowlistData } = await supabase
+    .from('admin_allowlist')
+    .select('email')
+    .eq('email', user.email)
+    .single();
+
+  if (!allowlistData) {
+    return res.status(403).json({ error: 'Forbidden: Not in admin allowlist' });
+  }
+
+  const adminEmail = user.email;
   
   const { message, confirmToolCall } = req.body;
   
   if (confirmToolCall) {
     try {
-      const result = await executeToolAction(supabase, confirmToolCall.name, confirmToolCall.arguments, 'admin_local');
+      const result = await executeToolAction(supabase, confirmToolCall.name, confirmToolCall.arguments, adminEmail);
       return res.status(200).json({ reply: result });
     } catch (err) {
       return res.status(500).json({ error: `Action failed: ${err.message}` });
@@ -149,7 +162,7 @@ export default async function handler(req, res) {
       
       // If it's a pure addition, execute directly
       if (functionName === 'add_schedule_event') {
-        const result = await executeToolAction(supabase, functionName, functionArgs, 'admin_local');
+        const result = await executeToolAction(supabase, functionName, functionArgs, adminEmail);
         return res.status(200).json({ reply: `Success: ${result}` });
       }
       

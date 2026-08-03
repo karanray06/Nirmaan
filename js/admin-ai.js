@@ -124,12 +124,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (pendingToolCall) {
         if (text.toLowerCase() === 'confirm' || text.toLowerCase() === 'yes') {
           // Confirm via serverless function
-          const adminPassword = sessionStorage.getItem('adminToken') || '';
+          const { data: { session } } = await supabase.auth.getSession();
+          const adminToken = session?.access_token || '';
           const confirmRes = await fetch('/api/admin-assistant', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${adminPassword}`
+              'Authorization': `Bearer ${adminToken}`
             },
             body: JSON.stringify({ confirmToolCall: pendingToolCall })
           });
@@ -144,12 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const adminPassword = sessionStorage.getItem('adminToken') || '';
+      const { data: { session } } = await supabase.auth.getSession();
+      const adminToken = session?.access_token || '';
       const res = await fetch('/api/admin-assistant', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${adminPassword}`
+          'Authorization': `Bearer ${adminToken}`
         },
         body: JSON.stringify({ message: text })
       });
