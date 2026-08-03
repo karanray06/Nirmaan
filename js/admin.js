@@ -19,14 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => t.style.display = 'none', 3000);
   }
 
-  let adminPwd = import.meta.env.VITE_ADMIN_PASSWORD || 'nirmaan2026admin';
-
-  // Login
-  pwdInput.addEventListener('keydown', e => { if (e.key === 'Enter') loginBtn.click(); });
-  
-  loginBtn.addEventListener('click', async () => {
-    if (pwdInput.value === adminPwd) {
-      sessionStorage.setItem('adminToken', pwdInput.value);
+  // Auth state
+  async function checkAuth() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
       loginSection.style.display = 'none';
       dashboard.style.display = 'block';
       checkDB();
@@ -37,19 +33,24 @@ document.addEventListener('DOMContentLoaded', () => {
       loadSchedule();
       loadThemes();
       loadSettings();
-      pwdInput.value = '';
     } else {
-      loginError.textContent = 'Incorrect password. Try again.';
-      loginError.style.display = 'block';
-      setTimeout(() => loginError.style.display = 'none', 3000);
+      loginSection.style.display = 'flex';
+      dashboard.style.display = 'none';
     }
+  }
+
+  // Initial check
+  checkAuth();
+
+  loginBtn.addEventListener('click', async () => {
+    // Step 4 will wire this to Google OAuth
+    toast('Google OAuth is being set up in Step 4.', 'err');
   });
 
   // Logout
-  document.getElementById('logoutBtn').addEventListener('click', () => {
-    sessionStorage.removeItem('adminToken');
-    dashboard.style.display = 'none';
-    loginSection.style.display = 'flex';
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await supabase.auth.signOut();
+    checkAuth();
   });
 
   // Tab Navigation
