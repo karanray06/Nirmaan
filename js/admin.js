@@ -17,22 +17,40 @@ document.addEventListener('DOMContentLoaded', () => {
     t.className = `toast ${type}`;
     t.style.display = 'block';
     setTimeout(() => t.style.display = 'none', 3000);
-  }
-
   // Auth state
   async function checkAuth() {
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
-      loginSection.style.display = 'none';
-      dashboard.style.display = 'block';
-      checkDB();
-      loadDelegates();
-      loadSecretariat();
-      loadTeam();
-      loadMessages();
-      loadSchedule();
-      loadThemes();
-      loadSettings();
+      // 1. Verify against allowlist
+      try {
+        const res = await fetch('/api/verify-admin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: session.user.email })
+        });
+        const data = await res.json();
+        
+        if (data.allowed) {
+          loginSection.style.display = 'none';
+          dashboard.style.display = 'block';
+          checkDB();
+          loadDelegates();
+          loadSecretariat();
+          loadTeam();
+          loadMessages();
+          loadSchedule();
+          loadThemes();
+          loadSettings();
+        } else {
+          await supabase.auth.signOut();
+          document.getElementById('loginError').textContent = 'Access Denied — this attempt has been logged.';
+          document.getElementById('loginError').style.display = 'block';
+          loginSection.style.display = 'flex';
+          dashboard.style.display = 'none';
+        }
+      } catch (err) {
+        toast('Verification failed: ' + err.message, 'err');
+      }
     } else {
       loginSection.style.display = 'flex';
       dashboard.style.display = 'none';
@@ -42,10 +60,28 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial check
   checkAuth();
 
-  loginBtn.addEventListener('click', async () => {
-    // Step 4 will wire this to Google OAuth
-    toast('Google OAuth is being set up in Step 4.', 'err');
+  // Listen for auth state changes (e.g. after OAuth redirect)
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN') {
+      checkAuth();
+    }
   });
+
+  const googleLoginBtn = document.getElementById('googleLoginBtn');
+  if (googleLoginBtn) {
+    googleLoginBtn.addEventListener('click', async () => {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin + '/admin.html'
+        }
+      });
+      if (error) {
+        document.getElementById('loginError').textContent = error.message;
+        document.getElementById('loginError').style.display = 'block';
+      }
+    });
+  }
 
   // Logout
   document.getElementById('logoutBtn').addEventListener('click', async () => {
@@ -789,7 +825,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (s.conference_date) document.getElementById('confDate').value = s.conference_date;
       if (s.dates_announced) document.getElementById('datesAnnouncedToggle').checked = s.dates_announced === 'true';
       if (s.schedule_announced) document.getElementById('scheduleAnnouncedToggle').checked = s.schedule_announced === 'true';
-      if (s.admin_password) adminPwd = s.admin_password;
+      
+      loadAdmins();
     } catch { /* settings table may not exist */ }
   }
 
@@ -813,17 +850,51 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ====== SETTINGS TAB ======
-  document.getElementById('changePwdBtn').addEventListener('click', async () => {
-    const cur = document.getElementById('curPwd').value;
-    const nw = document.getElementById('newPwd').value;
-    const conf = document.getElementById('confPwd').value;
-    if (cur !== adminPwd) return toast('Current password is wrong', 'err');
-    if (!nw || nw.length < 6) return toast('New password must be 6+ chars', 'err');
-    if (nw !== conf) return toast('Passwords do not match', 'err');
-    
-    const ok = await saveSetting('admin_password', nw);
-    if (ok) { adminPwd = nw; toast('Password updated!'); ['curPwd', 'newPwd', 'confPwd'].forEach(id => document.getElementById(id).value = ''); }
-  });
+    async function loadAdmins() {
+      const { data, error } = await supabase.from('admin_allowlist').select('*');
+      if (error) return;
+      const tbody = document.getElementById('adminListBody');
+      tbody.innerHTML = '';
+      data.forEach(a => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${a.email}</td>
+          <td>${a.added_by || 'system'}</td>
+          <td>
+            <button class="btn btn-primary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="removeAdmin('${a.email}')">Remove</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    window.removeAdmin = async (email) => {
+      if (!confirm('Remove admin ' + email + '?')) return;
+      const { error } = await supabase.from('admin_allowlist').delete().eq('email', email);
+      if (error) return toast('Failed: ' + error.message, 'err');
+      toast('Admin removed');
+      loadAdmins();
+    };
+
+    const addAdminBtn = document.getElementById('addAdminBtn');
+    if (addAdminBtn) {
+      addAdminBtn.addEventListener('click', async () => {
+        const email = document.getElementById('newAdminEmail').value;
+        if (!email) return toast('Enter an email', 'err');
+        
+        const { data: { session } } = await supabase.auth.getSession();
+        const { error } = await supabase.from('admin_allowlist').insert([{
+          email: email,
+          added_by: session.user.email
+        }]);
+        
+        if (error) return toast('Failed to add admin: ' + error.message, 'err');
+        
+        toast('Admin added successfully!');
+        document.getElementById('newAdminEmail').value = '';
+        loadAdmins();
+      });
+    }
 
   document.getElementById('saveDateBtn').addEventListener('click', async () => {
     const d = document.getElementById('confDate').value;
