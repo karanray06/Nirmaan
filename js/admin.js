@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
     t.className = `toast ${type}`;
     t.style.display = 'block';
     setTimeout(() => t.style.display = 'none', 3000);
+  }
+
   // Auth state
   async function checkAuth() {
     const { data: { session } } = await supabase.auth.getSession();
