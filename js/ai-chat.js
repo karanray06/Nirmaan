@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-          model: "llama3-8b-8192", // Valid Groq Llama model
+          model: "openai/gpt-oss-20b", // Valid supported model
           messages: [
             {
               role: "system",
