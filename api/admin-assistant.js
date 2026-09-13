@@ -134,7 +134,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
       body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
+        model: "llama3-8b-8192",
         messages: [
           {
             role: "system",
